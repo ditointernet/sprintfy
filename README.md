@@ -1,2 +1,2 @@
-# sprintfy
-Projeto responsável por gerir os sprint da Dito. 
+# Sprintfy
+Projeto responsável por gerir os sprint da Dito.
