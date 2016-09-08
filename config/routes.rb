@@ -11,4 +11,8 @@ Rails.application.routes.draw do
     post '/entrar', to: 'users/sessions#create', as: :create_user_session
     delete '/sair', to: 'users/sessions#destroy', as: :destroy_user_session
   end
+
+  # Squads
+  get '/nova-equipe', to: 'squads#new', as: :new_squad
+  post '/nova-equipe', to: 'squads#create', as: :create_squad
 end

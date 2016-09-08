@@ -52,7 +52,7 @@
 
                 <p class="menu-label">EQUIPES</p>
                 <ul class="menu-list">
-                  <li><a href="#">CRIAR EQUIPE</a></li>
+                  <li><%= link_to 'CRIAR EQUIPE', :new_squad %></li>
                   <li><a href="#">LISTAR EQUIPES</a></li>
                 </ul>
 
@@ -64,6 +64,18 @@
               </aside>
             </div>
             <div class="column">
+              <% if flash[:notice] %>
+                <div class="container">
+                    <p><%= flash[:notice] %></p>
+                </div>
+              <% end %>
+
+              <% if flash[:error] %>
+                <div class="container">
+                  <p><%= flash[:error] %></p>
+                </div>
+              <% end %>
+
               <%= yield %>
             </div>
           </div>
