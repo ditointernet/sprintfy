@@ -1,0 +1,31 @@
+<div class="section">
+  <div class="columns">
+    <div class="column is-one-third">
+    </div>
+
+    <div class="column is-one-third">
+      <h1 class="title">Entrar</h1>
+
+      <%= form_for resource, as: resource_name, url: session_path(resource_name) do |f| %>
+        <%= f.label 'E-mail', class: 'label' %>
+        <p class="control">
+          <%= f.text_field :email, class: 'input' %>
+        </p>
+
+        <%= f.label 'Senha', class: 'label' %>
+        <p class="control">
+          <%= f.password_field :password, autocomplete: 'off', class: 'input' %>
+        </p>
+
+        <p class="control">
+          <%= f.label :remember_me, class: 'label' do %>
+            <%= f.check_box :remember_me, class: 'checkbox' %>
+            Mantenha-me conectado
+          <% end %>
+        </p>
+
+        <%= f.submit 'Entrar', class: 'button is-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

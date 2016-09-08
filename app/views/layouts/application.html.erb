@@ -9,6 +9,59 @@
   </head>
 
   <body>
-    <%= yield %>
+    <section class="hero is-primary">
+      <div class="hero-head">
+        <header class="nav">
+          <div class="container">
+            <div class="nav-left">
+              <%= link_to 'SPRINTFY', :root, class: 'nav-item is-brand' %>
+            </div>
+
+            <div id="nav-toggle" class="nav-toggle">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+
+            <% unless user_signed_in? %>
+              <div class="nav-right nav-menu">
+                <span class="nav-item">
+                  <%= link_to 'ENTRAR', :user_session, class: 'button is-dark' %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </header>
+      </div>
+    </section>
+
+    <% if user_signed_in? %>
+      <section class="section">
+        <div class="container">
+          <div class="columns">
+            <div class="column is-3">
+              <aside class="menu">                
+                <p class="menu-label">SPRINTS</p>
+                <ul class="menu-list">
+                  <li><a href="#">CRIAR SPRINT</a></li>
+                  <li><a href="#">LISTAR SPRINTS</a></li>
+                </ul>
+
+                <p class="menu-label">CONTA</p>
+                <ul class="menu-list">
+                  <li><a href="#">EDITAR CONTA</a></li>
+                  <li><%= link_to 'SAIR', :destroy_user_session, method: :delete %></li>
+                </ul>
+              </aside>
+            </div>
+            <div class="column">
+              <%= yield %>
+            </div>
+          </div>
+        </div>
+      </section>
+    <% else %>
+      <%= yield %>
+    <% end %>
   </body>
 </html>

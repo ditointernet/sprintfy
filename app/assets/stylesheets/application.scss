@@ -13,3 +13,19 @@
  *= require_tree .
  *= require_self
  */
+
+$primary: #75BA43;
+$dark: #545454;
+
+$nav-height: 65px;
+
+$family-primary: 'Roboto', sans-serif;
+
+@import 'https://fonts.googleapis.com/css?family=Roboto:300,400';
+@import 'bulma';
+
+
+// Texto da logo branco
+.is-brand {
+  color: white !important;
+}
