@@ -1,0 +1,110 @@
+
+<div class="container">
+  <h1 class="title is-2">Equipe <%= @sprint.squad.name %></h1>
+  <h2 class="subtitle"><%= format_date @sprint.start_date %> a <%= format_date @sprint.due_date %></h2>
+
+  <div class="sprintfy-sprint-goals">
+    <strong class="title is-3">Goals</strong>
+
+    <% @sprint.goals.each_with_index do |goal, i| %>
+      <div class="box sprintfy-sprint-goal <%= 'goal-complete' if goal.completed %>">
+        <div class="media">
+          <div class="media-content">
+            <div class="content">
+              <div>
+                <strong>Goal <%= i + 1 %></strong>
+              </div>
+              <div>
+                <%= goal.description %>
+              </div>
+            </div>
+            <nav class="level">
+              <div class="level-left">
+                <% unless goal.completed %>
+                  <%= form_tag :complete_goal, method: :post do %>
+                    <%= hidden_field_tag 'goal_id', goal.id %>
+                    <%= submit_tag 'Completar', class: 'button is-primary level-item' %>
+                  <% end %>
+                <% end %>
+              </div>
+            </nav>
+          </div>
+          <div class="media-right">
+            <%= form_tag destroy_goal_path, method: :delete do %>
+              <%= hidden_field_tag 'goal_id', goal.id %>
+              <button type="submit" class="delete"></button>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+
+    <div>
+      <a id="show-add-goal-form-btn" href="#">Adicionar Goal</a>
+    </div>
+
+    <div class="sprintfy-add-goal-form is-hidden">
+      <div class="columns">
+        <div class="column is-one-third">
+          <%= form_for @sprint_goal, url: :create_goal do |f| %>
+            <%= f.hidden_field :sprint_id %>
+
+            <%= f.label 'Descrição', class: 'label' %>
+            <div class="control">
+              <%= f.text_field :description, class: 'input' %>
+            </div>
+
+            <%= f.submit 'Criar Goal', class: 'button is-dark' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sprintfy-sprint-users">
+    <strong class="title is-3">Participantes</strong>
+    <table class="table is-bordered sprintfy-sprint-users-table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Equipe</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @sprint.users.each do |user| %>
+          <tr>
+            <td><%= user.name %></td>
+            <td><%= user.squad.name %></td>
+            <td>
+              <%= form_tag remove_sprint_user_path, method: :post do %>
+                <%= hidden_field_tag 'sprint_id', @sprint.id %>
+                <%= hidden_field_tag 'user_id', user.id %>
+                <%= submit_tag 'remover', class: 'button' %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div>
+      <a id="show-add-sprint-user-form-btn" href="#">Adicionar Participante</a>
+    </div>
+
+    <div class="sprintfy-add-sprint-user-form is-hidden" %>
+      <%= form_tag add_sprint_user_path, method: :post do %>
+        <%= hidden_field_tag 'sprint_id', @sprint.id %>
+
+        <div class="control">
+          <%= label_tag 'sprint-user', 'Participante', class: 'label' %>
+          <span class="select">
+            <%= select_tag 'user_id', options_from_collection_for_select(@users, 'id', 'email'), include_blank: true %>
+          </span>
+        </div>
+
+        <%= submit_tag 'Adicionar', class: 'button is-dark' %>
+      <% end %>
+    </div>
+  </div>
+</div>

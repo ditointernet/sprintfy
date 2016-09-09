@@ -46,19 +46,17 @@
               <aside class="menu">
                 <p class="menu-label">SPRINTS</p>
                 <ul class="menu-list">
-                  <li><a href="#">CRIAR SPRINT</a></li>
-                  <li><a href="#">LISTAR SPRINTS</a></li>
+                  <li><%= link_to 'MEUS SPRINTS', :user_sprints %></li>
+                  <li><%= link_to 'CRIAR SPRINT', :new_sprint %></li>
                 </ul>
 
                 <p class="menu-label">EQUIPES</p>
                 <ul class="menu-list">
                   <li><%= link_to 'CRIAR EQUIPE', :new_squad %></li>
-                  <li><a href="#">LISTAR EQUIPES</a></li>
                 </ul>
 
                 <p class="menu-label">CONTA</p>
                 <ul class="menu-list">
-                  <li><a href="#">EDITAR CONTA</a></li>
                   <li><%= link_to 'SAIR', :destroy_user_session, method: :delete %></li>
                 </ul>
               </aside>

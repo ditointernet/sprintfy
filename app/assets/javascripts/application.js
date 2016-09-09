@@ -12,9 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//= require maskedinput
 //= require_tree .
 
+// App navbar toggle
 $(function() {
   var navToggle = $('#nav-toggle');
   var navMenu = $('.nav-menu');
@@ -29,5 +30,12 @@ $(function() {
       navToggle.addClass('is-active');
       navMenu.addClass('is-active');
     }
+  });
+});
+
+// App date inputs
+$(function() {
+  $('.sprintfy-date-input').mask('99/99/9999', {
+    placeholder: '_',
   });
 });

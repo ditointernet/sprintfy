@@ -1,0 +1,15 @@
+<div class="container">
+  <h1 class="title is-2">Meus Sprints</h1>
+
+  <% current_user.sprints.order(start_date: :desc).each do |sprint| %>
+    <div class="sprintfy-user-sprint">
+      <div>Equipe <%= sprint.squad.name %></div>
+      <div>
+        <span class="date"><%= format_date sprint.start_date %></span>
+        a
+        <span class="date"><%= format_date sprint.due_date %></span>
+      </div>
+      <%= link_to 'Ver', edit_sprint_path(id: sprint.id) %>
+    </div>
+  <% end %>
+</div>

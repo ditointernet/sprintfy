@@ -1,4 +1,6 @@
 class SquadsController < ApplicationController
+  before_action :authenticate_user!
+
   def new
     @squad = Squad.new
   end
