@@ -14,9 +14,9 @@ ActiveRecord::Schema.define(version: 20160908175628) do
 
   create_table "goals", force: :cascade do |t|
     t.text     "description"
-    t.boolean  "completed"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.boolean  "completed",   default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "sprints", force: :cascade do |t|
