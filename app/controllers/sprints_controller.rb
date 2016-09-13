@@ -3,10 +3,11 @@ class SprintsController < ApplicationController
 
   def new
     @sprint = Sprint.new
+    @squads = Squad.all
   end
 
   def create
-    sprint_params = params.require(:sprint).permit([:start_date, :due_date])
+    sprint_params = params.require(:sprint).permit([:start_date, :due_date, :squad_id])
 
     # Faz o parse das datas do sprint
     start_date = DateParser::parse_date_string(sprint_params[:start_date])
@@ -15,7 +16,8 @@ class SprintsController < ApplicationController
     # Cria o sprint e adiciona usuários da equipe do usuário que está
     # criando o sprint.
     # Também deve adicionar os goals do sprint
-    sprint = Sprint.new_for_squad(start_date, due_date, current_user.squad)
+    squad = Squad.find(sprint_params[:squad_id])
+    sprint = Sprint.new_for_squad(start_date, due_date, squad)
 
     if sprint.save
       redirect_to action: :edit, id: sprint.id
