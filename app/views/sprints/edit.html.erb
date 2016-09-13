@@ -74,7 +74,7 @@
       <tbody>
         <% @sprint.users.each do |user| %>
           <tr>
-            <td><%= user.name %></td>
+            <td><%= user.name_or_email %></td>
             <td><%= user.squad.name %></td>
             <td>
               <%= form_tag remove_sprint_user_path, method: :post do %>
@@ -99,7 +99,7 @@
         <div class="control">
           <%= label_tag 'sprint-user', 'Participante', class: 'label' %>
           <span class="select">
-            <%= select_tag 'user_id', options_for_select(@users_select_options), include_blank: true %>
+            <%= select_tag 'user_id', options_from_collection_for_select(@users, 'id', 'name_or_email'), include_blank: true %>
           </span>
         </div>
 
