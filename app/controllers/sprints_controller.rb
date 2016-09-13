@@ -13,9 +13,7 @@ class SprintsController < ApplicationController
     start_date = DateParser::parse_date_string(sprint_params[:start_date])
     due_date = DateParser::parse_date_string(sprint_params[:due_date])
 
-    # Cria o sprint e adiciona usuários da equipe do usuário que está
-    # criando o sprint.
-    # Também deve adicionar os goals do sprint
+    # Cria o sprint e adiciona usuários da equipe do sprint
     squad = Squad.find(sprint_params[:squad_id])
     sprint = Sprint.new_for_squad(start_date, due_date, squad)
 

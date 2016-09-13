@@ -1,6 +1,6 @@
 class Sprint < ApplicationRecord
   belongs_to :squad
-  has_and_belongs_to_many :users
+  has_and_belongs_to_many :users, -> { uniq }
   has_many :goals
 
   def self.new_for_squad(start_date, due_date, squad)
