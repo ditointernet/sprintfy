@@ -23,13 +23,8 @@ $(function() {
   navToggle.on('click', function(event) {
     event.preventDefault();
 
-    if (navToggle.hasClass('is-active')) {
-      navToggle.removeClass('is-active');
-      navMenu.removeClass('is-active');
-    } else {
-      navToggle.addClass('is-active');
-      navMenu.addClass('is-active');
-    }
+    navToggle.toggleClass('is-active');
+    navMenu.toggleClass('is-active');
   });
 });
 
