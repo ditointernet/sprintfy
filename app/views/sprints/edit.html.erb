@@ -99,7 +99,7 @@
         <div class="control">
           <%= label_tag 'sprint-user', 'Participante', class: 'label' %>
           <span class="select">
-            <%= select_tag 'user_id', options_from_collection_for_select(@users, 'id', 'email'), include_blank: true %>
+            <%= select_tag 'user_id', options_for_select(@users_select_options), include_blank: true %>
           </span>
         </div>
 

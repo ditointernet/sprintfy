@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(version: 20160908181036) do
   create_table "goals", force: :cascade do |t|
     t.text     "description"
     t.boolean  "completed",   default: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "sprint_id"
     t.index ["sprint_id"], name: "index_goals_on_sprint_id"
   end

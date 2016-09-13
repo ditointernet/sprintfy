@@ -33,6 +33,12 @@ class SprintsController < ApplicationController
     # Poderia ser feito paginado e apenas quando o usuário decidisse
     # adicionar um novo participante no Sprint.
     @users = User.all
+
+    @users_select_options = @users.map do |user|
+      text = user.name || user.email
+
+      [text, user.id]
+    end
   end
 
   def add_user
