@@ -3,7 +3,7 @@ class SprintsController < ApplicationController
 
   def new
     @sprint = Sprint.new
-    @squads = Squad.all
+    @squads = Squad.order(name: :asc)
   end
 
   def create

@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="title is-2">Meus Sprints</h1>
 
-  <% current_user.sprints.order(start_date: :desc).each do |sprint| %>
+  <% @sprints.each do |sprint| %>
     <div class="sprintfy-user-sprint">
       <div>Equipe <%= sprint.squad.name %></div>
       <div>
