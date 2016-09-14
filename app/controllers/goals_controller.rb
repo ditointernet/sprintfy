@@ -1,31 +1,37 @@
 class GoalsController < ApplicationController
-  def create
-    goal = Goal.new(params.require(:goal).permit([:description, :sprint_id]))
-    goal.completed = false
+  before_action :load_goal, only: [:destroy, :mark_as_complete]
 
-    unless goal.save
+  def create
+    @goal = Goal.new(goals_params.merge(completed: false))
+
+    unless @goal.save
       flash[:error] = 'Não foi possível adicionar o goal'
     end
 
-    redirect_to edit_sprint_path(id: goal.sprint_id)
+    redirect_to_edit_sprint_path
   end
 
   def destroy
-    goal_id = params.require(:goal_id)
-
-    goal = Goal.find(goal_id)
-    goal.delete
-
-    redirect_to edit_sprint_path(id: goal.sprint_id)
+    @goal.destroy
+    redirect_to_edit_sprint_path
   end
 
   def mark_as_complete
-    goal_id = params.require(:goal_id)
+    @goal.update_attribute(:completed, true)
+    redirect_to_edit_sprint_path
+  end
 
-    goal = Goal.find(goal_id)
-    goal.completed = true
-    goal.save
+  private
 
-    redirect_to edit_sprint_path(id: goal.sprint_id)
+  def goals_params
+    params.require(:goal).permit([:description, :sprint_id])
+  end
+
+  def load_goal
+    @goal = Goal.find(params.require(:id))
+  end
+
+  def redirect_to_edit_sprint_path
+    redirect_to edit_sprint_path(id: @goal.sprint_id)
   end
 end

@@ -21,8 +21,7 @@
             <nav class="level">
               <div class="level-left">
                 <% unless goal.completed %>
-                  <%= form_tag :complete_goal, method: :post do %>
-                    <%= hidden_field_tag 'goal_id', goal.id %>
+                  <%= form_tag complete_goal_path(id: goal.id), method: :post do %>
                     <%= submit_tag 'Completar', class: 'button is-primary level-item' %>
                   <% end %>
                 <% end %>
@@ -30,8 +29,7 @@
             </nav>
           </div>
           <div class="media-right">
-            <%= form_tag destroy_goal_path, method: :delete do %>
-              <%= hidden_field_tag 'goal_id', goal.id %>
+            <%= form_tag goal_path(id: goal.id), method: :delete do %>
               <button type="submit" class="delete"></button>
             <% end %>
           </div>
@@ -46,7 +44,7 @@
     <div class="sprintfy-add-goal-form is-hidden">
       <div class="columns">
         <div class="column is-one-third">
-          <%= form_for @sprint_goal, url: :create_goal do |f| %>
+          <%= form_for @sprint_goal, url: goals_path do |f| %>
             <%= f.hidden_field :sprint_id %>
 
             <%= f.label 'Descrição', class: 'label' %>
@@ -74,10 +72,10 @@
       <tbody>
         <% @sprint.users.each do |user| %>
           <tr>
-            <td><%= user.name %></td>
+            <td><%= user.name_or_email %></td>
             <td><%= user.squad.name %></td>
             <td>
-              <%= form_tag remove_sprint_user_path, method: :post do %>
+              <%= form_tag remove_user_sprint_path, method: :post do %>
                 <%= hidden_field_tag 'sprint_id', @sprint.id %>
                 <%= hidden_field_tag 'user_id', user.id %>
                 <%= submit_tag 'remover', class: 'button' %>
@@ -93,13 +91,13 @@
     </div>
 
     <div class="sprintfy-add-sprint-user-form is-hidden" %>
-      <%= form_tag add_sprint_user_path, method: :post do %>
+      <%= form_tag add_user_sprint_path, method: :post do %>
         <%= hidden_field_tag 'sprint_id', @sprint.id %>
 
         <div class="control">
           <%= label_tag 'sprint-user', 'Participante', class: 'label' %>
           <span class="select">
-            <%= select_tag 'user_id', options_from_collection_for_select(@users, 'id', 'email'), include_blank: true %>
+            <%= select_tag 'user_id', options_from_collection_for_select(@users, 'id', 'name_or_email'), include_blank: true %>
           </span>
         </div>
 

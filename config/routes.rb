@@ -11,21 +11,23 @@ Rails.application.routes.draw do
   end
 
   # Squads
-  get '/nova-equipe', to: 'squads#new', as: :new_squad
-  post '/nova-equipe', to: 'squads#create', as: :create_squad
+  resources :squads, only: [:new, :create], path: 'equipes', path_names: { new: '/criar' }
 
   # Sprints
-  get '/novo-sprint', to: 'sprints#new', as: :new_sprint
-  post '/novo-sprint', to: 'sprints#create', as: :create_sprint
-  get '/sprint/:id', to: 'sprints#edit', as: :edit_sprint
-  post '/remover-participante', to: 'sprints#remove_user', as: :remove_sprint_user
-  post '/adicionar-participante', to: 'sprints#add_user', as: :add_sprint_user
+  resources :sprints, only: [:new, :create, :edit], path: 'sprints', path_names: { new: '/criar', edit: '/' } do
+    member do
+      post '/remover-participante', to: 'sprints#remove_user', as: :remove_user
+      post '/adicionar-participante', to: 'sprints#add_user', as: :add_user
+    end
+  end
+
+  # Goals
+  resources :goals, only: [:create, :destroy], path: 'goals' do
+    member do
+      post '/completar', to: 'goals#mark_as_complete', as: :complete
+    end
+  end
 
   # User pages
   get '/meus-sprints', to: 'users/pages#sprints', as: :user_sprints
-
-  # Goals
-  post '/novo-goal', to: 'goals#create', as: :create_goal
-  delete '/remover-goal', to: 'goals#destroy', as: :destroy_goal
-  post '/completar-goal', to: 'goals#mark_as_complete', as: :complete_goal
 end

@@ -1,21 +1,19 @@
 class SprintsController < ApplicationController
   before_action :authenticate_user!
+  before_action :load_sprint, only: [:add_user, :remove_user, :edit]
+  before_action :load_user, only: [:add_user, :remove_user]
 
   def new
     @sprint = Sprint.new
+    @squads = Squad.order(name: :asc)
   end
 
   def create
-    sprint_params = params.require(:sprint).permit([:start_date, :due_date])
-
-    # Faz o parse das datas do sprint
     start_date = DateParser::parse_date_string(sprint_params[:start_date])
     due_date = DateParser::parse_date_string(sprint_params[:due_date])
 
-    # Cria o sprint e adiciona usuários da equipe do usuário que está
-    # criando o sprint.
-    # Também deve adicionar os goals do sprint
-    sprint = Sprint.new_for_squad(start_date, due_date, current_user.squad)
+    squad = Squad.find(sprint_params[:squad_id])
+    sprint = Sprint.new_for_squad(start_date, due_date, squad)
 
     if sprint.save
       redirect_to action: :edit, id: sprint.id
@@ -26,42 +24,36 @@ class SprintsController < ApplicationController
   end
 
   def edit
-    @sprint = Sprint.find(params[:id])
     @sprint_goal = Goal.new(sprint: @sprint)
-
-    # TODO:
-    # Poderia ser feito paginado e apenas quando o usuário decidisse
-    # adicionar um novo participante no Sprint.
     @users = User.all
   end
 
   def add_user
-    sprint_id = params.require(:sprint_id)
-    user_id = params.require(:user_id)
-
-    # Encontra o sprint e adiciona o participante
-    begin
-      sprint = Sprint.find(sprint_id)
-      user = User.find(user_id) # TODO: Precisa buscar do banco mesmo?
-
-      sprint.users.append(user)
-    end
-
-    redirect_to edit_sprint_path(sprint_id)
+    @sprint.users.append(@user)
+    redirect_to_edit_sprint_path
   end
 
   def remove_user
-    sprint_id = params.require(:sprint_id)
-    user_id = params.require(:user_id)
+    @sprint.users.delete(@user)
+    redirect_to_edit_sprint_path
+  end
 
-    # Encontra o sprint e remove o participante
-    begin
-      sprint = Sprint.find(sprint_id)
-      user = User.find(user_id) # TODO: Tem como deletar da associação sem buscar do banco?
+  private
 
-      sprint.users.delete(user)
-    end
+  def sprint_params
+    params.require(:sprint).permit([:start_date, :due_date, :squad_id])
+  end
 
-    redirect_to edit_sprint_path(sprint_id)
+  def load_sprint
+    id = params[:sprint_id] || params[:id]
+    @sprint = Sprint.find(id)
+  end
+
+  def load_user
+    @user = User.find(params[:user_id])
+  end
+
+  def redirect_to_edit_sprint_path
+    redirect_to edit_sprint_path(@sprint.id)
   end
 end

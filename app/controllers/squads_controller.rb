@@ -10,10 +10,10 @@ class SquadsController < ApplicationController
 
     if squad.save
       flash[:notice] = "Equipe #{squad.name} criada!"
-      redirect_to :new_squad
+      redirect_to new_squad_path
     else
       flash[:error] = "Não foi possível criar a equipe"
-      redirect_to :new_squad
+      redirect_to new_squad_path
     end
   end
 end
