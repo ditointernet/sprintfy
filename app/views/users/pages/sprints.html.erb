@@ -3,8 +3,12 @@
 
   <% @sprints.each do |sprint| %>
     <div class="sprintfy-user-sprint">
-      <div>Equipe <%= sprint.squad.name %></div>
       <div>
+        <span>Equipe <%= sprint.squad.name %></span>
+      </div>
+      <div>
+        <span class="counter">#<%= sprint.squad_counter %></span>
+        de
         <span class="date"><%= format_date sprint.start_date %></span>
         a
         <span class="date"><%= format_date sprint.due_date %></span>

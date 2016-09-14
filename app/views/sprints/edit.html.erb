@@ -1,6 +1,9 @@
 
 <div class="container">
-  <h1 class="title is-2">Equipe <%= @sprint.squad.name %></h1>
+  <h1 class="title is-2 sprintfy-sprint-title">
+    <span>Equipe <%= @sprint.squad.name %></span>
+    <span class="counter">#<%= @sprint.squad_counter %></span>
+  </h1>
   <h2 class="subtitle"><%= format_date @sprint.start_date %> a <%= format_date @sprint.due_date %></h2>
 
   <div class="sprintfy-sprint-goals">
