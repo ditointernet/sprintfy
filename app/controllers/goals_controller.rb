@@ -28,6 +28,6 @@ class GoalsController < ApplicationController
   private
 
   def find_goal
-    goal = Goal.find(params.require(:goal_id))
+    goal = Goal.find(params.require(:id))
   end
 end

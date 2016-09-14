@@ -7,7 +7,7 @@
         <div class="control">
           <%= f.label 'Equipe', class: 'label' %>
           <span class="select">
-            <%= f.select :squad_id, options_from_collection_for_select(@squads, 'id', 'name', current_user.squad.id) %>
+            <%= f.select :squad_id, options_from_collection_for_select(@squads, 'id', 'name', @user_squad) %>
           </span>
         </div>
 
