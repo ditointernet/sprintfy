@@ -14,9 +14,9 @@ ActiveRecord::Schema.define(version: 20160908181036) do
 
   create_table "goals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text     "description", limit: 65535
-    t.boolean  "completed", default: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.boolean  "completed",                 default: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.integer  "sprint_id"
     t.index ["sprint_id"], name: "index_goals_on_sprint_id", using: :btree
   end

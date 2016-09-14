@@ -1,11 +1,7 @@
-FROM ruby:2.2.5
+FROM ruby:2.2.5-onbuild
 
-ADD ./ /usr/src/app
+COPY ./ /usr/src/app
 WORKDIR /usr/src/app
 
 RUN apt-get update && \
-    apt-get install -y build-essential nodejs mysql-client && \
-    gem install bundler && \
-    bundle install
-
-CMD bundle exec rails server -b 0.0.0.0 -p 80
+    apt-get install -y build-essential nodejs mysql-client
