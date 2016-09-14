@@ -36,32 +36,37 @@ class SprintsController < ApplicationController
   end
 
   def add_user
-    sprint_id = params.require(:sprint_id)
-    user_id = params.require(:user_id)
-
     # Encontra o sprint e adiciona o participante
     begin
-      sprint = Sprint.find(sprint_id)
-      user = User.find(user_id) # TODO: Precisa buscar do banco mesmo?
+      sprint = find_sprint
+      user = find_user # TODO: Precisa buscar do banco mesmo?
 
       sprint.users.append(user)
+
+      redirect_to edit_sprint_path(sprint.id)
     end
 
-    redirect_to edit_sprint_path(sprint_id)
   end
 
   def remove_user
-    sprint_id = params.require(:sprint_id)
-    user_id = params.require(:user_id)
-
     # Encontra o sprint e remove o participante
     begin
-      sprint = Sprint.find(sprint_id)
-      user = User.find(user_id) # TODO: Tem como deletar da associação sem buscar do banco?
+      sprint = find_sprint
+      user = find_user # TODO: Tem como deletar da associação sem buscar do banco?
 
       sprint.users.delete(user)
-    end
 
-    redirect_to edit_sprint_path(sprint_id)
+      redirect_to edit_sprint_path(sprint.id)
+    end
+  end
+
+  private
+
+  def find_sprint
+    Sprint.find(params.require(:sprint_id))
+  end
+
+  def find_user
+    User.find(params.require(:user_id))
   end
 end

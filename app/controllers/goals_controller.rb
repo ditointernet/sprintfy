@@ -11,21 +11,23 @@ class GoalsController < ApplicationController
   end
 
   def destroy
-    goal_id = params.require(:goal_id)
-
-    goal = Goal.find(goal_id)
+    goal = find_goal
     goal.delete
 
     redirect_to edit_sprint_path(id: goal.sprint_id)
   end
 
   def mark_as_complete
-    goal_id = params.require(:goal_id)
-
-    goal = Goal.find(goal_id)
+    goal = find_goal
     goal.completed = true
     goal.save
 
     redirect_to edit_sprint_path(id: goal.sprint_id)
+  end
+
+  private
+
+  def find_goal
+    goal = Goal.find(params.require(:goal_id))
   end
 end
