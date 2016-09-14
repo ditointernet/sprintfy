@@ -46,18 +46,34 @@
               <aside class="menu">
                 <p class="menu-label">SPRINTS</p>
                 <ul class="menu-list">
-                  <li><a href="#">CRIAR SPRINT</a></li>
-                  <li><a href="#">LISTAR SPRINTS</a></li>
+                  <li><%= link_to 'MEUS SPRINTS', :user_sprints %></li>
+                  <li><%= link_to 'CRIAR SPRINT', new_sprint_path %></li>
+                </ul>
+
+                <p class="menu-label">EQUIPES</p>
+                <ul class="menu-list">
+                  <li><%= link_to 'CRIAR EQUIPE', new_squad_path %></li>
                 </ul>
 
                 <p class="menu-label">CONTA</p>
                 <ul class="menu-list">
-                  <li><a href="#">EDITAR CONTA</a></li>
                   <li><%= link_to 'SAIR', :destroy_user_session, method: :delete %></li>
                 </ul>
               </aside>
             </div>
             <div class="column">
+              <% if flash[:notice] %>
+                <div class="container">
+                    <p><%= flash[:notice] %></p>
+                </div>
+              <% end %>
+
+              <% if flash[:error] %>
+                <div class="container">
+                  <p><%= flash[:error] %></p>
+                </div>
+              <% end %>
+
               <%= yield %>
             </div>
           </div>

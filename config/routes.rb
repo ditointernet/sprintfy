@@ -9,4 +9,25 @@ Rails.application.routes.draw do
     post '/entrar', to: 'devise/sessions#create', as: :create_user_session
     delete '/sair', to: 'devise/sessions#destroy', as: :destroy_user_session
   end
+
+  # Squads
+  resources :squads, only: [:new, :create], path: 'equipes', path_names: { new: '/criar' }
+
+  # Sprints
+  resources :sprints, only: [:new, :create, :edit], path: 'sprints', path_names: { new: '/criar', edit: '/' } do
+    member do
+      post '/remover-participante', to: 'sprints#remove_user', as: :remove_user
+      post '/adicionar-participante', to: 'sprints#add_user', as: :add_user
+    end
+  end
+
+  # Goals
+  resources :goals, only: [:create, :destroy], path: 'goals' do
+    member do
+      post '/completar', to: 'goals#mark_as_complete', as: :complete
+    end
+  end
+
+  # User pages
+  get '/meus-sprints', to: 'users/pages#sprints', as: :user_sprints
 end

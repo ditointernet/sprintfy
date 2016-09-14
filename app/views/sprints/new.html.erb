@@ -1,0 +1,31 @@
+<div class="container">
+  <h1 class="title is-2">Novo Sprint</h1>
+
+  <%= form_for @sprint, url: { action: 'create' } do |f| %>
+    <div class="columns">
+      <div class="column is-half">
+        <div class="control">
+          <%= f.label 'Equipe', class: 'label' %>
+          <span class="select">
+            <%= f.select :squad_id, options_from_collection_for_select(@squads, 'id', 'name', @user_squad) %>
+          </span>
+        </div>
+
+        <%= f.label 'Período', class: 'label' %>
+        <div class="control is-horizontal">
+          <div class="control is-grouped">
+            <p class="control is-expanded">
+              <%= f.text_field :start_date, class: 'input sprintfy-date-input', placeholder: 'Início' %>
+            </p>
+
+            <p class="control is-expanded">
+              <%= f.text_field :due_date, class: 'input sprintfy-date-input', placeholder: 'Término' %>
+            </p>
+          </div>
+        </div>
+
+        <%= f.submit 'Criar Sprint', class: 'button is-primary' %>
+      </div>
+    </div>
+  <% end %>
+</div>
