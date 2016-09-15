@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   end
 
   # Squads
-  resources :squads, only: [:new, :create], path: 'equipes', path_names: { new: '/criar' }
+  resources :squads, only: [:new, :create], path: 'equipes', path_names: { new: '/criar' } do
+    collection do
+      get '/', to: 'squads#list'
+    end
+  end
 
   # Sprints
   resources :sprints, only: [:new, :create, :edit], path: 'sprints', path_names: { new: '/criar', edit: '/' } do
