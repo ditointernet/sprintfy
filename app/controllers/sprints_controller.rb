@@ -13,7 +13,7 @@ class SprintsController < ApplicationController
     due_date = DateParser::parse_date_string(sprint_params[:due_date])
 
     squad = Squad.find(sprint_params[:squad_id])
-    sprint = Sprint.new_for_squad(start_date, due_date, squad)
+    sprint = Sprint.create_for_squad(start_date, due_date, squad)
 
     if sprint.save
       redirect_to action: :edit, id: sprint.id
@@ -29,12 +29,12 @@ class SprintsController < ApplicationController
   end
 
   def add_user
-    @sprint.users.append(@user)
+    @sprint.add_user(@user)
     redirect_to_edit_sprint_path
   end
 
   def remove_user
-    @sprint.users.delete(@user)
+    @sprint.remove_user(@user)
     redirect_to_edit_sprint_path
   end
 

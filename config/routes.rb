@@ -28,6 +28,13 @@ Rails.application.routes.draw do
     end
   end
 
+  # Story points
+  resources :story_points, only: [], path: 'story-points', path_names: { edit: '/editar' } do
+    collection do
+      post '/editar', to: 'story_points#edit_expected', as: :edit
+    end
+  end
+
   # User pages
   get '/meus-sprints', to: 'users/pages#sprints', as: :user_sprints
 end

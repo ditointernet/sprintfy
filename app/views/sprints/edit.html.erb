@@ -61,11 +61,12 @@
 
   <div class="sprintfy-sprint-users">
     <strong class="title is-3">Participantes</strong>
-    <table class="table is-bordered sprintfy-sprint-users-table">
+    <table id="sprint-users-table" class="table is-bordered sprintfy-sprint-users-table">
       <thead>
         <tr>
           <th>Nome</th>
           <th>Equipe</th>
+          <th>Story Points</th>
           <th></th>
         </tr>
       </thead>
@@ -74,6 +75,11 @@
           <tr>
             <td><%= user.name_or_email %></td>
             <td><%= user.squad.name %></td>
+            <td>
+              0.0
+              /
+              <%= user.story_points.where(sprint: @sprint).take.expected_value %>
+            </td>
             <td>
               <%= form_tag remove_user_sprint_path, method: :post do %>
                 <%= hidden_field_tag 'sprint_id', @sprint.id %>
@@ -86,23 +92,53 @@
       </tbody>
     </table>
 
-    <div>
-      <a id="show-add-sprint-user-form-btn" href="#">Adicionar Participante</a>
+    <div id="sprint-users-menu">
+      <div><a id="show-add-sprint-user-form-btn" href="#">Adicionar Participante</a></div>
+      <div><a id="show-edit-sprint-story-points-form-btn" href="#">Editar Story Points</a></div>
     </div>
+  </div>
 
-    <div class="sprintfy-add-sprint-user-form is-hidden" %>
-      <%= form_tag add_user_sprint_path, method: :post do %>
-        <%= hidden_field_tag 'sprint_id', @sprint.id %>
+  <div class="sprintfy-add-sprint-user-form is-hidden" %>
+    <%= form_tag add_user_sprint_path, method: :post do %>
+      <%= hidden_field_tag 'sprint_id', @sprint.id %>
 
-        <div class="control">
-          <%= label_tag 'sprint-user', 'Participante', class: 'label' %>
-          <span class="select">
-            <%= select_tag 'user_id', options_from_collection_for_select(@users, 'id', 'name_or_email'), include_blank: true %>
-          </span>
-        </div>
+      <div class="control">
+        <%= label_tag 'sprint-user', 'Participante', class: 'label' %>
+        <span class="select">
+          <%= select_tag 'user_id', options_from_collection_for_select(@users, 'id', 'name_or_email'), include_blank: true %>
+        </span>
+      </div>
 
-        <%= submit_tag 'Adicionar', class: 'button is-dark' %>
-      <% end %>
-    </div>
+      <%= submit_tag 'Adicionar', class: 'button is-dark' %>
+    <% end %>
+  </div>
+
+  <div id="sprintfy-edit-sprint-story-points-form" class="is-hidden">
+    <%= form_tag edit_story_points_path, method: :post do %>
+      <%= hidden_field_tag 'sprint[id]', @sprint.id %>
+
+      <table class="table is-bordered">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Story Points</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @sprint.users.each do |user| %>
+            <tr>
+              <td><%= user.name_or_email %></td>
+              <td>
+                <%= hidden_field_tag "users[][id]", user.id %>
+                <%= number_field_tag "users[][story_points]", '', step: '0.01', style: 'width: 30%', class: 'input', value: user.story_points.where(sprint: @sprint).take.expected_value %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <%= submit_tag 'Salvar', class: 'button is-dark' %>
+    <% end %>
   </div>
 </div>
