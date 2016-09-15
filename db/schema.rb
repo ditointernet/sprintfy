@@ -12,41 +12,42 @@
 
 ActiveRecord::Schema.define(version: 20160914205525) do
 
-  create_table "goals", force: :cascade do |t|
-    t.text     "description"
-    t.boolean  "completed",   default: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+  create_table "goals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.text     "description", limit: 65535
+    t.boolean  "completed",                 default: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.integer  "sprint_id"
-    t.index ["sprint_id"], name: "index_goals_on_sprint_id"
+    t.index ["sprint_id"], name: "index_goals_on_sprint_id", using: :btree
   end
 
-  create_table "sprints", force: :cascade do |t|
+  create_table "sprints", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.date     "start_date"
     t.date     "due_date"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.integer  "squad_id"
     t.integer  "squad_counter"
-    t.index ["squad_id"], name: "index_sprints_on_squad_id"
+    t.index ["squad_id"], name: "index_sprints_on_squad_id", using: :btree
+>>>>>>> master
   end
 
-  create_table "sprints_users", force: :cascade do |t|
+  create_table "sprints_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.integer  "sprint_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["sprint_id"], name: "index_sprints_users_on_sprint_id"
-    t.index ["user_id"], name: "index_sprints_users_on_user_id"
+    t.index ["sprint_id"], name: "index_sprints_users_on_sprint_id", using: :btree
+    t.index ["user_id"], name: "index_sprints_users_on_user_id", using: :btree
   end
 
-  create_table "squads", force: :cascade do |t|
+  create_table "squads", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
@@ -61,9 +62,14 @@ ActiveRecord::Schema.define(version: 20160914205525) do
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
     t.integer  "squad_id"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["squad_id"], name: "index_users_on_squad_id"
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["squad_id"], name: "index_users_on_squad_id", using: :btree
   end
 
+  add_foreign_key "goals", "sprints"
+  add_foreign_key "sprints", "squads"
+  add_foreign_key "sprints_users", "sprints"
+  add_foreign_key "sprints_users", "users"
+  add_foreign_key "users", "squads"
 end
