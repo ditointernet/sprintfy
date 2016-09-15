@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 20160914205525) do
     t.integer  "squad_id"
     t.integer  "squad_counter"
     t.index ["squad_id"], name: "index_sprints_on_squad_id", using: :btree
->>>>>>> master
   end
 
   create_table "sprints_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
