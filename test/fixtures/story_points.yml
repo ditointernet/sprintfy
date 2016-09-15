@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sprint: one
+  user: one
+  expected_value: 
+  value: 
+
+two:
+  sprint: two
+  user: two
+  expected_value: 
+  value: 
