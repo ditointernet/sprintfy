@@ -30,4 +30,5 @@ Rails.application.routes.draw do
 
   # User pages
   get '/meus-sprints', to: 'users/pages#sprints', as: :user_sprints
+  get '/usuarios', to: 'users/pages#list', as: :users_list
 end
