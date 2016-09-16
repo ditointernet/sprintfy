@@ -1,7 +1,8 @@
 class SprintsController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_sprint, only: [:add_user, :remove_user, :edit]
+  before_action :load_sprint, only: [:add_user, :remove_user, :edit, :closing, :close]
   before_action :load_user, only: [:add_user, :remove_user]
+
 
   def new
     @sprint = Sprint.new
@@ -38,10 +39,28 @@ class SprintsController < ApplicationController
     redirect_to_edit_sprint_path
   end
 
+  def closing
+  end
+
+  def close
+    users_params.each do |user_params|
+      user_params.permit([:id, :story_points])
+
+      user = User.find(user_params[:id])
+      @sprint.update_user_story_points(user, user_params[:story_points])
+    end
+
+    redirect_to_edit_sprint_path
+  end
+
   private
 
   def sprint_params
     params.require(:sprint).permit([:start_date, :due_date, :squad_id])
+  end
+
+  def users_params
+    params.require(:users)
   end
 
   def load_sprint

@@ -15,7 +15,7 @@ class Sprint < ApplicationRecord
 
   def add_user(user)
     self.users.append(user)
-    
+
     user_story_point = StoryPoint.create(sprint: self, user: user)
     self.story_points.append(user_story_point)
   end
@@ -27,5 +27,9 @@ class Sprint < ApplicationRecord
 
   def update_user_expected_story_points(user, points)
     self.story_points.where(user: user).update(expected_value: points)
+  end
+
+  def update_user_story_points(user, points)
+    self.story_points.where(user: user).update(value: points)
   end
 end

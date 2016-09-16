@@ -3,6 +3,10 @@
   <h1 class="title is-2">Equipe <%= @sprint.squad.name %></h1>
   <h2 class="subtitle"><%= format_date @sprint.start_date %> a <%= format_date @sprint.due_date %></h2>
 
+  <div>
+    <%= link_to 'Finalizar', closing_sprint_path(id: @sprint.id), class: 'button is-dark' %>
+  </div>
+
   <div class="sprintfy-sprint-goals">
     <strong class="title is-3">Goals</strong>
 

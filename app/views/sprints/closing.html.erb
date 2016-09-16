@@ -1,0 +1,28 @@
+<div class="container">
+  <h1 class="title is-2">Finalizar Sprint</h1>
+
+  <%= form_tag close_sprint_path, method: :post do %>
+    <table class="table is-bordered">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Story Points</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @sprint.users.each do |user| %>
+          <tr>
+            <td><%= user.name_or_email %></td>
+            <td>
+              <%= hidden_field_tag "users[][id]", user.id %>
+              <%= number_field_tag "users[][story_points]", '', step: '0.1', style: 'width: 30%', class: 'input', value: '0' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <%= submit_tag 'Finalizar', class: 'button is-primary' %>
+  <% end %>
+</div>
