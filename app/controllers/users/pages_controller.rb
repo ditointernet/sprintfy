@@ -22,6 +22,9 @@ class Users::PagesController < ApplicationController
     @sprints = current_user.sprints.order(start_date: :desc)
   end
 
+  def list
+    @users = User.order(name: :asc)
+  end
 
   private
 
