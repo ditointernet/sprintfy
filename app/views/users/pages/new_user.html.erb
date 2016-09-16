@@ -1,0 +1,33 @@
+<div class="container">
+  <h1 class="title is-2">Novo Usuário</h1>
+
+  <div class="columns">
+    <div class="column is-one-third">
+      <%= form_for @user, url: create_user_path do |f| %>
+        <%= f.label 'Nome', class: 'label' %>
+        <p class="control">
+          <%= f.text_field :name, class: 'input' %>
+        </p>
+
+        <div class="control">
+          <%= f.label 'Equipe', class: 'label' %>
+          <span class="select">
+            <%= f.select :squad_id, options_from_collection_for_select(@squads, 'id', 'name') %>
+          </span>
+        </div>
+
+        <%= f.label 'E-mail', class: 'label' %>
+        <p class="control">
+          <%= f.text_field :email, class: 'input' %>
+        </p>
+
+        <%= f.label 'Senha', class: 'label' %>
+        <p class="control">
+          <%= f.password_field :password, class: 'input' %>
+        </p>
+
+        <%= f.submit 'Criar Usuário', class: 'button is-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -29,5 +29,7 @@ Rails.application.routes.draw do
   end
 
   # User pages
+  get '/adicionar-usuario', to: 'users/pages#new_user', as: :new_user
+  post '/adicionar-usuario', to: 'users/pages#create_user', as: :create_user
   get '/meus-sprints', to: 'users/pages#sprints', as: :user_sprints
 end
