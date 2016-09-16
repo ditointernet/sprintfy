@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sprint: one
+  name: MyString
+  text: MyText
+
+two:
+  sprint: two
+  name: MyString
+  text: MyText

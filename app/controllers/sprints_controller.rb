@@ -40,6 +40,8 @@ class SprintsController < ApplicationController
   end
 
   def closing
+    @did_right_text = @sprint.report_text('did_right')
+    @did_wrong_text = @sprint.report_text('did_wrong')
   end
 
   def close
@@ -49,6 +51,9 @@ class SprintsController < ApplicationController
       user = User.find(user_params[:id])
       @sprint.update_user_story_points(user, user_params[:story_points])
     end
+
+    SprintReport.create(did_right_sprint_report_params.merge(name: 'did_right', sprint: @sprint))
+    SprintReport.create(did_wrong_sprint_report_params.merge(name: 'did_wrong', sprint: @sprint))
 
     @sprint.update(closed: true)
 
@@ -63,6 +68,14 @@ class SprintsController < ApplicationController
 
   def users_params
     params.require(:users)
+  end
+
+  def did_right_sprint_report_params
+    params.require(:did_right_sprint_report).permit([:text])
+  end
+
+  def did_wrong_sprint_report_params
+    params.require(:did_wrong_sprint_report).permit([:text])
   end
 
   def load_sprint
