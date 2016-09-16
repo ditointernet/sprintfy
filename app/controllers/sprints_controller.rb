@@ -50,6 +50,8 @@ class SprintsController < ApplicationController
       @sprint.update_user_story_points(user, user_params[:story_points])
     end
 
+    @sprint.update(closed: true)
+
     redirect_to_edit_sprint_path
   end
 
