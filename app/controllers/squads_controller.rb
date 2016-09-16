@@ -17,7 +17,7 @@ class SquadsController < ApplicationController
     end
   end
 
-  def list
+  def index
     @squads = Squad.order(name: :asc)
   end
 end
