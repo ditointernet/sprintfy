@@ -41,6 +41,13 @@
           </div>
         </div>
 
+        <div class="control">
+          <%= label_tag 'what_to_change_sprint_report[text]', 'O que mudar?', class: 'label' %>
+          <div class="control">
+            <%= text_area 'what_to_change_sprint_report', 'text', class: 'textarea', value: @what_to_change_text %>
+          </div>
+        </div>
+
         <%= submit_tag 'Finalizar', class: 'button is-primary' %>
       <% end %>
     </div>

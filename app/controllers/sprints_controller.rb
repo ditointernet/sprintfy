@@ -42,6 +42,7 @@ class SprintsController < ApplicationController
   def closing
     @did_right_text = @sprint.report_text('did_right')
     @did_wrong_text = @sprint.report_text('did_wrong')
+    @what_to_change_text = @sprint.report_text('what_to_change')
   end
 
   def close
@@ -54,6 +55,7 @@ class SprintsController < ApplicationController
 
     SprintReport.create(did_right_sprint_report_params.merge(name: 'did_right', sprint: @sprint))
     SprintReport.create(did_wrong_sprint_report_params.merge(name: 'did_wrong', sprint: @sprint))
+    SprintReport.create(what_to_change_sprint_report_params.merge(name: 'what_to_change', sprint: @sprint))
 
     @sprint.update(closed: true)
 
@@ -76,6 +78,10 @@ class SprintsController < ApplicationController
 
   def did_wrong_sprint_report_params
     params.require(:did_wrong_sprint_report).permit([:text])
+  end
+
+  def what_to_change_sprint_report_params
+    params.require(:what_to_change_sprint_report).permit([:text])
   end
 
   def load_sprint
