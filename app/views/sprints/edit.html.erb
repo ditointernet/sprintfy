@@ -136,8 +136,9 @@
   <% end %>
 
   <% unless @sprint.closed %>
+
     <div id="sprintfy-edit-sprint-story-points-form" class="is-hidden">
-      <%= form_tag edit_story_points_path, method: :post do %>
+      <%= form_tag story_points_path, method: :put do %>
         <%= hidden_field_tag 'sprint[id]', @sprint.id %>
 
         <table class="table is-bordered">

@@ -33,10 +33,11 @@ ActiveRecord::Schema.define(version: 20160916170029) do
   create_table "sprints", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.date     "start_date"
     t.date     "due_date"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "squad_id"
-    t.boolean  "closed",     default: false
+    t.boolean  "closed",        default: false
+    t.integer  "squad_counter"
     t.index ["squad_id"], name: "index_sprints_on_squad_id", using: :btree
   end
 

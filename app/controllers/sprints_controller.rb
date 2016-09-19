@@ -16,7 +16,7 @@ class SprintsController < ApplicationController
     squad = Squad.find(sprint_params[:squad_id])
     sprint = Sprint.create_for_squad(start_date, due_date, squad)
 
-    if sprint.save
+    unless sprint.id.nil?
       redirect_to action: :edit, id: sprint.id
     else
       flash[:error] = 'Não foi possível criar o Sprint'
