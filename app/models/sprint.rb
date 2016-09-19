@@ -6,16 +6,17 @@ class Sprint < ApplicationRecord
 
   def self.create_for_squad(start_date, due_date, squad)
     Sprint.create(start_date: start_date, due_date: due_date, squad: squad) do |sprint|
-      # Adiciona os usuários da equipe como participantes do sprint
-      squad.users.each do |user|
-        sprint.add_user(user)
+      Sprint.transaction do
+        squad.users.each do |user|
+          sprint.add_user(user)
+        end
       end
     end
   end
 
   def add_user(user)
     self.users.append(user)
-    
+
     user_story_point = StoryPoint.create(sprint: self, user: user)
     self.story_points.append(user_story_point)
   end
