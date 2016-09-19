@@ -16,4 +16,8 @@ class SquadsController < ApplicationController
       redirect_to new_squad_path
     end
   end
+
+  def index
+    @squads = Squad.order(name: :asc)
+  end
 end

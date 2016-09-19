@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20160914205525) do
+=======
+ActiveRecord::Schema.define(version: 20160916170029) do
+>>>>>>> master
 
   create_table "goals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text     "description", limit: 65535
@@ -21,13 +25,23 @@ ActiveRecord::Schema.define(version: 20160914205525) do
     t.index ["sprint_id"], name: "index_goals_on_sprint_id", using: :btree
   end
 
+  create_table "sprint_reports", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "sprint_id"
+    t.string   "name"
+    t.text     "text",       limit: 65535
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["sprint_id"], name: "index_sprint_reports_on_sprint_id", using: :btree
+  end
+
   create_table "sprints", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.date     "start_date"
     t.date     "due_date"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.integer  "squad_id"
     t.integer  "squad_counter"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "squad_id"
+    t.boolean  "closed",     default: false
     t.index ["squad_id"], name: "index_sprints_on_squad_id", using: :btree
   end
 
@@ -44,6 +58,17 @@ ActiveRecord::Schema.define(version: 20160914205525) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "story_points", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "sprint_id"
+    t.integer  "user_id"
+    t.float    "expected_value", limit: 24, default: 0.0
+    t.float    "value",          limit: 24, default: 0.0
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.index ["sprint_id"], name: "index_story_points_on_sprint_id", using: :btree
+    t.index ["user_id"], name: "index_story_points_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -67,8 +92,11 @@ ActiveRecord::Schema.define(version: 20160914205525) do
   end
 
   add_foreign_key "goals", "sprints"
+  add_foreign_key "sprint_reports", "sprints"
   add_foreign_key "sprints", "squads"
   add_foreign_key "sprints_users", "sprints"
   add_foreign_key "sprints_users", "users"
+  add_foreign_key "story_points", "sprints"
+  add_foreign_key "story_points", "users"
   add_foreign_key "users", "squads"
 end

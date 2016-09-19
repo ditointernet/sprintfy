@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   end
 
   # Squads
-  resources :squads, only: [:new, :create], path: 'equipes', path_names: { new: '/criar' }
+  resources :squads, only: [:index, :new, :create], path: 'equipes', path_names: { new: '/criar' }
 
   # Sprints
   resources :sprints, only: [:new, :create, :edit], path: 'sprints', path_names: { new: '/criar', edit: '/' } do
@@ -29,5 +29,8 @@ Rails.application.routes.draw do
   end
 
   # User pages
+  get '/adicionar-usuario', to: 'users/pages#new_user', as: :new_user
+  post '/adicionar-usuario', to: 'users/pages#create_user', as: :create_user
   get '/meus-sprints', to: 'users/pages#sprints', as: :user_sprints
+  get '/usuarios', to: 'users/pages#list', as: :users_list
 end
