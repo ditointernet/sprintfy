@@ -114,7 +114,7 @@
   </div>
 
   <div id="sprintfy-edit-sprint-story-points-form" class="is-hidden">
-    <%= form_tag edit_story_points_path, method: :post do %>
+    <%= form_tag story_points_path, method: :put do %>
       <%= hidden_field_tag 'sprint[id]', @sprint.id %>
 
       <table class="table is-bordered">
@@ -131,7 +131,7 @@
               <td><%= user.name_or_email %></td>
               <td>
                 <%= hidden_field_tag "users[][id]", user.id %>
-                <%= number_field_tag "users[][story_points]", '', step: '0.01', style: 'width: 30%', class: 'input', value: user.story_points.where(sprint: @sprint).take.expected_value %>
+                <%= number_field_tag "users[][expected_story_points]", '', step: '0.01', style: 'width: 30%', class: 'input', value: user.story_points.where(sprint: @sprint).take.expected_value %>
               </td>
             </tr>
           <% end %>

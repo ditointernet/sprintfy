@@ -29,9 +29,10 @@ Rails.application.routes.draw do
   end
 
   # Story points
-  resources :story_points, only: [], path: 'story-points', path_names: { edit: '/editar' } do
+  resources :story_points, only: [], path: 'story-points' do
     collection do
-      post '/editar', to: 'story_points#edit_expected', as: :edit
+      put :update
+      patch :update
     end
   end
 
