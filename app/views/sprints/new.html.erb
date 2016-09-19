@@ -1,9 +1,9 @@
 <div class="container">
   <h1 class="title is-2">Novo Sprint</h1>
 
-  <%= form_for @sprint, url: { action: 'create' } do |f| %>
-    <div class="columns">
-      <div class="column is-half">
+  <div class="columns">
+    <div class="column is-half">
+      <%= form_for @sprint, url: { action: 'create' } do |f| %>
         <div class="control">
           <%= f.label 'Equipe', class: 'label' %>
           <span class="select">
@@ -25,7 +25,25 @@
         </div>
 
         <%= f.submit 'Criar Sprint', class: 'button is-primary' %>
-      </div>
+      <% end %>
     </div>
-  <% end %>
+
+    <div class="column">
+      <% @squads.each do |squad| %>
+        <div id="what-to-change-<%= squad.id %>" class="is-hidden what-to-change-box">
+          <% if @squads_what_to_change_texts[squad.id] %>
+            <div class="box sprintfy-what-to-change">
+              <div class="title is-5">O que mudar nesse sprint?</div>
+
+              <div class="subtitle is-6">
+                texto do sprint #<%= @squads_what_to_change_texts[squad.id][:sprint_number] %>
+              </div>
+
+              <div class="text"><%= @squads_what_to_change_texts[squad.id][:text] %></div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>

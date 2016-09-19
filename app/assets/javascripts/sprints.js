@@ -20,3 +20,20 @@ $(function() {
     $('#sprintfy-edit-sprint-story-points-form').removeClass('is-hidden');
   });
 });
+
+
+$(function() {
+  function showWhatToChangeBox() {
+    var squadId = $('#sprint_squad_id').val();
+
+    $('.what-to-change-box').addClass('is-hidden');
+    $('#what-to-change-' + squadId).removeClass('is-hidden');
+  }
+
+  $('#sprint_squad_id').on('change', function(event) {
+    event.preventDefault();
+    showWhatToChangeBox();
+  });
+
+  showWhatToChangeBox();
+});

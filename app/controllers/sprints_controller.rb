@@ -8,6 +8,18 @@ class SprintsController < ApplicationController
   def new
     @sprint = Sprint.new
     @squads = Squad.order(name: :asc)
+    @squads_what_to_change_texts = {}
+
+    @squads.each do |squad|
+      last_sprint = squad.sprints.where(closed: true).order(squad_counter: :desc).first
+
+      if last_sprint
+        @squads_what_to_change_texts[squad.id] = {
+          sprint_number: last_sprint.squad_counter,
+          text: last_sprint.report_text('what_to_change')
+        }
+      end
+    end
   end
 
   def create
