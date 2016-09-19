@@ -2,6 +2,7 @@ class SprintsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_sprint, only: [:add_user, :remove_user, :edit, :closing, :close]
   before_action :load_user, only: [:add_user, :remove_user]
+  before_action :load_sprint_report_texts, only: [:closing, :edit]
 
 
   def new
@@ -40,9 +41,6 @@ class SprintsController < ApplicationController
   end
 
   def closing
-    @did_right_text = @sprint.report_text('did_right')
-    @did_wrong_text = @sprint.report_text('did_wrong')
-    @what_to_change_text = @sprint.report_text('what_to_change')
   end
 
   def close
@@ -91,6 +89,12 @@ class SprintsController < ApplicationController
 
   def load_user
     @user = User.find(params[:user_id])
+  end
+
+  def load_sprint_report_texts
+    @did_right_text = @sprint.report_text('did_right')
+    @did_wrong_text = @sprint.report_text('did_wrong')
+    @what_to_change_text = @sprint.report_text('what_to_change')
   end
 
   def redirect_to_edit_sprint_path

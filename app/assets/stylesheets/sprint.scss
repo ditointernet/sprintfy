@@ -7,7 +7,7 @@
 }
 
 .sprintfy-sprint-goals {
-  margin: 50px 0;
+  margin: 40px 0;
 }
 
 .sprintfy-sprint-goal.incomplete {
@@ -19,4 +19,20 @@
 
 .sprintfy-sprint-goal.complete {
   background-color: #dfffdf;
+}
+
+.sprintfy-sprint-reports {
+  .report {
+    .title {
+      font-size: 16px;
+      font-weight: 700;
+
+      margin-bottom: 10px;
+    }
+
+    .text {
+      margin-bottom: 20px;
+      color: black;
+    }
+  }
 }

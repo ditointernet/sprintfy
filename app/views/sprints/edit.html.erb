@@ -9,6 +9,31 @@
     </div>
   <% end %>
 
+  <% if @sprint.closed %>
+    <div class="sprintfy-sprint-reports box">
+      <div class="report">
+        <div class="title">O que deu certo?</div>
+        <div class="text">
+          <%= @did_right_text %>
+        </div>
+      </div>
+
+      <div class="report">
+        <div class="title">O que deu errado?</div>
+        <div class="text">
+          <%= @did_wrong_text %>
+        </div>
+      </div>
+
+      <div class="report">
+        <div class="title">O que mudar?</div>
+        <div class="text">
+          <%= @what_to_change_text %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
   <div class="sprintfy-sprint-goals">
     <div style="margin-bottom: 10px;">
       <strong class="title is-3">Goals</strong>
