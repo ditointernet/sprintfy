@@ -13,8 +13,11 @@
   .sprintfy-sprint-goal {
     margin: 20px 0;
     border: none !important;
+
+    background-color: #ffffdf;
   }
 
   .sprintfy-sprint-goal.goal-complete {
+    background-color: #dfffdf;
   }
 }
