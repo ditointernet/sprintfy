@@ -4,10 +4,17 @@ class StoryPointsController < ApplicationController
 
   def update
     users_params.each do |user_params|
-      user_params.permit([:id, :expected_story_points])
+      user_params.permit([:id, :story_points, :expected_story_points])
 
       user = User.find(user_params[:id])
-      @sprint.update_user_expected_story_points(user, user_params[:expected_story_points])
+
+      if user_params[:expected_story_points]
+        @sprint.update_user_expected_story_points(user, user_params[:expected_story_points])
+      end
+
+      if user_params[:story_points]
+        @sprint.update_user_story_points(user, user_params[:story_points])
+      end
     end
 
     redirect_to_edit_sprint_path
