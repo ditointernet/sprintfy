@@ -6,6 +6,12 @@ class Sprint < ApplicationRecord
   has_many :sprint_reports
 
 
+  # Calcula qual o número do sprint dentro da equipe
+  before_create do
+    self.squad_counter = Sprint.where(squad: self.squad).count + 1
+  end
+
+
   def self.create_for_squad(start_date, due_date, squad)
     Sprint.create(start_date: start_date, due_date: due_date, squad: squad) do |sprint|
       Sprint.transaction do
