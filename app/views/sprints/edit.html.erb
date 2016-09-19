@@ -155,7 +155,7 @@
                 <td><%= user.name_or_email %></td>
                 <td>
                   <%= hidden_field_tag "users[][id]", user.id %>
-                  <%= number_field_tag "users[][story_points]", '', step: '0.01', style: 'width: 30%', class: 'input', value: user.story_points.where(sprint: @sprint).take.expected_value %>
+                  <%= number_field_tag "users[][expected_story_points]", '', step: '0.01', style: 'width: 30%', class: 'input', value: user.story_points.where(sprint: @sprint).take.expected_value %>
                 </td>
               </tr>
             <% end %>
