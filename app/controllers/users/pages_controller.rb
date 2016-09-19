@@ -19,7 +19,7 @@ class Users::PagesController < ApplicationController
   end
 
   def sprints
-    @sprints = current_user.sprints.order(start_date: :desc)
+    @sprints = current_user.sprints.order(squad_counter: :desc)
   end
 
   def list

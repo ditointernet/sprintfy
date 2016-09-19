@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
+ActiveRecord::Schema.define(version: 20160914205525) do
+=======
 ActiveRecord::Schema.define(version: 20160916170029) do
+>>>>>>> master
 
   create_table "goals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text     "description", limit: 65535
@@ -33,6 +37,7 @@ ActiveRecord::Schema.define(version: 20160916170029) do
   create_table "sprints", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.date     "start_date"
     t.date     "due_date"
+    t.integer  "squad_counter"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.integer  "squad_id"
