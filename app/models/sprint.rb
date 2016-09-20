@@ -11,8 +11,8 @@ class Sprint < ApplicationRecord
 
 
   def self.create_for_squad(start_date, due_date, squad)
-    Sprint.create(start_date: start_date, due_date: due_date, squad: squad) do |sprint|
-      Sprint.transaction do
+    ActiveRecord::Base.transation do
+      Sprint.create(start_date: start_date, due_date: due_date, squad: squad) do |sprint|
         squad.users.each do |user|
           sprint.add_user(user)
         end
