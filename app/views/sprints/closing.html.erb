@@ -20,7 +20,7 @@
                 <td><%= user.name_or_email %></td>
                 <td>
                   <%= hidden_field_tag "users[][id]", user.id %>
-                  <%= number_field_tag "users[][story_points]", '', step: '0.1', style: 'width: 30%', class: 'input', value: '0' %>
+                  <%= number_field_tag "users[][story_points]", '', step: '0.01', style: 'width: 30%', class: 'input', value: '0' %>
                 </td>
               </tr>
             <% end %>
