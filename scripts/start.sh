@@ -1,9 +1,9 @@
-#! /bin/sh
+#! /bin/bash
 
-if [ $RAILS_ENV == "development" ]; then
+if [ "$RAILS_ENV" == "development" ]; then
   # Espera o servidor do MySQL responder
   until $(curl --output /dev/null --silent --head --fail http://mysql:3306); do
-      sleep 1
+    sleep 1
   done
 fi
 
@@ -11,7 +11,7 @@ fi
 bundle exec rails db:create
 bundle exec rails db:migrate
 # Precompile
-if [ $RAILS_ENV == "production" ]; then
+if [ "$RAILS_ENV" == "production" ]; then
   rails assets:precompile
 fi
 # Liga o server

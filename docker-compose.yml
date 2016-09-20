@@ -7,7 +7,7 @@ services:
 
   web:
     build: .
-    command: bash ./scripts/start.sh
+    command: scripts/start.sh
     ports:
       - "3000:80"
     volumes:
