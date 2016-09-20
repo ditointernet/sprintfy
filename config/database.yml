@@ -21,4 +21,6 @@ test:
 
 production:
   <<: *default
-  database: production
+  database: sprintfy
+  host: <%= ENV['WEB_DATABASE_HOST'] %>
+  port: <%= ENV['WEB_DATABASE_PORT'] %>

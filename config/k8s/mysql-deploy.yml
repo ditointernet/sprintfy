@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sprintfy-mysql
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: sprintfy-mysql
+    spec:
+      containers:
+      - name: sprintfy-mysql
+        image: mysql:latest
+        ports:
+        - containerPort: 3306
+        env:
+          - name: MYSQL_ALLOW_EMPTY_PASSWORD
+            value: '1'
+        volumeMounts:
+          - name: sprintfy-mysql-persistent-storage
+            mountPath: /data/db
+      volumes:
+        - name: sprintfy-mysql-persistent-storage
+          awsElasticBlockStore:
+           volumeID: aws://us-east-1d/vol-fc297d50
+           fsType: ext4

@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sprintfy-frontend
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: sprintfy-frontend
+    spec:
+      containers:
+      - name: sprintfy-frontend
+        image: ditointernet/sprintfy:v1.0.4
+        command:
+          - "/bin/bash"
+          - "-c"
+          - "scripts/start.sh"
+        ports:
+        - containerPort: 80
+        env:
+          - name: RAILS_ENV
+            value: production
+          - name: SECRET_KEY_BASE
+            value: c2980c8d657ba6e6ea07dbc327523ee48e63b1cce5858334b3d43791c9d169f34f0a2b292a979c103b928f2848fa699ee5bf44ca463107b5fb51924d16bc1802
+          - name: WEB_DATABASE_PORT
+            value: '3306'
+          - name: WEB_DATABASE_HOST
+            value: 'sprintfy-mysql'
+          - name: MYSQL_ALLOW_EMPTY_PASSWORD
+            value: '1'
+          - name: RAILS_SERVE_STATIC_FILES
+            value: 'true'
