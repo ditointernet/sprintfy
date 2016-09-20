@@ -1,19 +1,26 @@
 <div class="container">
   <h1 class="title is-2">Meus Sprints</h1>
+  <table class="table is-bordered">
+    <thead>
+      <tr>
+        <th>Equipe</th>
+        <th>Nome</th>
+        <th>Data inicio</th>
+        <th>Data fim</th>
+        <th></th>
+      </tr>
+    </thead>
 
-  <% @sprints.each do |sprint| %>
-    <div class="sprintfy-user-sprint">
-      <div>
-        <span>Equipe <%= sprint.squad.name %></span>
-      </div>
-      <div>
-        <span class="counter">#<%= sprint.squad_counter %></span>
-        de
-        <span class="date"><%= format_date sprint.start_date %></span>
-        a
-        <span class="date"><%= format_date sprint.due_date %></span>
-      </div>
-      <%= link_to 'Ver', edit_sprint_path(id: sprint.id) %>
-    </div>
-  <% end %>
+    <tbody>
+      <% @sprints.each do |sprint| %>
+        <tr>
+          <td><%= sprint.squad.name %></td>
+          <td><%= sprint.squad_counter %></td>
+          <td><%= format_date(sprint.start_date) %></td>
+          <td><%= format_date(sprint.due_date) %></td>
+          <td><%= link_to 'Ver', edit_sprint_path(id: sprint.id) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
