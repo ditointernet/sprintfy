@@ -8,6 +8,7 @@ class SprintsController < ApplicationController
   def new
     @sprint = Sprint.new
     @squads = Squad.order(name: :asc)
+    @user_squad = current_user.squad_id
     @squads_what_to_change_texts = {}
 
     @squads.each do |squad|
