@@ -13,14 +13,43 @@
 }
 
 .sprintfy-sprint-goals {
-  margin: 50px 0;
+  margin: 40px 0;
+}
 
+.sprintfy-sprint-goal.incomplete {
+  margin: 20px 0;
+  border: none !important;
 
-  .sprintfy-sprint-goal {
-    margin: 20px 0;
-    border: none !important;
+  background-color: #ffffdf;
+}
+
+.sprintfy-sprint-goal.complete {
+  background-color: #dfffdf;
+}
+
+.sprintfy-sprint-reports {
+  .report {
+    .title {
+      font-size: 16px;
+      font-weight: 700;
+
+      margin-bottom: 10px;
+    }
+
+    .text {
+      margin-bottom: 20px;
+      color: black;
+    }
+  }
+}
+
+.sprintfy-what-to-change {
+  .title {
+    font-weight: 700;
   }
 
-  .sprintfy-sprint-goal.goal-complete {
+  .text {
+    color: black;
+    font-size: 16px;
   }
 }

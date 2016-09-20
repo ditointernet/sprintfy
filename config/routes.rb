@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   # Sprints
   resources :sprints, only: [:new, :create, :edit], path: 'sprints', path_names: { new: '/criar', edit: '/' } do
     member do
+      get '/fechar', to: 'sprints#closing', as: :closing
+      post '/fechar', to: 'sprints#close', as: :close
+
       post '/remover-participante', to: 'sprints#remove_user', as: :remove_user
       post '/adicionar-participante', to: 'sprints#add_user', as: :add_user
     end

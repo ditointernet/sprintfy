@@ -1,8 +1,10 @@
 class Sprint < ApplicationRecord
   belongs_to :squad
-  has_and_belongs_to_many :users, -> { uniq }
+  has_and_belongs_to_many :users, -> { distinct }
   has_many :goals
   has_many :story_points
+  has_many :sprint_reports
+
 
   # Calcula qual o número do sprint dentro da equipe
   before_create do
@@ -34,5 +36,19 @@ class Sprint < ApplicationRecord
 
   def update_user_expected_story_points(user, points)
     self.story_points.where(user: user).update(expected_value: points)
+  end
+
+  def update_user_story_points(user, points)
+    self.story_points.where(user: user).update(value: points)
+  end
+
+  def report_text(report_name)
+    report = self.sprint_reports.where(name: report_name).take
+
+    if report
+      report.text
+    else
+      ''
+    end
   end
 end
