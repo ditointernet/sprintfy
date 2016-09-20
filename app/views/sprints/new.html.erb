@@ -39,7 +39,7 @@
                 texto do sprint #<%= @squads_what_to_change_texts[squad.id][:sprint_number] %>
               </div>
 
-              <div class="text"><%= @squads_what_to_change_texts[squad.id][:text] %></div>
+              <div class="text"><%= simple_format @squads_what_to_change_texts[squad.id][:text] %></div>
             </div>
           <% end %>
         </div>
