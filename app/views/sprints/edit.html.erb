@@ -6,11 +6,44 @@
   </h1>
   <h2 class="subtitle"><%= format_date @sprint.start_date %> a <%= format_date @sprint.due_date %></h2>
 
+  <% unless @sprint.closed %>
+    <div>
+      <%= link_to 'Finalizar', closing_sprint_path(id: @sprint.id), class: 'button is-dark' %>
+    </div>
+  <% end %>
+
+  <% if @sprint.closed %>
+    <div class="sprintfy-sprint-reports box">
+      <div class="report">
+        <div class="title">O que deu certo?</div>
+        <div class="text">
+          <%= @did_right_text %>
+        </div>
+      </div>
+
+      <div class="report">
+        <div class="title">O que deu errado?</div>
+        <div class="text">
+          <%= @did_wrong_text %>
+        </div>
+      </div>
+
+      <div class="report">
+        <div class="title">O que mudar?</div>
+        <div class="text">
+          <%= @what_to_change_text %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
   <div class="sprintfy-sprint-goals">
-    <strong class="title is-3">Goals</strong>
+    <div style="margin-bottom: 10px;">
+      <strong class="title is-3">Goals</strong>
+    </div>
 
     <% @sprint.goals.each_with_index do |goal, i| %>
-      <div class="box sprintfy-sprint-goal <%= 'goal-complete' if goal.completed %>">
+      <div class="box sprintfy-sprint-goal <%= if goal.completed then 'complete' else 'incomplete' end %>">
         <div class="media">
           <div class="media-content">
             <div class="content">
@@ -31,45 +64,53 @@
               </div>
             </nav>
           </div>
-          <div class="media-right">
-            <%= form_tag goal_path(id: goal.id), method: :delete do %>
-              <button type="submit" class="delete"></button>
+          <% unless goal.completed || @sprint.closed %>
+            <div class="media-right">
+              <%= form_tag goal_path(id: goal.id), method: :delete do %>
+                <button type="submit" class="delete"></button>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% unless @sprint.closed %>
+      <div>
+        <a id="show-add-goal-form-btn" href="#">Adicionar Goal</a>
+      </div>
+
+      <div class="sprintfy-add-goal-form is-hidden">
+        <div class="columns">
+          <div class="column is-one-third">
+            <%= form_for @sprint_goal, url: goals_path do |f| %>
+              <%= f.hidden_field :sprint_id %>
+
+              <%= f.label 'Descrição', class: 'label' %>
+              <div class="control">
+                <%= f.text_field :description, class: 'input' %>
+              </div>
+
+              <%= f.submit 'Criar Goal', class: 'button is-dark' %>
             <% end %>
           </div>
         </div>
       </div>
     <% end %>
-
-    <div>
-      <a id="show-add-goal-form-btn" href="#">Adicionar Goal</a>
-    </div>
-
-    <div class="sprintfy-add-goal-form is-hidden">
-      <div class="columns">
-        <div class="column is-one-third">
-          <%= form_for @sprint_goal, url: goals_path do |f| %>
-            <%= f.hidden_field :sprint_id %>
-
-            <%= f.label 'Descrição', class: 'label' %>
-            <div class="control">
-              <%= f.text_field :description, class: 'input' %>
-            </div>
-
-            <%= f.submit 'Criar Goal', class: 'button is-dark' %>
-          <% end %>
-        </div>
-      </div>
-    </div>
   </div>
 
   <div class="sprintfy-sprint-users">
     <strong class="title is-3">Participantes</strong>
-    <table class="table is-bordered sprintfy-sprint-users-table">
+    <table id="sprint-users-table" class="table is-bordered sprintfy-sprint-users-table">
       <thead>
         <tr>
           <th>Nome</th>
           <th>Equipe</th>
-          <th></th>
+          <th>Story Points</th>
+
+          <% unless @sprint.closed %>
+            <th></th>
+          <% end %>
         </tr>
       </thead>
       <tbody>
@@ -78,21 +119,34 @@
             <td><%= user.name_or_email %></td>
             <td><%= user.squad.name %></td>
             <td>
-              <%= form_tag remove_user_sprint_path, method: :post do %>
-                <%= hidden_field_tag 'sprint_id', @sprint.id %>
-                <%= hidden_field_tag 'user_id', user.id %>
-                <%= submit_tag 'remover', class: 'button' %>
-              <% end %>
+              <%= user.story_points.where(sprint: @sprint).take.value %>
+              /
+              <%= user.story_points.where(sprint: @sprint).take.expected_value %>
             </td>
+
+            <% unless @sprint.closed %>
+              <td>
+                <%= form_tag remove_user_sprint_path, method: :post do %>
+                  <%= hidden_field_tag 'sprint_id', @sprint.id %>
+                  <%= hidden_field_tag 'user_id', user.id %>
+                  <%= submit_tag 'remover', class: 'button' %>
+                <% end %>
+              </td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
     </table>
 
-    <div>
-      <a id="show-add-sprint-user-form-btn" href="#">Adicionar Participante</a>
+    <div id="sprint-users-menu">
+      <% unless @sprint.closed %>
+        <div><a id="show-add-sprint-user-form-btn" href="#">Adicionar Participante</a></div>
+      <% end %>
+      <div><a id="show-edit-sprint-story-points-form-btn" href="#">Editar Story Points</a></div>
     </div>
+  </div>
 
+  <% unless @sprint.closed %>
     <div class="sprintfy-add-sprint-user-form is-hidden" %>
       <%= form_tag add_user_sprint_path, method: :post do %>
         <%= hidden_field_tag 'sprint_id', @sprint.id %>
@@ -107,5 +161,65 @@
         <%= submit_tag 'Adicionar', class: 'button is-dark' %>
       <% end %>
     </div>
-  </div>
+  <% end %>
+
+  <% unless @sprint.closed %>
+    <div id="sprintfy-edit-sprint-story-points-form" class="is-hidden">
+      <%= form_tag story_points_path, method: :put do %>
+        <%= hidden_field_tag 'sprint[id]', @sprint.id %>
+
+        <table class="table is-bordered">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Story Points</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @sprint.users.each do |user| %>
+              <tr>
+                <td><%= user.name_or_email %></td>
+                <td>
+                  <%= hidden_field_tag "users[][id]", user.id %>
+                  <%= number_field_tag "users[][expected_story_points]", '', step: '0.01', style: 'width: 30%', class: 'input', value: user.story_points.where(sprint: @sprint).take.expected_value %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <%= submit_tag 'Salvar', class: 'button is-dark' %>
+      <% end %>
+    </div>
+  <% else %>
+    <div id="sprintfy-edit-sprint-story-points-form" class="is-hidden">
+      <%= form_tag story_points_path, method: :put do %>
+        <%= hidden_field_tag 'sprint[id]', @sprint.id %>
+
+        <table class="table is-bordered">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Story Points</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @sprint.users.each do |user| %>
+              <tr>
+                <td><%= user.name_or_email %></td>
+                <td>
+                  <%= hidden_field_tag "users[][id]", user.id %>
+                  <%= number_field_tag "users[][story_points]", '', step: '0.01', style: 'width: 30%', class: 'input', value: user.story_points.where(sprint: @sprint).take.value %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+        <%= submit_tag 'Salvar', class: 'button is-dark' %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
