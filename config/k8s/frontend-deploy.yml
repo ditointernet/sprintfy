@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: sprintfy-frontend
-        image: ditointernet/sprintfy:v1.0.4
+        image: ditointernet/sprintfy:v1.0.6
         command:
           - "/bin/bash"
           - "-c"
