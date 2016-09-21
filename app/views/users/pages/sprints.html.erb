@@ -7,17 +7,35 @@
         <th>Nome</th>
         <th>Data inicio</th>
         <th>Data fim</th>
+        <th>SP`s</th>
+        <th>Goals</th>
         <th></th>
       </tr>
     </thead>
 
     <tbody>
       <% @sprints.each do |sprint| %>
-        <tr>
+        <% story_points = sprint.story_points %>
+        <% expected_value = story_points.sum(&:expected_value) %>
+        <% value = story_points.sum(&:value) %>
+        <% goals = sprint.goals %>
+        <% goals_count = goals.count %>
+        <% not_completed = goals.where(completed: false).count %>
+        <% completed = goals.where(completed: true).count %>
+        <% if completed == goals_count %>
+          <% class_name = 'succeded-sprint' %>
+        <% elsif completed / goals_count > 0.8 %>
+          <% class_name = 'partially-succeded-sprint' %>
+        <% else %>
+          <% class_name = 'failed-sprint' %>
+        <% end %>
+        <tr class='<%= class_name %>'>
           <td><%= sprint.squad.name %></td>
           <td><%= sprint.squad_counter %></td>
           <td><%= format_date(sprint.start_date) %></td>
           <td><%= format_date(sprint.due_date) %></td>
+          <td><%= value %> / <%= expected_value %> (<%= expected_value.to_i > 0 ? (value / expected_value * 100).round(2) : 0 %>)%</td>
+          <td><%= not_completed %> / <%= completed %> (<%= not_completed.to_i > 0 ? (completed / not_completed * 100).round(2) : 0 %>)%</td>
           <td><%= link_to 'Ver', edit_sprint_path(id: sprint.id) %></td>
         </tr>
       <% end %>
