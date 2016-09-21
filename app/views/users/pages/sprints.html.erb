@@ -24,7 +24,7 @@
         <% completed = goals.where(completed: true).count %>
         <% if completed == goals_count %>
           <% class_name = 'succeded-sprint' %>
-        <% elsif completed / goals_count > 0.8 %>
+        <% elsif completed / goals_count.to_f > 0.8 %>
           <% class_name = 'partially-succeded-sprint' %>
         <% else %>
           <% class_name = 'failed-sprint' %>
@@ -34,8 +34,8 @@
           <td><%= sprint.squad_counter %></td>
           <td><%= format_date(sprint.start_date) %></td>
           <td><%= format_date(sprint.due_date) %></td>
-          <td><%= value %> / <%= expected_value %> (<%= expected_value.to_i > 0 ? (value / expected_value * 100).round(2) : 0 %>%)</td>
-          <td><%= not_completed %> / <%= completed %> (<%= not_completed.to_i > 0 ? (completed / not_completed * 100).round(2) : 0 %>%)</td>
+          <td><%= value %> / <%= expected_value %> (<%= expected_value.to_i > 0 ? (value / expected_value.to_f * 100).round(2) : 0 %>%)</td>
+          <td><%= completed %> / <%= goals_count %> (<%= goals_count.to_i > 0 ? (not_completed / goals_count.to_f * 100).round(2) : 0 %>%)</td>
           <td><%= link_to 'Ver', edit_sprint_path(id: sprint.id) %></td>
         </tr>
       <% end %>
