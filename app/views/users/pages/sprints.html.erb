@@ -23,7 +23,7 @@
         <% completed = goals.where(completed: true).count %>
         <% if completed == goals_count %>
           <% class_name = 'succeded-sprint' %>
-        <% elsif completed / goals_count.to_f > 0.8 %>
+        <% elsif completed / goals_count.to_f >= 0.8 %>
           <% class_name = 'partially-succeded-sprint' %>
         <% else %>
           <% class_name = 'failed-sprint' %>
