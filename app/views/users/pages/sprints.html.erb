@@ -34,8 +34,8 @@
           <td><%= sprint.squad_counter %></td>
           <td><%= format_date(sprint.start_date) %></td>
           <td><%= format_date(sprint.due_date) %></td>
-          <td><%= value %> / <%= expected_value %> (<%= expected_value.to_i > 0 ? (value / expected_value * 100).round(2) : 0 %>)%</td>
-          <td><%= not_completed %> / <%= completed %> (<%= not_completed.to_i > 0 ? (completed / not_completed * 100).round(2) : 0 %>)%</td>
+          <td><%= value %> / <%= expected_value %> (<%= expected_value.to_i > 0 ? (value / expected_value * 100).round(2) : 0 %>%)</td>
+          <td><%= not_completed %> / <%= completed %> (<%= not_completed.to_i > 0 ? (completed / not_completed * 100).round(2) : 0 %>%)</td>
           <td><%= link_to 'Ver', edit_sprint_path(id: sprint.id) %></td>
         </tr>
       <% end %>
