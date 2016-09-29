@@ -17,7 +17,9 @@
         <header class="nav">
           <div class="container">
             <div class="nav-left">
-              <%= link_to 'SPRINTFY', :root, class: 'nav-item is-brand' %>
+              <%= link_to :root, class: 'nav-item is-brand' do %>
+                <%= image_tag 'logo-sprintfy.png' %>
+              <% end %>
             </div>
 
             <div id="nav-toggle" class="nav-toggle">
