@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  root 'pages#index'
+  # root
+  devise_scope :user do
+    root to: 'devise/sessions#new'
+  end
 
   # Users auth
   devise_for :users, skip: :all
