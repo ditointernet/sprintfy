@@ -40,7 +40,7 @@ class SprintsController < ApplicationController
 
   def edit
     @sprint_goal = Goal.new(sprint: @sprint)
-    @users = User.all
+    @users = User.all.sort {|a, b| a.name_or_email.downcase <=> b.name_or_email.downcase }
   end
 
   def add_user
