@@ -7,8 +7,28 @@
   <h2 class="subtitle"><%= format_date @sprint.start_date %> a <%= format_date @sprint.due_date %></h2>
 
   <% unless @sprint.closed %>
-    <div>
+    <div id="edit-sprint-btns">
+      <a id="show-update-sprint-dates-btn" href="#" class="button">Alterar Período</a>
       <%= link_to 'Finalizar', closing_sprint_path(id: @sprint.id), class: 'button is-dark' %>
+    </div>
+
+    <div id="update-sprint-dates-form" class="is-hidden">
+      <%= form_for @sprint, method: :put do |f| %>
+        <%= f.label 'Período', class: 'label' %>
+        <div class="control is-horizontal">
+          <div class="control is-grouped">
+            <p class="control is-expanded">
+              <%= f.text_field :start_date, class: 'input sprintfy-date-input', placeholder: 'Início' %>
+            </p>
+
+            <p class="control is-expanded">
+              <%= f.text_field :due_date, class: 'input sprintfy-date-input', placeholder: 'Término' %>
+            </p>
+          </div>
+        </div>
+
+        <%= f.submit 'Salvar', class: 'button is-dark' %>
+      <% end %>
     </div>
   <% end %>
 
