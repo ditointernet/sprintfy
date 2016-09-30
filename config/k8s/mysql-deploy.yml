@@ -12,6 +12,9 @@ spec:
       containers:
       - name: sprintfy-mysql
         image: mysql:latest
+        args:
+          - "--ignore-db-dir"
+          - "lost+found"
         ports:
         - containerPort: 3306
         env:
@@ -19,9 +22,9 @@ spec:
             value: '1'
         volumeMounts:
           - name: sprintfy-mysql-persistent-storage
-            mountPath: /data/db
+            mountPath: /var/lib/mysql
       volumes:
         - name: sprintfy-mysql-persistent-storage
           awsElasticBlockStore:
-           volumeID: aws://us-east-1d/vol-fc297d50
+           volumeID: aws://us-east-1d/vol-d9080675
            fsType: ext4
