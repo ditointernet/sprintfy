@@ -1,6 +1,6 @@
 class SprintsController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_sprint, only: [:add_user, :remove_user, :edit, :closing, :close]
+  before_action :load_sprint, only: [:add_user, :remove_user, :edit, :update, :closing, :close]
   before_action :load_user, only: [:add_user, :remove_user]
   before_action :load_sprint_report_texts, only: [:closing, :edit]
 
@@ -41,6 +41,15 @@ class SprintsController < ApplicationController
   def edit
     @sprint_goal = Goal.new(sprint: @sprint)
     @users = User.all.sort {|a, b| a.name_or_email.downcase <=> b.name_or_email.downcase }
+  end
+
+  def update
+    start_date = DateParser::parse_date_string(sprint_params[:start_date])
+    due_date = DateParser::parse_date_string(sprint_params[:due_date])
+
+    @sprint.update_columns(start_date: start_date, due_date: due_date)
+
+    redirect_to_edit_sprint_path
   end
 
   def add_user

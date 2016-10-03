@@ -5,8 +5,6 @@ class Sprint < ApplicationRecord
   has_many :story_points
   has_many :sprint_reports
 
-
-  # Calcula qual o número do sprint dentro da equipe
   before_create do
     self.squad_counter = Sprint.where(squad: self.squad).count + 1
   end
