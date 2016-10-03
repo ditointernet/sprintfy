@@ -13,22 +13,26 @@
     </div>
 
     <div id="update-sprint-dates-form" class="is-hidden">
-      <%= form_for @sprint, method: :put do |f| %>
-        <%= f.label 'Período', class: 'label' %>
-        <div class="control is-horizontal">
-          <div class="control is-grouped">
-            <p class="control is-expanded">
-              <%= f.text_field :start_date, class: 'input sprintfy-date-input', placeholder: 'Início' %>
-            </p>
+      <div class="columns">
+        <div class="column is-half">
+          <%= form_for @sprint, method: :put do |f| %>
+            <%= f.label 'Período', class: 'label' %>
+            <div class="control is-horizontal">
+              <div class="control is-grouped">
+                <p class="control is-expanded">
+                  <%= f.text_field :start_date, value: format_date(@sprint.start_date), class: 'input sprintfy-date-input', placeholder: 'Início' %>
+                </p>
 
-            <p class="control is-expanded">
-              <%= f.text_field :due_date, class: 'input sprintfy-date-input', placeholder: 'Término' %>
-            </p>
-          </div>
+                <p class="control is-expanded">
+                  <%= f.text_field :due_date, value: format_date(@sprint.due_date), class: 'input sprintfy-date-input', placeholder: 'Término' %>
+                </p>
+              </div>
+            </div>
+
+            <%= f.submit 'Salvar', class: 'button is-dark' %>
+          <% end %>
         </div>
-
-        <%= f.submit 'Salvar', class: 'button is-dark' %>
-      <% end %>
+      </div>
     </div>
   <% end %>
 
