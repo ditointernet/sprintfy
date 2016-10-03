@@ -37,3 +37,13 @@ $(function() {
 
   showWhatToChangeBox();
 });
+
+
+$(function() {
+  $('#show-update-sprint-dates-btn').on('click', function(event) {
+    event.preventDefault();
+
+    $('#edit-sprint-btns').addClass('is-hidden');
+    $('#update-sprint-dates-form').removeClass('is-hidden');
+  });
+});

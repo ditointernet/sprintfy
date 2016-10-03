@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  root 'pages#index'
+  # root
+  devise_scope :user do
+    root to: 'devise/sessions#new'
+  end
 
   # Users auth
   devise_for :users, skip: :all
@@ -14,7 +17,7 @@ Rails.application.routes.draw do
   resources :squads, only: [:index, :new, :create], path: 'equipes', path_names: { new: '/criar' }
 
   # Sprints
-  resources :sprints, only: [:new, :create, :edit], path: 'sprints', path_names: { new: '/criar', edit: '/' } do
+  resources :sprints, only: [:new, :create, :edit, :update], path: 'sprints', path_names: { new: '/criar', edit: '/', update: '/editar' } do
     member do
       get '/fechar', to: 'sprints#closing', as: :closing
       post '/fechar', to: 'sprints#close', as: :close

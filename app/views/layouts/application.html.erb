@@ -17,7 +17,9 @@
         <header class="nav">
           <div class="container">
             <div class="nav-left">
-              <%= link_to 'SPRINTFY', :root, class: 'nav-item is-brand' %>
+              <%= link_to :root, class: 'nav-item is-brand' do %>
+                <%= image_tag 'logo-sprintfy.png' %>
+              <% end %>
             </div>
 
             <div id="nav-toggle" class="nav-toggle">
@@ -25,14 +27,6 @@
               <span></span>
               <span></span>
             </div>
-
-            <% unless user_signed_in? %>
-              <div class="nav-right nav-menu">
-                <span class="nav-item">
-                  <%= link_to 'ENTRAR', :user_session, class: 'button is-dark' %>
-                </div>
-              </div>
-            <% end %>
           </div>
         </header>
       </div>
