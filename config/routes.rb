@@ -11,6 +11,8 @@ Rails.application.routes.draw do
     get '/entrar', to: 'devise/sessions#new', as: :user_session
     post '/entrar', to: 'devise/sessions#create', as: :create_user_session
     delete '/sair', to: 'devise/sessions#destroy', as: :destroy_user_session
+    get '/usuarios/editar', to: 'devise/registrations#edit', as: :edit_user_registration
+    patch '/usuarios', to: 'devise/registrations#update', as: :user_registration
   end
 
   # Squads
