@@ -3,20 +3,20 @@
 
   <div class="columns">
     <div class="column is-one-third">
-      <%= form_for resource, as: resource_name, url: registration_path(resource_name) do |f| %>
-        <%= f.label 'Senha Antiga', class: 'label' %>
+      <%= form_for(@user, url: user_registration_path, html: { method: :patch }) do |f| %>
         <p class="control">
+          <%= f.label 'Senha Antiga', class: 'label' %>
           <%= f.password_field :current_password, autocomplete: 'off', class: 'input' %>
         </p>
 
 
-        <%= f.label 'Nova Senha', class: 'label' %>
         <p class="control">
+          <%= f.label 'Nova Senha', class: 'label' %>
           <%= f.password_field :password, autocomplete: 'off', class: 'input' %>
         </p>
 
-        <%= f.label 'Confirmar Senha', class: 'label' %>
         <p class="control">
+          <%= f.label 'Confirmar Senha', class: 'label' %>
           <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'input' %>
         </p>
 
