@@ -30,6 +30,8 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'devise', '~> 4.0'
 
+gem 'rolify'
+
 gem 'bulma-rails', '~> 0.1.2'
 gem 'maskedinput-rails'
 gem 'font-awesome-rails'
