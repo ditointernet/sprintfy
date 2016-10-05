@@ -31,6 +31,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise', '~> 4.0'
 
 gem 'rolify'
+gem 'authority'
 
 gem 'bulma-rails', '~> 0.1.2'
 gem 'maskedinput-rails'
