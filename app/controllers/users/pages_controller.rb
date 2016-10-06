@@ -19,7 +19,8 @@ class Users::PagesController < ApplicationController
   end
 
   def sprints
-    @sprints = current_user.sprints.order(squad_counter: :desc)
+    query = current_user.admin? ? Sprint : current_user.sprints
+    @sprints = query.order(squad_counter: :desc)
   end
 
   def list
