@@ -4,6 +4,8 @@ class SprintsController < ApplicationController
   before_action :load_user, only: [:add_user, :remove_user]
   before_action :load_sprint_report_texts, only: [:closing, :edit]
 
+  authorize_actions_for Sprint, except: :edit
+  authority_actions add_user: 'update', remove_user: 'update', closing: 'update', close: 'update'
 
   def new
     @sprint = Sprint.new

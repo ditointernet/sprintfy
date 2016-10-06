@@ -1,6 +1,7 @@
 class StoryPointsController < ApplicationController
   before_action :load_sprint, only: [:update]
 
+  authorize_actions_for StoryPoint
 
   def update
     users_params.each do |user_params|

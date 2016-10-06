@@ -1,4 +1,7 @@
 class Sprint < ApplicationRecord
+  include Authority::Abilities
+  resourcify
+
   belongs_to :squad
   has_and_belongs_to_many :users, -> { distinct }
   has_many :goals

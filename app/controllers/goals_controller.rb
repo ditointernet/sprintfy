@@ -1,6 +1,9 @@
 class GoalsController < ApplicationController
   before_action :load_goal, only: [:destroy, :mark_as_complete]
 
+  authorize_actions_for Goal
+  authority_actions mark_as_complete: 'update'
+
   def create
     @goal = Goal.new(goals_params.merge(completed: false))
 
