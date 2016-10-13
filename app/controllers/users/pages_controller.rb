@@ -4,7 +4,11 @@ class Users::PagesController < ApplicationController
   def new_user
     @user = User.new
     @squads = Squad.order(name: :asc)
-    @roles = Role.order(name: :asc)
+    @roles = Role.order(name: :asc).to_a
+
+    if user_role = @roles.find {|r| r.name == 'user' }
+      @default_role_id = user_role.id
+    end
   end
 
   def create_user
@@ -41,7 +45,7 @@ class Users::PagesController < ApplicationController
   end
 
   def roles_params
-    params.require(:roles)
+    params[:roles] || []
   end
 
   def redirect_to_new_user_path

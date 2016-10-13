@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  after_create :assign_default_role
+
   include Authority::UserAbilities
 
   belongs_to :squad, optional: true
@@ -20,5 +22,11 @@ class User < ApplicationRecord
 
   def sprinter?
     self.has_role(:sprinter)
+  end
+
+  private
+
+  def assign_default_role
+    self.add_role(:user)
   end
 end

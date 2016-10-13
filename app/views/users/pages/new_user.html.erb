@@ -18,7 +18,7 @@
 
         <div class="control">
           <%= f.label 'Permissões', class: 'label' %>
-          <%= select_tag :roles, options_from_collection_for_select(@roles, 'id', 'name'), { style: 'width: 100%;', multiple: true } %>
+          <%= select_tag :roles, options_from_collection_for_select(@roles, :id, :name), { style: 'width: 100%;', 'data-default-role-id' => @default_role_id, multiple: true } %>
         </div>
 
         <%= f.label 'E-mail', class: 'label' %>
