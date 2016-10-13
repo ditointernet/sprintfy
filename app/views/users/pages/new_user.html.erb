@@ -16,6 +16,11 @@
           </span>
         </div>
 
+        <div class="control">
+          <%= f.label 'Permissões', class: 'label' %>
+          <%= select_tag :roles, options_from_collection_for_select(@roles, 'id', 'name'), { style: 'width: 100%;', multiple: true } %>
+        </div>
+
         <%= f.label 'E-mail', class: 'label' %>
         <p class="control">
           <%= f.text_field :email, class: 'input' %>

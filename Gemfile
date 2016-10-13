@@ -36,6 +36,7 @@ gem 'authority'
 gem 'bulma-rails', '~> 0.1.2'
 gem 'maskedinput-rails'
 gem 'font-awesome-rails'
+gem 'select2-rails'
 
 gem 'mysql2'
 
