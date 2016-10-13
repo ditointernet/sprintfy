@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  after_create :assign_default_role
+  after_commit :assign_default_role
 
   include Authority::UserAbilities
 

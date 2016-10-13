@@ -15,11 +15,8 @@ class Users::PagesController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      roles = Role.find(roles_params.to_a)
-
-      roles.each do |role|
-        @user.add_role(role.name)
-      end
+      role = Role.find(role_params)
+      @user.add_role(role.name)
 
       flash[:notice] = 'Usuário criado!'
     else
@@ -44,8 +41,8 @@ class Users::PagesController < ApplicationController
     params.require(:user).permit([:email, :name, :password, :squad_id, :roles])
   end
 
-  def roles_params
-    params[:roles] || []
+  def role_params
+    params[:role]
   end
 
   def redirect_to_new_user_path
