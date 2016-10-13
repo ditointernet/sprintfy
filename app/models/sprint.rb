@@ -8,6 +8,9 @@ class Sprint < ApplicationRecord
   has_many :story_points
   has_many :sprint_reports
 
+  validates :start_date, presence: true
+  validates :due_date, presence: true
+
   before_create do
     self.squad_counter = Sprint.where(squad: self.squad).count + 1
   end
