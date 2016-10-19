@@ -46,18 +46,19 @@
 
                 <p class="menu-label">USUÁRIOS</p>
                 <ul class="menu-list">
-                  <li><%= link_to 'CRIAR USUÁRIO', new_user_path %></li>
                   <li><%= link_to 'CADASTRADOS', :users_list %></li>
+                  <li><%= link_to 'CRIAR USUÁRIO', new_user_path %></li>
                 </ul>
 
                 <p class="menu-label">EQUIPES</p>
                 <ul class="menu-list">
-                  <li><%= link_to 'CRIAR EQUIPE', new_squad_path %></li>
                   <li><%= link_to 'CADASTRADAS', squads_path %></li>
+                  <li><%= link_to 'CRIAR EQUIPE', new_squad_path %></li>
                 </ul>
 
                 <p class="menu-label">CONTA</p>
                 <ul class="menu-list">
+                  <li><%= link_to 'MUDAR SENHA', :edit_user_registration %></li>
                   <li><%= link_to 'SAIR', :destroy_user_session, method: :delete %></li>
                 </ul>
               </aside>
