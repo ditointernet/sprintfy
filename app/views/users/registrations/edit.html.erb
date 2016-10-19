@@ -1,0 +1,27 @@
+<div class="container">
+  <h1 class="title is-2">Mudar Senha</h1>
+
+  <div class="columns">
+    <div class="column is-one-third">
+      <%= form_for(@user, url: user_registration_path, html: { method: :patch }) do |f| %>
+        <p class="control">
+          <%= f.label 'Senha Antiga', class: 'label' %>
+          <%= f.password_field :current_password, autocomplete: 'off', class: 'input' %>
+        </p>
+
+
+        <p class="control">
+          <%= f.label 'Nova Senha', class: 'label' %>
+          <%= f.password_field :password, autocomplete: 'off', class: 'input' %>
+        </p>
+
+        <p class="control">
+          <%= f.label 'Confirmar Senha', class: 'label' %>
+          <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'input' %>
+        </p>
+
+        <%= f.submit 'Salvar', class: 'button is-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>
