@@ -1,0 +1,2 @@
+class GoalAuthorizer < SprinterAuthorizer
+end

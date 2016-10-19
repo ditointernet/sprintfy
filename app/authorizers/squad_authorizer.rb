@@ -1,0 +1,2 @@
+class SquadAuthorizer < ApplicationAuthorizer
+end

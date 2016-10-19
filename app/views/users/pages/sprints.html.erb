@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 class="title is-2">Meus Sprints</h1>
+  <h1 class="title is-2"><%= current_user.admin? ? 'SPRINTS' : 'MEUS SPRINTS' %></h1>
   <table class="table is-bordered">
     <thead>
       <tr>
@@ -25,6 +25,8 @@
           <% class_name = 'succeded-sprint' %>
         <% elsif completed / goals_count.to_f >= 0.8 %>
           <% class_name = 'partially-succeded-sprint' %>
+        <% elsif !sprint.closed? %>
+          <% class_name = '' %>
         <% else %>
           <% class_name = 'failed-sprint' %>
         <% end %>

@@ -1,0 +1,2 @@
+class StoryPointAuthorizer < SprinterAuthorizer
+end

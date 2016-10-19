@@ -40,21 +40,28 @@
               <aside class="menu">
                 <p class="menu-label">SPRINTS</p>
                 <ul class="menu-list">
-                  <li><%= link_to 'MEUS SPRINTS', :user_sprints %></li>
-                  <li><%= link_to 'CRIAR SPRINT', new_sprint_path %></li>
+                  <li><%= link_to (current_user.admin? ? 'SPRINTS' : 'MEUS SPRINTS'), :user_sprints %></li>
+
+                  <% if current_user.can_create?(Sprint.new) %>
+                    <li><%= link_to 'CRIAR SPRINT', new_sprint_path %></li>
+                  <% end %>
                 </ul>
 
-                <p class="menu-label">USUÁRIOS</p>
-                <ul class="menu-list">
-                  <li><%= link_to 'CADASTRADOS', :users_list %></li>
-                  <li><%= link_to 'CRIAR USUÁRIO', new_user_path %></li>
-                </ul>
+                <% if current_user.admin? %>
+                  <p class="menu-label">USUÁRIOS</p>
+                  <ul class="menu-list">
+                    <li><%= link_to 'CRIAR USUÁRIO', new_user_path %></li>
+                    <li><%= link_to 'CADASTRADOS', :users_list %></li>
+                  </ul>
+                <% end %>
 
-                <p class="menu-label">EQUIPES</p>
-                <ul class="menu-list">
-                  <li><%= link_to 'CADASTRADAS', squads_path %></li>
-                  <li><%= link_to 'CRIAR EQUIPE', new_squad_path %></li>
-                </ul>
+                <% if current_user.admin? %>
+                  <p class="menu-label">EQUIPES</p>
+                  <ul class="menu-list">
+                    <li><%= link_to 'CRIAR EQUIPE', new_squad_path %></li>
+                    <li><%= link_to 'CADASTRADAS', squads_path %></li>
+                  </ul>
+                <% end %>
 
                 <p class="menu-label">CONTA</p>
                 <ul class="menu-list">

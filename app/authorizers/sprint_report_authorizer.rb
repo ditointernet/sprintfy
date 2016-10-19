@@ -1,0 +1,2 @@
+class SprintReportAuthorizer < SprinterAuthorizer
+end

@@ -1,9 +1,15 @@
 class Sprint < ApplicationRecord
+  include Authority::Abilities
+  resourcify
+
   belongs_to :squad
   has_and_belongs_to_many :users, -> { distinct }
   has_many :goals
   has_many :story_points
   has_many :sprint_reports
+
+  validates :start_date, presence: true
+  validates :due_date, presence: true
 
   before_create do
     self.squad_counter = Sprint.where(squad: self.squad).count + 1
