@@ -5,6 +5,6 @@ class StoryPoint < ApplicationRecord
   belongs_to :sprint
   belongs_to :user
 
-  validates :sprint_id, presence: true
-  validates :user_id, presence: true
+  validates :sprint, presence: true
+  validates :user, presence: true
 end
