@@ -12,7 +12,13 @@ class Sprint < ApplicationRecord
   validates :due_date, presence: true
 
   before_create do
-    self.squad_counter = Sprint.where(squad: self.squad).count + 1
+    last_sprint = Sprint.where(squad: self.squad).last
+
+    if last_sprint
+      self.squad_counter = last_sprint.squad_counter + 1
+    else
+      self.squad_counter = 1
+    end
   end
 
 
