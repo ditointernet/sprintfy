@@ -1,0 +1,19 @@
+<div class="section">
+  <div class="columns">
+    <div class="column is-one-third">
+    </div>
+
+    <div class="column is-one-third">
+      <h2 class="title">Esqueceu sua senha?</h2>
+
+      <%= form_for(@user, url: create_user_password_path, html: { method: :patch }) do |f| %>
+        <div class="control">
+          <%= f.label :email, class: 'label' %>
+          <%= f.email_field :email, class: 'input', autofocus: true %>
+        </div>
+
+        <%= f.submit 'Enviar instruções para criar nova senha', class: 'button is-primary' %>
+      <% end %>
+    </div>
+  </div>
+</div>
