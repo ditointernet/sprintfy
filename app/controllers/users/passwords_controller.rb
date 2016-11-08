@@ -4,9 +4,11 @@ class Users::PasswordsController < ApplicationController
   end
 
   def create
-    puts params
     @user = User.find_by_email(user_params[:email])
-    @user.send_reset_password_instructions
+
+    if @user
+      @user.send_reset_password_instructions
+    end
 
     flash[:notice] = 'E-mail de instruções enviado'
     redirect_to :root
