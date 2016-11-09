@@ -85,11 +85,11 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   ActionMailer::Base.smtp_settings = {
-    :user_name => RAILS_ENV['MAILER_SMTP_USERNAME'],
-    :password => RAILS_ENV['MAILER_SMTP_PASSWORD'],
-    :domain => RAILS_ENV['MAILER_SMTP_DOMAIN'],
-    :address => RAILS_ENV['MAILER_SMTP_ADDRESS'],
-    :port => RAILS_ENV['MAILER_SMTP_PORT'],
+    :user_name => ENV['MAILER_SMTP_USERNAME'],
+    :password => ENV['MAILER_SMTP_PASSWORD'],
+    :domain => ENV['MAILER_SMTP_DOMAIN'],
+    :address => ENV['MAILER_SMTP_ADDRESS'],
+    :port => ENV['MAILER_SMTP_PORT'],
     :authentication => :plain,
     :enable_starttls_auto => true
   }
