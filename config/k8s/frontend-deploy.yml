@@ -41,3 +41,5 @@ spec:
             value: 'smtp.sendgrid.net'
           - name: MAILER_SMTP_PORT
             value: '587'
+          - name: HOST
+            value: 'change'
