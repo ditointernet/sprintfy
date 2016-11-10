@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: sprintfy-frontend
-        image: ditointernet/sprintfy:v1.0.18
+        image: ditointernet/sprintfy:v1.0.19
         command:
           - "/bin/bash"
           - "-c"
@@ -42,4 +42,6 @@ spec:
           - name: MAILER_SMTP_PORT
             value: '587'
           - name: HOST
+            value: 'change'
+          - name: MAILER_SENDER
             value: 'change'
