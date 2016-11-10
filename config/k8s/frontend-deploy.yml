@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: sprintfy-frontend
-        image: ditointernet/sprintfy:v1.0.15
+        image: ditointernet/sprintfy:v1.0.19
         command:
           - "/bin/bash"
           - "-c"
@@ -31,3 +31,17 @@ spec:
             value: '1'
           - name: RAILS_SERVE_STATIC_FILES
             value: 'true'
+          - name: MAILER_SMTP_USERNAME
+            value: 'change'
+          - name: MAILER_SMTP_PASSWORD
+            value: 'change'
+          - name: MAILER_SMTP_DOMAIN
+            value: 'change'
+          - name: MAILER_SMTP_ADDRESS
+            value: 'smtp.sendgrid.net'
+          - name: MAILER_SMTP_PORT
+            value: '587'
+          - name: HOST
+            value: 'change'
+          - name: MAILER_SENDER
+            value: 'change'

@@ -11,8 +11,14 @@ Rails.application.routes.draw do
     get '/entrar', to: 'devise/sessions#new', as: :user_session
     post '/entrar', to: 'devise/sessions#create', as: :create_user_session
     delete '/sair', to: 'devise/sessions#destroy', as: :destroy_user_session
+
     get '/usuarios/editar', to: 'users/registrations#edit', as: :edit_user_registration
     patch '/usuarios/editar', to: 'users/registrations#update', as: :user_registration
+
+    get '/esqueci-minha-senha', to: 'users/passwords#new', as: :user_password
+    patch '/esqueci-minha-senha', to: 'users/passwords#create', as: :create_user_password
+    get '/mudar-senha', to: 'users/passwords#edit', as: :edit_user_password
+    put '/mudar-senha', to: 'users/passwords#update', as: :update_user_password
   end
 
   # Squads

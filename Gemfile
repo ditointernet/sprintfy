@@ -33,12 +33,16 @@ gem 'devise', '~> 4.0'
 gem 'rolify'
 gem 'authority'
 
-gem 'bulma-rails', '~> 0.1.2'
+gem 'bulma-rails', '~> 0.2.3'
 gem 'maskedinput-rails'
 gem 'font-awesome-rails'
 
 gem 'mysql2'
 
+
+group :development do
+  gem 'letter_opener'
+end
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
