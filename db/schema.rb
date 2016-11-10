@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161005185513) do
+ActiveRecord::Schema.define(version: 20161108183755) do
+
+  create_table "daily_meetings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "reason"
+    t.date     "date"
+    t.boolean  "done"
+    t.boolean  "skip"
+    t.integer  "squad_id"
+    t.integer  "sprint_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sprint_id"], name: "index_daily_meetings_on_sprint_id", using: :btree
+    t.index ["squad_id"], name: "index_daily_meetings_on_squad_id", using: :btree
+  end
 
   create_table "goals", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text     "description", limit: 65535
@@ -103,6 +116,8 @@ ActiveRecord::Schema.define(version: 20161005185513) do
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
   end
 
+  add_foreign_key "daily_meetings", "sprints"
+  add_foreign_key "daily_meetings", "squads"
   add_foreign_key "goals", "sprints"
   add_foreign_key "sprint_reports", "sprints"
   add_foreign_key "sprints", "squads"

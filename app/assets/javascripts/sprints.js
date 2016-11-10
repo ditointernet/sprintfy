@@ -47,3 +47,65 @@ $(function() {
     $('#update-sprint-dates-form').removeClass('is-hidden');
   });
 });
+
+$(function() {
+  function getDailyMeetingParams(form) {
+    return {
+      done: form.find('[name="daily_meeting[done]"]'),
+      skip: form.find('[name="daily_meeting[skip]"]'),
+      reason: form.find('[name="daily_meeting[reason]"]'),
+    };
+  }
+
+  $('.sprintfy-dm-form .dm-done').on('click', function(event) {
+    event.preventDefault();
+
+    var form = $(this).parent().parent();
+
+    getDailyMeetingParams(form).done.val(true);
+    form.submit();
+  });
+
+  $('.sprintfy-dm-form .dm-not-done').on('click', function(event) {
+    event.preventDefault();
+
+    var modal = $('#sprintfy-dm-not-done-reason-modal');
+
+    modal.addClass('is-active');
+    modal.data('form-count', $(this).data('form-count'));
+  });
+
+  $('.sprintfy-dm-form .dm-skip').on('click', function(event) {
+    event.preventDefault();
+
+    var form = $(this).parent().parent();
+
+    getDailyMeetingParams(form).skip.val(true);
+    form.submit();
+  });
+
+
+  $('#sprintfy-dm-not-done-reason-modal .delete, #sprintfy-dm-not-done-reason-modal .cancel-button').on('click', function(event) {
+    event.preventDefault();
+
+    var modal = $('#sprintfy-dm-not-done-reason-modal');
+
+    modal.find('.reason-textarea').val('');
+    modal.removeClass('is-active');
+  });
+
+  $('#sprintfy-dm-not-done-reason-modal .send-button').on('click', function(event) {
+    event.preventDefault();
+
+    var modal = $('#sprintfy-dm-not-done-reason-modal');
+    var reasonTextarea = modal.find('.reason-textarea');
+    var form = $('#sprintfy-dm-form-' + $(modal).data('form-count'));
+
+    getDailyMeetingParams(form).reason.val(reasonTextarea.val());
+
+    reasonTextarea.val('');
+    modal.removeClass('is-active');
+
+    form.submit();
+  });
+});

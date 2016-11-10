@@ -7,6 +7,7 @@ class Sprint < ApplicationRecord
   has_many :goals
   has_many :story_points
   has_many :sprint_reports
+  has_many :daily_meetings
 
   validates :start_date, presence: true
   validates :due_date, presence: true
@@ -60,5 +61,9 @@ class Sprint < ApplicationRecord
     else
       ''
     end
+  end
+
+  def sprint_days
+    self.start_date.upto(self.due_date).select(&:on_weekday?)
   end
 end
