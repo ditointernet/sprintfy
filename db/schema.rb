@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161108183755) do
+ActiveRecord::Schema.define(version: 20161110231607) do
 
   create_table "daily_meetings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "reason"
@@ -73,6 +73,15 @@ ActiveRecord::Schema.define(version: 20161108183755) do
     t.index ["user_id"], name: "index_sprints_users_on_user_id", using: :btree
   end
 
+  create_table "squad_managers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.integer  "squad_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["squad_id"], name: "index_squad_managers_on_squad_id", using: :btree
+    t.index ["user_id"], name: "index_squad_managers_on_user_id", using: :btree
+  end
+
   create_table "squads", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -123,6 +132,8 @@ ActiveRecord::Schema.define(version: 20161108183755) do
   add_foreign_key "sprints", "squads"
   add_foreign_key "sprints_users", "sprints"
   add_foreign_key "sprints_users", "users"
+  add_foreign_key "squad_managers", "squads"
+  add_foreign_key "squad_managers", "users"
   add_foreign_key "story_points", "sprints"
   add_foreign_key "story_points", "users"
   add_foreign_key "users", "squads"

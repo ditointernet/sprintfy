@@ -81,6 +81,9 @@ class SprintsController < ApplicationController
 
     @sprint.update(closed: true)
 
+    SquadManagerMailer.sprint_report_email(@sprint).deliver_now
+    flash[:notice] = 'Relatório enviado aos gestores com sucesso'
+
     redirect_to_edit_sprint_path
   end
 
