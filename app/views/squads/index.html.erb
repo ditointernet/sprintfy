@@ -7,7 +7,8 @@
         <thead>
           <tr>
             <th>Nome</th>
-            <th>Membros</th>
+            <th>Integrantes</th>
+            <td></th>
           </tr>
         </thead>
 
@@ -16,6 +17,7 @@
             <tr>
               <td><%= squad.name %></td>
               <td><%= squad.users.count %></td>
+              <td><%= link_to 'Editar', edit_squad_path(squad) %></td>
             </tr>
           <% end %>
         </tbody>
