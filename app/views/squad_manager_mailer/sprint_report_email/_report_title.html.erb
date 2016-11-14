@@ -1,0 +1,6 @@
+<div class="report-title">Relatório Sprint #<%= @sprint.squad_counter %></div>
+<div class="report-subtitle">
+  <div class="squad-name">Equipe <%= @squad.name %></div>
+  <div class="sprint-duration"><%= format_date(@sprint.start_date) %> até <%= format_date(@sprint.due_date) %></div>
+  <div class="sprint-business-days"><%= @sprint_days_count %> dias úteis</div>
+</div>

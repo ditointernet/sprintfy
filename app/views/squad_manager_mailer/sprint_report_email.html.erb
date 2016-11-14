@@ -1,185 +1,26 @@
-<style>
-  body {
-    font-family: sans-serif;
-  }
+<%= render 'squad_manager_mailer/sprint_report_email/report_css' %>
 
-  table {
-    border-collapse: collapse;
-    border: 1px solid black;
-  }
-  th {
-    font-weight: bold;
-  }
-  th, td {
-    border: 1px solid black;
-    min-width: 100px;
-  }
-
-  div.separator {
-    height: 20px;
-  }
-
-  .report-title {
-    font-size: 28px;
-  }
-  .report-subtitle > .squad-name {
-    font-size: 18px;
-    color: #555;
-
-    margin-bottom: 10px;
-  }
-  .report-subtitle > .sprint-duration {
-    font-size: 18px;
-    color: #555;
-  }
-  .report-subtitle > .sprint-business-days {
-    font-size: 18px;
-    color: #555;
-  }
-
-  .report-section {
-    margin: 40px 0;
-  }
-  .report-section > .title {
-    font-weight: bold;
-    font-size: 24px;
-
-    margin-bottom: 20px;
-  }
-  .report-section > .subsection {
-    margin: 20px 0;
-  }
-  .report-section > .subsection > .title {
-    font-weight: bold;
-    font-size: 18px;
-
-    margin-bottom: 10px;
-  }
-
-  .sprint-goals .complete-goal {
-    font-weight: bold;
-    color: #090;
-  }
-  .sprint-goals .incomplete-goal {
-    font-weight: bold;
-    color: #c00;
-  }
-</style>
-
-<div class="report-title">Relatório Sprint #<%= @sprint.squad_counter %></div>
-<div class="report-subtitle">
-  <div class="squad-name">Equipe <%= @squad.name %></div>
-  <div class="sprint-duration"><%= format_date(@sprint.start_date) %> até <%= format_date(@sprint.due_date) %></div>
-  <div class="sprint-business-days"><%= @sprint_days_count %> dias úteis</div>
-</div>
-
+<%= render 'squad_manager_mailer/sprint_report_email/report_title' %>
 
 <div class="report-section">
   <div class="title">Goals</div>
-
-  <ul class="sprint-goals">
-    <% @complete_goals.each do |goal| %>
-      <li class="complete-goal"><%= goal.description %></li>
-    <% end %>
-
-    <% @incomplete_goals.each do |goal| %>
-      <li class="incomplete-goal"><%= goal.description %></li>
-    <% end %>
-  </ul>
+  <%= render 'squad_manager_mailer/sprint_report_email/goals_report' %>
 </div>
 
 <div class="report-section">
   <div class="title">Story Points</div>
 
   <div>Tabela 1 - Story points entregues</div>
-  <table>
-    <thead>
-      <tr>
-        <th></th>
-        <th>Entregues</th>
-        <th>Prometidos</th>
-        <th>%</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users_story_points.each do |sp| %>
-        <tr>
-          <td style="text-align: right;"><b><%= sp[:user_name] %></b></td>
-          <td style="text-align: center;"><%= sp[:story_points] %></td>
-          <td style="text-align: center;"><%= sp[:expected_story_points] %></td>
-          <td style="text-align: center;">
-            <b>
-              <%= number_with_precision(sp[:total_percent], precision: 2) %>
-            </b>
-          </td>
-        </tr>
-      <% end %>
-
-      <tr>
-        <td style="text-align: right;"><b>Total</b></td>
-        <td style="text-align: center;"><%= @total_users_story_points[:story_points] %></td>
-        <td style="text-align: center;"><%= @total_users_story_points[:expected_story_points] %></td>
-        <td style="text-align: center;">
-          <b>
-            <%= number_with_precision(@total_users_story_points[:total_percent], precision: 2) %>
-          </b>
-          </td>
-      </tr>
-    </tbody>
-  </table>
+  <%= render 'squad_manager_mailer/sprint_report_email/story_points_table' %>
 
   <div class="separator"></div>
 
-  <div>
-    Foram
-    <b><%= @total_users_story_points[:expected_story_points] %></b>
-    story points prometidos e
-    <b><%= @total_users_story_points[:story_points] %></b>
-    story points entregues
-    <b>(<%= number_with_precision(@total_users_story_points[:total_percent] * 100, precision: 2) %>%)</b>,
-    ou seja, uma média de
-    <b><%= number_with_precision(@total_users_story_points[:daily_story_points], precision: 2) %></b>
-    story points por dia útil do sprint.
-  </div>
+  <%= render 'squad_manager_mailer/sprint_report_email/story_points_summary' %>
 
   <div class="separator"></div>
 
   <div>Tabela 2 - Story points por dia útil</div>
-  <table>
-    <thead>
-      <tr>
-        <th></th>
-        <th>Dias</th>
-        <th>SPs</th>
-        <th>SPs / Dia</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users_story_points.each do |sp| %>
-        <tr>
-          <td style="text-align: right;"><b><%= sp[:user_name] %></b></td>
-          <td style="text-align: center;"><%= @sprint_days_count %></td>
-          <td style="text-align: center;"><%= sp[:story_points] %></td>
-          <td style="text-align: center;">
-            <b>
-              <%= number_with_precision(sp[:daily_story_points], precision: 2) %>
-            </b>
-          </td>
-        </tr>
-      <% end %>
-
-      <tr>
-        <td style="text-align: right;"><b>Total</b></td>
-        <td style="text-align: center;"><%= @sprint_days_count %></td>
-        <td style="text-align: center;"><%= @total_users_story_points[:story_points] %></td>
-        <td style="text-align: center;">
-          <b>
-            <%= number_with_precision(@total_users_story_points[:daily_story_points], precision: 2) %>
-          </b>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <%= render 'squad_manager_mailer/sprint_report_email/daily_story_points_table' %>
 </div>
 
 <div class="report-section">
@@ -187,31 +28,16 @@
 
   <div class="subsection">
     <div class="title">O que mudar</div>
-
-    <ul>
-      <% @sprint_what_to_change.each do |line| %>
-        <li><%= line %></li>
-      <% end %>
-    </ul>
+    <%= render 'squad_manager_mailer/sprint_report_email/sprint_report_items', sprint_report: @sprint_what_to_change %>
   </div>
 
   <div class="subsection">
     <div class="title">O que deu certo</div>
-
-    <ul>
-      <% @sprint_did_right.each do |line| %>
-        <li><%= line %></li>
-      <% end %>
-    </ul>
+    <%= render 'squad_manager_mailer/sprint_report_email/sprint_report_items', sprint_report: @sprint_did_right %>
   </div>
 
   <div class="subsection">
     <div class="title">O que deu errado</div>
-
-    <ul>
-      <% @sprint_did_wrong.each do |line| %>
-        <li><%= line %></li>
-      <% end %>
-    </ul>
+    <%= render 'squad_manager_mailer/sprint_report_email/sprint_report_items', sprint_report: @sprint_did_wrong %>
   </div>
 </div>
