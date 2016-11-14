@@ -14,7 +14,7 @@ class SquadManagerMailer < ApplicationMailer
         story_points: story_points.value,
         expected_story_points: story_points.expected_value,
         daily_story_points: story_points.value / @sprint_days_count,
-        total_percent: story_points.expected_value == 0 ? 0 : (story_points.value / story_points.expected_value)
+        total_percent: story_points.expected_value == 0 ? 0 : (100 * story_points.value / story_points.expected_value)
       }
     end
 
@@ -22,7 +22,7 @@ class SquadManagerMailer < ApplicationMailer
     @total_story_points[:story_points] = @story_points.map {|sp| sp[:story_points] }.reduce(:+)
     @total_story_points[:expected_story_points] = @story_points.map {|sp| sp[:expected_story_points] }.reduce(:+)
     @total_story_points[:daily_story_points] = @total_story_points[:story_points] / @sprint_days_count
-    @total_story_points[:total_percent] = @total_story_points[:expected_story_points] == 0 ? 0 : (@total_story_points[:story_points] / @total_story_points[:expected_story_points])
+    @total_story_points[:total_percent] = @total_story_points[:expected_story_points] == 0 ? 0 : (100 * @total_story_points[:story_points] / @total_story_points[:expected_story_points])
 
     @sprint_what_to_change = sprint_report_items('what_to_change')
     @sprint_did_right = sprint_report_items('did_right')
