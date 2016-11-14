@@ -24,8 +24,8 @@ Rails.application.routes.draw do
       get '/fechar', to: 'sprints#closing', as: :closing
       post '/fechar', to: 'sprints#close', as: :close
 
-      get '/daily-meetings', to: 'sprints#daily_meetings', as: :daily_meetings
-      post '/daily-meetings', to: 'sprints#create_daily_meeting', as: :create_daily_meeting
+      get '/daily-meetings', to: 'daily_meetings#index', as: :daily_meetings
+      post '/daily-meetings', to: 'daily_meetings#create', as: :create_daily_meeting
 
       post '/remover-participante', to: 'sprints#remove_user', as: :remove_user
       post '/adicionar-participante', to: 'sprints#add_user', as: :add_user
