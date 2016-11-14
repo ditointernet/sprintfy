@@ -15,7 +15,7 @@
         <td style="text-align: center;"><%= sp[:expected_story_points] %></td>
         <td style="text-align: center;">
           <b>
-            <%= number_with_precision(sp[:total_percent], precision: 2) %>
+            <%= number_with_precision(sp[:total_percent], precision: 2) %>%
           </b>
         </td>
       </tr>
@@ -27,7 +27,7 @@
       <td style="text-align: center;"><%= @total_story_points[:expected_story_points] %></td>
       <td style="text-align: center;">
         <b>
-          <%= number_with_precision(@total_story_points[:total_percent], precision: 2) %>
+          <%= number_with_precision(@total_story_points[:total_percent], precision: 2) %>%
         </b>
         </td>
     </tr>
