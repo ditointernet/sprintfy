@@ -1,7 +1,7 @@
 <div class="container">
   <h1 class="title is-2">Equipe <%= @squad.name %></h1>
   <div style="margin-bottom: 40px;">
-    <a id="sprintfy-squad-add-manager-btn" href="#">Adicionar Gestor</a>
+    <a id="sprintfy-squad-add-manager-btn" href="#" class="button">Adicionar Gestor</a>
 
     <div id="sprintfy-squad-add-manager-form" class="is-hidden">
       <%= form_for @squad, url: squad_path(@squad), method: :patch do |f| %>
