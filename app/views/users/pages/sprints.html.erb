@@ -37,7 +37,10 @@
           <td><%= format_date(sprint.due_date) %></td>
           <td><%= story_points_done %> / <%= promised_story_points %> (<%= promised_story_points.to_i > 0 ? (story_points_done / promised_story_points.to_f * 100).round(2) : 0 %>%)</td>
           <td><%= completed %> / <%= goals_count %> (<%= goals_count.to_i > 0 ? (completed / goals_count.to_f * 100).round(2) : 0 %>%)</td>
-          <td><%= link_to 'Ver', edit_sprint_path(id: sprint.id) %></td>
+          <td>
+            <div><%= link_to 'Ver sprint', edit_sprint_path(sprint) %></div>
+            <div><%= link_to 'Gerenciar DMs', daily_meetings_sprint_path(sprint) %></div>
+          </td>
         </tr>
       <% end %>
     </tbody>

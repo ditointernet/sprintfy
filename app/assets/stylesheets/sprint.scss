@@ -12,7 +12,7 @@
   }
 }
 
-.sprintfy-sprint-goals {
+.sprintfy-sprint-daily-meetings {
   margin: 40px 0;
 }
 
@@ -52,4 +52,24 @@
     color: black;
     font-size: 16px;
   }
+}
+
+.sprintfy-daily-meeting-done {
+  background: #dfffdf;
+}
+
+.sprintfy-daily-meeting-not-done {
+  background: #ffcccc;
+}
+
+.sprintfy-daily-meeting-skipped {
+  color: #555 !important;
+}
+
+.sprintfy-daily-meeting-incomplete {
+  background: #ffffdf;
+}
+
+.sprintfy-daily-meeting-disabled {
+  color: #bbb !important;
 }
