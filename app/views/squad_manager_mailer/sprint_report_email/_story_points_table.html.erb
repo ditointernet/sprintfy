@@ -5,7 +5,7 @@
       <th>Entregues</th>
       <th>Prometidos</th>
       <th>%</th>
-      <th>Média de Entrega</th>
+      <th>Média Histórica de <br /> % de SPs / Sprint</th>
     </tr>
   </thead>
   <tbody>
@@ -19,7 +19,9 @@
             <%= number_with_precision(sp[:total_percent], precision: 2) %>%
           </b>
         </td>
-        <td style="text-align: center;"><%= sp[:story_points_average] %></td>
+        <td style="text-align: center;">
+          <%= number_with_precision(sp[:story_points_average], precision: 2) %>%
+        </td>
       </tr>
     <% end %>
 
@@ -32,7 +34,9 @@
           <%= number_with_precision(@total_story_points[:total_percent], precision: 2) %>%
         </b>
       </td>
-      <td style="text-align: center;"><%= @total_story_points[:story_points_average] %></td>
+      <td style="text-align: center;">
+        <%= number_with_precision(@total_story_points[:story_points_average], precision: 2) %>%
+      </td>
     </tr>
   </tbody>
 </table>

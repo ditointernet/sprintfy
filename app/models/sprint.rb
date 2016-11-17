@@ -63,7 +63,7 @@ class Sprint < ApplicationRecord
   end
 
   def previous
-    Sprint.where('squad_counter < ?', self.squad_counter)
+    Sprint.where('start_date < ?', self.start_date)
   end
 
   def sprint_days
