@@ -14,7 +14,7 @@
         <td style="text-align: right;"><b><%= sp[:user_name] %></b></td>
         <td style="text-align: center;"><%= sp[:story_points] %></td>
         <td style="text-align: center;"><%= sp[:expected_story_points] %></td>
-        <td style="text-align: center;">
+        <td style="text-align: center;" class="<%= sp[:total_percent] >= 100 ? 'success' : 'fail' %>">
           <b>
             <%= number_with_precision(sp[:total_percent], precision: 2) %>%
           </b>
@@ -29,7 +29,7 @@
       <td style="text-align: right;"><b>Total</b></td>
       <td style="text-align: center;"><%= @total_story_points[:story_points] %></td>
       <td style="text-align: center;"><%= @total_story_points[:expected_story_points] %></td>
-      <td style="text-align: center;">
+      <td style="text-align: center;" class="<%= @total_story_points[:total_percent] >= 100 ? 'success' : 'fail' %>">
         <b>
           <%= number_with_precision(@total_story_points[:total_percent], precision: 2) %>%
         </b>
