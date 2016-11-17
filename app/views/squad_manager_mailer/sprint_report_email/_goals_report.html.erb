@@ -1,9 +1,9 @@
 <ul class="sprint-goals">
   <% @complete_goals.each do |goal| %>
-    <li class="success"><b><%= goal.description %><b/></li>
+    <li class="success"><b><%= goal.description %></b></li>
   <% end %>
 
   <% @incomplete_goals.each do |goal| %>
-    <li class="fail"><b><%= goal.description %><b/></li>
+    <li class="fail"><b><%= goal.description %></b></li>
   <% end %>
 </ul>
