@@ -5,6 +5,7 @@
       <th>Dias</th>
       <th>SPs</th>
       <th>SPs / Dia</th>
+      <th>Média SPs / Dia</th>
     </tr>
   </thead>
   <tbody>
@@ -18,6 +19,9 @@
             <%= number_with_precision(sp[:daily_story_points], precision: 2) %>
           </b>
         </td>
+        <td style="text-align: center;">
+          <%= number_with_precision(sp[:daily_story_points_average], precision: 2) %>
+        </td>
       </tr>
     <% end %>
 
@@ -29,6 +33,9 @@
         <b>
           <%= number_with_precision(@total_story_points[:daily_story_points], precision: 2) %>
         </b>
+      </td>
+      <td style="text-align: center;">
+        <%= number_with_precision(@total_story_points[:daily_story_points_average], precision: 2) %>
       </td>
     </tr>
   </tbody>

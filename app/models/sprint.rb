@@ -61,4 +61,16 @@ class Sprint < ApplicationRecord
       ''
     end
   end
+
+  def previous
+    Sprint.where('squad_counter < ?', self.squad_counter)
+  end
+
+  def sprint_days
+    self.start_date.upto(self.due_date).select(&:on_weekday?)
+  end
+
+  def total_sprint_days
+    sprint_days.count
+  end
 end

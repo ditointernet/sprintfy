@@ -25,6 +25,10 @@ class User < ApplicationRecord
     self.has_role(:sprinter)
   end
 
+  def total_sprint_days
+    self.sprints.map(&:sprint_days).map(&:count).reduce(:+)
+  end
+
   private
 
   def assign_default_role
