@@ -24,6 +24,16 @@
 </div>
 
 <div class="report-section">
+  <div class="title">Daily Meetings</div>
+  <%= render 'squad_manager_mailer/sprint_report_email/daily_meeting_summary' %>
+
+  <div class="subsection">
+    <div class="title">Dias sem daily meeting</div>
+    <%= render 'squad_manager_mailer/sprint_report_email/daily_meeting_not_done_items' %>
+  </div>
+</div>
+
+<div class="report-section">
   <div class="title">Sprint Review</div>
 
   <div class="subsection">
