@@ -27,10 +27,12 @@
   <div class="title">Daily Meetings</div>
   <%= render 'squad_manager_mailer/sprint_report_email/daily_meeting_summary' %>
 
-  <div class="subsection">
-    <div class="title">Dias sem daily meeting</div>
-    <%= render 'squad_manager_mailer/sprint_report_email/daily_meeting_not_done_items' %>
-  </div>
+  <% if @daily_meeting_not_done.present? %>
+    <div class="subsection">
+      <div class="title">Dias sem daily meeting</div>
+      <%= render 'squad_manager_mailer/sprint_report_email/daily_meeting_not_done_items' %>
+    </div>
+  <% end %>
 </div>
 
 <div class="report-section">
