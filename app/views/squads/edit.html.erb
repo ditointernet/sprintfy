@@ -7,7 +7,7 @@
       <%= form_for @squad, url: squad_path(@squad), method: :patch do |f| %>
         <div class="control">
           <span class="select">
-            <%= select_tag 'squad_manager[id]', options_from_collection_for_select(@squad_users, 'id', 'name_or_email'), include_blank: true %>
+            <%= select_tag 'squad_manager[id]', options_from_collection_for_select(@managers, 'id', 'name_or_email'), include_blank: true %>
           </span>
         </div>
 

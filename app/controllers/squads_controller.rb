@@ -23,6 +23,7 @@ class SquadsController < ApplicationController
   end
 
   def edit
+    @managers = User.all
     @squad_users = @squad.users
     @squad_managers = @squad.squad_managers.map(&:user)
   end
