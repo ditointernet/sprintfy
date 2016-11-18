@@ -1,40 +1,40 @@
-<table>
+<table style="border-collapse: collapse; border: 1px solid black;">
   <thead>
     <tr>
-      <th></th>
-      <th>Dias</th>
-      <th>SPs</th>
-      <th>SPs / Dia</th>
-      <th>Média Histórica de <br /> SPs / Dia</th>
+      <th stlye="border: 1px solid black; min-width: 100px;"></th>
+      <th style="border: 1px solid black; min-width: 100px;">Dias</th>
+      <th style="border: 1px solid black; min-width: 100px;">SPs</th>
+      <th style="border: 1px solid black; min-width: 100px;">SPs / Dia</th>
+      <th style="border: 1px solid black; min-width: 100px;">Média Histórica de <br /> SPs / Dia</th>
     </tr>
   </thead>
   <tbody>
     <% @story_points.each do |sp| %>
       <tr>
-        <td style="text-align: right;"><b><%= sp[:user_name] %></b></td>
-        <td style="text-align: center;"><%= @sprint_days_count %></td>
-        <td style="text-align: center;"><%= sp[:story_points] %></td>
-        <td style="text-align: center;">
+        <td style="text-align: right; border: 1px solid black; min-width: 100px;"><b><%= sp[:user_name] %></b></td>
+        <td style="text-align: center; border: 1px solid black; min-width: 100px;"><%= @sprint_days_count %></td>
+        <td style="text-align: center; border: 1px solid black; min-width: 100px;"><%= sp[:story_points] %></td>
+        <td style="text-align: center; border: 1px solid black; min-width: 100px;">
           <b>
             <%= number_with_precision(sp[:daily_story_points], precision: 2) %>
           </b>
         </td>
-        <td style="text-align: center;">
+        <td style="text-align: center; border: 1px solid black; min-width: 100px;">
           <%= number_with_precision(sp[:daily_story_points_average], precision: 2) %>
         </td>
       </tr>
     <% end %>
 
     <tr>
-      <td style="text-align: right;"><b>Total</b></td>
-      <td style="text-align: center;"><%= @sprint_days_count %></td>
-      <td style="text-align: center;"><%= @total_story_points[:story_points] %></td>
-      <td style="text-align: center;">
+      <td style="text-align: right; border: 1px solid black; min-width: 100px;"><b>Total</b></td>
+      <td style="text-align: center; border: 1px solid black; min-width: 100px;"><%= @sprint_days_count %></td>
+      <td style="text-align: center; border: 1px solid black; min-width: 100px;"><%= @total_story_points[:story_points] %></td>
+      <td style="text-align: center; border: 1px solid black; min-width: 100px;">
         <b>
           <%= number_with_precision(@total_story_points[:daily_story_points], precision: 2) %>
         </b>
       </td>
-      <td style="text-align: center;">
+      <td style="text-align: center; border: 1px solid black; min-width: 100px;">
         <%= number_with_precision(@total_story_points[:daily_story_points_average], precision: 2) %>
       </td>
     </tr>
