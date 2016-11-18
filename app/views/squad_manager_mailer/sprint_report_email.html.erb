@@ -1,55 +1,55 @@
-<%= render 'squad_manager_mailer/sprint_report_email/report_css' %>
+<body style="font-family: sans-serif;">
+  <%= render 'squad_manager_mailer/sprint_report_email/report_title' %>
 
-<%= render 'squad_manager_mailer/sprint_report_email/report_title' %>
+  <div style="margin: 40px 0;">
+    <div style="font-weight: bold; font-size: 24px; margin-bottom: 20px;">Goals</div>
+    <%= render 'squad_manager_mailer/sprint_report_email/goals_report' %>
+  </div>
 
-<div class="report-section">
-  <div class="title">Goals</div>
-  <%= render 'squad_manager_mailer/sprint_report_email/goals_report' %>
-</div>
+  <div style="margin: 40px 0;">
+    <div style="font-weight: bold; font-size: 24px; margin-bottom: 20px;">Story Points</div>
 
-<div class="report-section">
-  <div class="title">Story Points</div>
+    <div>Tabela 1 - Story points entregues</div>
+    <%= render 'squad_manager_mailer/sprint_report_email/story_points_table' %>
 
-  <div>Tabela 1 - Story points entregues</div>
-  <%= render 'squad_manager_mailer/sprint_report_email/story_points_table' %>
+    <div style="height: 20px;"></div>
 
-  <div class="separator"></div>
+    <%= render 'squad_manager_mailer/sprint_report_email/story_points_summary' %>
 
-  <%= render 'squad_manager_mailer/sprint_report_email/story_points_summary' %>
+    <div style="height: 20px;"></div>
 
-  <div class="separator"></div>
+    <div>Tabela 2 - Story points por dia útil</div>
+    <%= render 'squad_manager_mailer/sprint_report_email/daily_story_points_table' %>
+  </div>
 
-  <div>Tabela 2 - Story points por dia útil</div>
-  <%= render 'squad_manager_mailer/sprint_report_email/daily_story_points_table' %>
-</div>
+  <div style="margin: 40px 0;">
+    <div style="font-weight: bold; font-size: 24px; margin-bottom: 20px;">Daily Meetings</div>
+    <%= render 'squad_manager_mailer/sprint_report_email/daily_meeting_summary' %>
 
-<div class="report-section">
-  <div class="title">Daily Meetings</div>
-  <%= render 'squad_manager_mailer/sprint_report_email/daily_meeting_summary' %>
+    <% if @daily_meeting_not_done.present? %>
+      <div style="margin: 20px 0;">
+        <div style="font-weight: bold; font-size: 18px; margin-bottom: 10px;">Dias sem daily meeting</div>
+        <%= render 'squad_manager_mailer/sprint_report_email/daily_meeting_not_done_items' %>
+      </div>
+    <% end %>
+  </div>
 
-  <% if @daily_meeting_not_done.present? %>
-    <div class="subsection">
-      <div class="title">Dias sem daily meeting</div>
-      <%= render 'squad_manager_mailer/sprint_report_email/daily_meeting_not_done_items' %>
+  <div style="margin: 40px 0;">
+    <div style="font-weight: bold; font-size: 24px; margin-bottom: 20px;">Sprint Review</div>
+
+    <div style="margin: 20px 0;">
+      <div style="font-weight: bold; font-size: 18px; margin-bottom: 10px;">O que mudar</div>
+      <%= render 'squad_manager_mailer/sprint_report_email/sprint_report_items', sprint_report: @sprint_what_to_change %>
     </div>
-  <% end %>
-</div>
 
-<div class="report-section">
-  <div class="title">Sprint Review</div>
+    <div style="margin: 20px 0;">
+      <div style="font-weight: bold; font-size: 18px; margin-bottom: 10px;">O que deu certo</div>
+      <%= render 'squad_manager_mailer/sprint_report_email/sprint_report_items', sprint_report: @sprint_did_right %>
+    </div>
 
-  <div class="subsection">
-    <div class="title">O que mudar</div>
-    <%= render 'squad_manager_mailer/sprint_report_email/sprint_report_items', sprint_report: @sprint_what_to_change %>
-  </div>
-
-  <div class="subsection">
-    <div class="title">O que deu certo</div>
-    <%= render 'squad_manager_mailer/sprint_report_email/sprint_report_items', sprint_report: @sprint_did_right %>
-  </div>
-
-  <div class="subsection">
-    <div class="title">O que deu errado</div>
-    <%= render 'squad_manager_mailer/sprint_report_email/sprint_report_items', sprint_report: @sprint_did_wrong %>
+    <div style="margin: 20px 0;">
+      <div style="font-weight: bold; font-size: 18px; margin-bottom: 10px;">O que deu errado</div>
+      <%= render 'squad_manager_mailer/sprint_report_email/sprint_report_items', sprint_report: @sprint_did_wrong %>
+    </div>
   </div>
 </div>
