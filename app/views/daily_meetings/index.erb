@@ -1,0 +1,67 @@
+<div class="container">
+  <h1 class="title is-2">Sprint #<%= @sprint.squad_counter %> Daily Meetings</h1>
+
+  <table class="table is-bordered">
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Feito?</th>
+        <th>Abonado?</th>
+        <th>Justificativa</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @sprint_days.each_with_index do |sprint_day, i| %>
+        <tr class="<%= sprint_day[:html_class] %>">
+          <td><%= format_date(sprint_day[:date]) %></td>
+          <td><%= sprint_day[:daily_meeting_done] ? 'Sim' : 'Não' %></td>
+          <td><%= sprint_day[:daily_meeting_skipped] ? 'Sim' : 'Não' %></td>
+          <td><%= sprint_day[:daily_meeting_not_done_reason] %></td>
+          <td>
+            <%= form_for @sprint, method: :post, url: create_daily_meeting_sprint_path(@sprint), html: { id: "sprintfy-dm-form-#{i}", class: "sprintfy-dm-form" } do |f| %>
+              <%= hidden_field_tag 'daily_meeting[date]', format_date(sprint_day[:date]) %>
+              <%= hidden_field_tag 'daily_meeting[done]', false %>
+              <%= hidden_field_tag 'daily_meeting[skip]', false %>
+              <%= hidden_field_tag 'daily_meeting[reason]', '' %>
+
+              <% if sprint_day[:date] > @today %>
+              <% elsif !sprint_day[:daily_meeting_present] %>
+                <% if current_user.can_update?(DailyMeeting) %>
+                  <div><a href="#" class="dm-done">Feito</a></div>
+                  <div><a href="#" data-form-count="<%= "#{i}" %>" class="dm-not-done">Não Feito</a></div>
+                  <div><a href="#" class="dm-skip">Abonar</a></div>
+                <% end %>
+              <% else %>
+                <div><strong>Registrado</strong></div>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div>
+    <%= link_to 'Ir para o Sprint', edit_sprint_path(@sprint), class: 'button is-dark' %>
+  </div>
+
+  <div id="sprintfy-dm-not-done-reason-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title">Justificativa</p>
+        <button class="delete"></button>
+      </header>
+      <section class="modal-card-body">
+        Por que não teve DM:
+        <textarea class="reason-textarea textarea"></textarea>
+      </section>
+      <footer class="modal-card-foot">
+        <a class="send-button button is-primary">Enviar</a>
+        <a class="cancel-button button">Cancelar</a>
+      </footer>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,55 @@
+<%= render 'squad_manager_mailer/sprint_report_email/report_css' %>
+
+<%= render 'squad_manager_mailer/sprint_report_email/report_title' %>
+
+<div class="report-section">
+  <div class="title">Goals</div>
+  <%= render 'squad_manager_mailer/sprint_report_email/goals_report' %>
+</div>
+
+<div class="report-section">
+  <div class="title">Story Points</div>
+
+  <div>Tabela 1 - Story points entregues</div>
+  <%= render 'squad_manager_mailer/sprint_report_email/story_points_table' %>
+
+  <div class="separator"></div>
+
+  <%= render 'squad_manager_mailer/sprint_report_email/story_points_summary' %>
+
+  <div class="separator"></div>
+
+  <div>Tabela 2 - Story points por dia útil</div>
+  <%= render 'squad_manager_mailer/sprint_report_email/daily_story_points_table' %>
+</div>
+
+<div class="report-section">
+  <div class="title">Daily Meetings</div>
+  <%= render 'squad_manager_mailer/sprint_report_email/daily_meeting_summary' %>
+
+  <% if @daily_meeting_not_done.present? %>
+    <div class="subsection">
+      <div class="title">Dias sem daily meeting</div>
+      <%= render 'squad_manager_mailer/sprint_report_email/daily_meeting_not_done_items' %>
+    </div>
+  <% end %>
+</div>
+
+<div class="report-section">
+  <div class="title">Sprint Review</div>
+
+  <div class="subsection">
+    <div class="title">O que mudar</div>
+    <%= render 'squad_manager_mailer/sprint_report_email/sprint_report_items', sprint_report: @sprint_what_to_change %>
+  </div>
+
+  <div class="subsection">
+    <div class="title">O que deu certo</div>
+    <%= render 'squad_manager_mailer/sprint_report_email/sprint_report_items', sprint_report: @sprint_did_right %>
+  </div>
+
+  <div class="subsection">
+    <div class="title">O que deu errado</div>
+    <%= render 'squad_manager_mailer/sprint_report_email/sprint_report_items', sprint_report: @sprint_did_wrong %>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<div>
+  Justificativa para dias sem daily meeting:
+  <ul>
+    <% @daily_meeting_not_done.each do |dm| %>
+      <li><b><%= dm.date.day %>/<%= dm.date.month %></b> - <%= dm.reason %></li>
+    <% end %>
+  </ul>
+</div>

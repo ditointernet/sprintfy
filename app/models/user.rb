@@ -6,6 +6,7 @@ class User < ApplicationRecord
   belongs_to :squad, optional: true
   has_and_belongs_to_many :sprints, -> { distinct }
   has_many :story_points
+  has_many :squad_managers
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
@@ -22,6 +23,10 @@ class User < ApplicationRecord
 
   def sprinter?
     self.has_role(:sprinter)
+  end
+
+  def total_sprint_days
+    self.sprints.map(&:sprint_days).map(&:count).reduce(:+)
   end
 
   private

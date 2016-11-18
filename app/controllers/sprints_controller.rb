@@ -4,7 +4,7 @@ class SprintsController < ApplicationController
   before_action :load_user, only: [:add_user, :remove_user]
   before_action :load_sprint_report_texts, only: [:closing, :edit]
 
-  authorize_actions_for Sprint, except: :edit
+  authorize_actions_for Sprint, except: [:edit]
   authority_actions add_user: 'update', remove_user: 'update', closing: 'update', close: 'update'
 
   def new
@@ -80,6 +80,9 @@ class SprintsController < ApplicationController
     SprintReport.create(what_to_change_sprint_report_params.merge(name: 'what_to_change', sprint: @sprint))
 
     @sprint.update(closed: true)
+
+    SquadManagerMailer.sprint_report_email(@sprint).deliver_now
+    flash[:notice] = 'Relatório enviado com sucesso.'
 
     redirect_to_edit_sprint_path
   end

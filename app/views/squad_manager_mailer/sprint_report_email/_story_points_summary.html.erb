@@ -1,0 +1,11 @@
+<div>
+  Foram
+  <b><%= @total_story_points[:expected_story_points] %></b>
+  story points prometidos e
+  <b><%= @total_story_points[:story_points] %></b>
+  story points entregues
+  <b>(<%= number_with_precision(@total_story_points[:total_percent], precision: 2) %>%)</b>,
+  ou seja, uma média de
+  <b><%= number_with_precision(@total_story_points[:daily_story_points], precision: 2) %></b>
+  story points por dia útil do sprint.
+</div>

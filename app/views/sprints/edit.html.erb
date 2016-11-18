@@ -61,6 +61,14 @@
     </div>
   <% end %>
 
+  <div class="sprintfy-sprint-daily-meetings">
+    <div style="margin-bottom: 10px">
+      <strong class="title is-3">Daily Meetings</strong>
+    </div>
+
+    <%= link_to (current_user.can_update?(DailyMeeting) ? 'Gerenciar' : 'Ver'), daily_meetings_sprint_path(@sprint), class: 'button is-dark' %>
+  </div>
+
   <div class="sprintfy-sprint-goals">
     <div style="margin-bottom: 10px;">
       <strong class="title is-3">Goals</strong>

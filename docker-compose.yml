@@ -14,5 +14,6 @@ services:
       - .:/usr/src/app
     environment:
       - RAILS_ENV=development
+      - MAILER_SENDER=dev@email.com
     links:
       - mysql
