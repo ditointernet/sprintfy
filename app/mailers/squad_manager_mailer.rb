@@ -38,6 +38,7 @@ class SquadManagerMailer < ApplicationMailer
 
     @daily_meeting_done_count = @sprint.daily_meetings.where(done: true).count
     @daily_meeting_not_done = @sprint.daily_meetings.where(done: false, skip: false)
+    @sprint_skipped_days = @sprint.daily_meetings.where(skip: true).count
 
     recipients = @squad.squad_managers.map do |manager|
       manager.user.email
