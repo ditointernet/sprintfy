@@ -11,6 +11,19 @@ spec:
   selector:
     name: sprintfy-mysql
 ---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: sprintfy-mysql-claim
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "slow"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
