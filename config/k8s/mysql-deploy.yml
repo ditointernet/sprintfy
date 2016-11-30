@@ -1,3 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: sprintfy-mysql
+  name: sprintfy-mysql
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    name: sprintfy-mysql
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: sprintfy-mysql-claim
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "slow"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -25,6 +51,5 @@ spec:
             mountPath: /var/lib/mysql
       volumes:
         - name: sprintfy-mysql-persistent-storage
-          awsElasticBlockStore:
-           volumeID: aws://us-east-1d/vol-d9080675
-           fsType: ext4
+          persistentVolumeClaim:
+            claimName: sprintfy-mysql-claim
