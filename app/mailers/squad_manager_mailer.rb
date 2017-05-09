@@ -9,7 +9,7 @@ class SquadManagerMailer < ApplicationMailer
     @incomplete_goals = @sprint.goals.where(completed: false)
 
     @story_points = @sprint.story_points.map do |story_points|
-      user_story_points = story_points.user.story_points.where(sprint: @sprint.previous)
+      user_story_points = story_points.user.story_points.where(sprint: @sprint.closed_before)
       user_story_points_total = user_story_points.sum(:value).to_f
       user_story_points_expected_total = user_story_points.sum(:expected_value).to_f
 
@@ -19,14 +19,14 @@ class SquadManagerMailer < ApplicationMailer
         expected_story_points: story_points.expected_value,
         story_points_average: safe_div(100 * user_story_points_total, user_story_points_expected_total),
         daily_story_points: safe_div(story_points.value, @sprint_days_count),
-        daily_story_points_average: safe_div(user_story_points_total, story_points.user.total_sprint_days),
+        daily_story_points_average: safe_div(user_story_points_total, story_points.user.total_sprint_days - @sprint_days_count),
         total_percent: safe_div(100 * story_points.value, story_points.expected_value)
       }
     end
 
     @total_story_points = {}
-    @total_story_points[:story_points] = @story_points.map {|sp| sp[:story_points] }.reduce(0, :+)
-    @total_story_points[:expected_story_points] = @story_points.map {|sp| sp[:expected_story_points] }.reduce(0, :+)
+    @total_story_points[:story_points] = @story_points.map {|sp| sp[:story_points] }.sum
+    @total_story_points[:expected_story_points] = @story_points.map {|sp| sp[:expected_story_points] }.sum
     @total_story_points[:story_points_average] = safe_div(100 * @squad.story_points.where(sprint: @sprint.previous).sum(:value).to_f, @squad.story_points.where(sprint: @sprint.previous).sum(:expected_value).to_f)
     @total_story_points[:daily_story_points] = safe_div(@total_story_points[:story_points], @sprint_days_count)
     @total_story_points[:daily_story_points_average] = safe_div(@squad.story_points.where(sprint: @sprint.previous).sum(:value).to_f, @sprint.previous.map(&:total_sprint_days).reduce(0, :+))
