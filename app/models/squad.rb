@@ -7,6 +7,6 @@ class Squad < ApplicationRecord
   has_many :sprints
 
   def story_points
-    StoryPoint.where(user: self.users)
+    StoryPoint.where(sprint: self.sprints)
   end
 end

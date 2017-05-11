@@ -67,6 +67,10 @@ class Sprint < ApplicationRecord
     Sprint.where('squad_counter < ? AND squad_id = ?', self.squad_counter, self.squad_id)
   end
 
+  def closed_before
+    Sprint.where('closed = ? AND due_date < ?', true, self.due_date)
+  end
+
   def sprint_days
     self.start_date.upto(self.due_date).select(&:on_weekday?)
   end
