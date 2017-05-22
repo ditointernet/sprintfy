@@ -43,6 +43,10 @@ class SprintsController < ApplicationController
   def edit
     @sprint_goal = Goal.new(sprint: @sprint)
     @users = User.all.sort {|a, b| a.name_or_email.downcase <=> b.name_or_email.downcase }
+
+    @sps_done = @sprint.story_points.sum(&:value)
+    @sps_expected = @sprint.story_points.sum(&:expected_value)
+    @percent_sps = (100.0 * @sps_done / @sps_expected).round(2)
   end
 
   def update
