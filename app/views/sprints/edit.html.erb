@@ -167,6 +167,15 @@
             <% end %>
           </tr>
         <% end %>
+        <% if @sprint.closed? %>
+          <tr class='sprintfy-summary-sps'>
+            <td>Total</td>
+            <td><%= @sprint.squad.name %></td>
+            <td>
+              <%= "#{@sps_done} / #{@sps_expected} ( #{@percent_sps} % )" %>
+            </td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
 
