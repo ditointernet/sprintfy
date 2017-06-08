@@ -9,18 +9,28 @@
         <table class="table is-bordered">
           <thead>
             <tr>
-              <th>Nome</th>
-              <th>Story Points</th>
+              <th></th>
+              <th colspan="2" scope='colgroup' class="sprintfy-closing-table-center">
+                StoryPoints
+              </th>
+            </tr>
+            <tr>
+              <th scope='colgroup'>Name</th>
+              <th scope='col'>Expected</th>
+              <th scope='col'>Done</th>
             </tr>
           </thead>
 
           <tbody>
-            <% @sprint.users.each do |user| %>
+            <% @sprint.story_points.each do |sp| %>
               <tr>
-                <td><%= user.name_or_email %></td>
+                <td><%= sp.user.name_or_email %></td>
+                <td class='sprintfy-closing-table-center'>
+                  <%= sp.expected_value %>
+                </td>
                 <td>
-                  <%= hidden_field_tag "users[][id]", user.id %>
-                  <%= number_field_tag "users[][story_points]", '', step: '0.01', style: 'width: 30%', class: 'input', value: '0' %>
+                  <%= hidden_field_tag "users[][id]", sp.user.id %>
+                  <%= number_field_tag "users[][story_points]", '', step: '0.01', style: 'width: 80%', class: 'input', value: sp.expected_value, :step => 0.25 %>
                 </td>
               </tr>
             <% end %>
