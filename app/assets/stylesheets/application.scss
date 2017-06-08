@@ -33,10 +33,8 @@ $family-primary: 'Roboto', sans-serif;
   color: white !important;
 }
 
-.table th {
-  text-align: center
-}
-
-.table td {
-  text-align: center
+.table {
+  th, td {
+    text-align: center
+  }
 }
