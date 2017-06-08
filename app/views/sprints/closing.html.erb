@@ -25,9 +25,7 @@
             <% @sprint.story_points.each do |sp| %>
               <tr>
                 <td><%= sp.user.name_or_email %></td>
-                <td class='sprintfy-closing-table-center'>
-                  <%= sp.expected_value %>
-                </td>
+                <td><%= sp.expected_value %></td>
                 <td>
                   <%= hidden_field_tag "users[][id]", sp.user.id %>
                   <%= number_field_tag "users[][story_points]", '', step: '0.01', style: 'width: 80%', class: 'input', value: sp.expected_value, :step => 0.25 %>
