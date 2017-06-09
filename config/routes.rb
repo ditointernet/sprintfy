@@ -58,4 +58,5 @@ Rails.application.routes.draw do
   post '/adicionar-usuario', to: 'users/pages#create_user', as: :create_user
   get '/meus-sprints', to: 'users/pages#sprints', as: :user_sprints
   get '/usuarios', to: 'users/pages#list', as: :users_list
+  get '/evolucao', to: 'users/pages#personal_evolution', as: :personal_evolution
 end

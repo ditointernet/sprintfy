@@ -39,6 +39,7 @@ gem 'font-awesome-rails'
 
 gem 'mysql2'
 
+gem 'chartkick'
 
 group :development do
   gem 'letter_opener'

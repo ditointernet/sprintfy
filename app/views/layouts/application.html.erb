@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+    <%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -62,6 +63,11 @@
                     <li><%= link_to 'CADASTRADAS', squads_path %></li>
                   </ul>
                 <% end %>
+
+                <p class="menu-label">RELATÓRIOS</p>
+                <ul class="menu-list">
+                  <li><%= link_to 'EVOLUÇÃO PESSOAL', :personal_evolution %></li>
+                </ul>
 
                 <p class="menu-label">CONTA</p>
                 <ul class="menu-list">

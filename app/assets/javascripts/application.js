@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require maskedinput
 //= require_tree .
+//= require chartkick
 
 // App navbar toggle
 $(function() {
