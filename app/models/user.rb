@@ -45,6 +45,14 @@ class User < ApplicationRecord
     ]
   end
 
+  def squad_name
+    if !self.squad_id.nil?
+      self.squad.name
+    else
+      return "No squad"
+    end
+  end
+
   private
 
   def assign_default_role

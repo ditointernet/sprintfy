@@ -49,6 +49,13 @@
                 </ul>
 
                 <% if current_user.admin? %>
+                  <p class="menu-label">PAINEL ADMINISTRATIVO</p>
+                  <ul class="menu-list">
+                      <li><%= link_to 'RELATÓRIOS', reports_path %></li>
+                  </ul>
+                <% end %>
+
+                <% if current_user.admin? %>
                   <p class="menu-label">USUÁRIOS</p>
                   <ul class="menu-list">
                     <li><%= link_to 'CRIAR USUÁRIO', new_user_path %></li>

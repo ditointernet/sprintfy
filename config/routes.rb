@@ -45,6 +45,13 @@ Rails.application.routes.draw do
     end
   end
 
+  #Reports admin
+  resources :reports, only:[:index], path: 'reports/report' do
+    member do
+      get '/reports', to: 'reports#report', as: :report
+    end
+  end
+
   # Story points
   resources :story_points, only: [], path: 'story-points' do
     collection do
@@ -59,4 +66,5 @@ Rails.application.routes.draw do
   get '/meus-sprints', to: 'users/pages#sprints', as: :user_sprints
   get '/usuarios', to: 'users/pages#list', as: :users_list
   get '/evolucao', to: 'users/pages#personal_evolution', as: :personal_evolution
+
 end

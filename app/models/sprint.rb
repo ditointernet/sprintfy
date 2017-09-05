@@ -4,6 +4,7 @@ class Sprint < ApplicationRecord
 
   belongs_to :squad
   has_and_belongs_to_many :users, -> { distinct }
+  has_and_belongs_to_many :reports
   has_many :goals
   has_many :story_points
   has_many :sprint_reports
