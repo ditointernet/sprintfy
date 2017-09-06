@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   end
 
   #Reports admin
-  resources :reports, only:[:index], path: 'reports/report' do
+  resources :reports, only:[:index], path: 'reports' do
     member do
       get '/reports', to: 'reports#report', as: :report
     end
