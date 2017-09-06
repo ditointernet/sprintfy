@@ -134,13 +134,6 @@ ActiveRecord::Schema.define(version: 20170905190049) do
     t.index ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
   end
 
-  add_foreign_key "daily_meetings", "sprints"
-  add_foreign_key "daily_meetings", "squads"
-  add_foreign_key "goals", "sprints"
-  add_foreign_key "reports", "sprints", column: "sprints_id"
-  add_foreign_key "reports", "squads", column: "squads_id"
-  add_foreign_key "reports", "users", column: "users_id"
-  add_foreign_key "sprint_reports", "sprints"
   add_foreign_key "sprints", "squads"
   add_foreign_key "sprints_users", "sprints"
   add_foreign_key "sprints_users", "users"
