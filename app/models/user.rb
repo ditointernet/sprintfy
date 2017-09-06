@@ -31,10 +31,9 @@ class User < ApplicationRecord
 
   def average_sps_per_sprint
     sprints.each_with_object({}) do |sprint, sps_per_sprint|
-      sprint_name = "#{sprint.squad.name}_#{sprint.squad_counter}"
-      sprint_name = sprint_name.tr(' ', '_')
-      story_points = sprint.story_points.by_user_on_sprint(self, sprint).value
-      sps_per_sprint[sprint_name] = story_points / sprint.total_sprint_days
+      sprint_name = "#{sprint.squad.name}_#{sprint.squad_counter}".tr(' ', '_')
+      story_points = self.story_points_on_sprint(sprint).value
+      sps_per_sprint[sprint_name] = (story_points/(sprint.total_sprint_days.nonzero? || 1)).to_f
     end
   end
 
@@ -45,12 +44,12 @@ class User < ApplicationRecord
     ]
   end
 
+  def story_points_on_sprint(sprint)
+    self.story_points.where(sprint_id: sprint.id).take
+  end
+
   def squad_name
-    if !self.squad_id.nil?
-      self.squad.name
-    else
-      return "No squad"
-    end
+    self.squad.try(:name) || "No squad"
   end
 
   private
