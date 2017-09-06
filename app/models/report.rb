@@ -8,8 +8,7 @@ class Report < ApplicationRecord
         Squad.where(id: sprint.squad_id).first.name,
         sprint.squad_id,
         sprint.start_date.strftime("%d-%m-%y"),
-        sprint.due_date.strftime("%d-%m-%y"),
-        
+        sprint.due_date.strftime("%d-%m-%y")
       ]
     end
     sprints_test
