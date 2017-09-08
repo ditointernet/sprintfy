@@ -3,7 +3,8 @@ class ReportsController < ApplicationController
 
   def index
     @report = Report.create
-    @test_data = @report.admin_chart_data
+    @sprint_all_data = @report.chart_data_sprint_all
+    @sprint_squad_data = @report.chart_data_sprint_squad(1)
     render 'report'
   end
 end
