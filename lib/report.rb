@@ -1,6 +1,4 @@
-class Report < ApplicationRecord
-  has_and_belongs_to_many :sprints
-
+class Report
   def chart_data_sprint ##testes
     sprints_test = {}
     Sprint.find_each do |sprint|
@@ -22,10 +20,10 @@ class Report < ApplicationRecord
     ]
   end
 
-  def chart_data_sprint_all
+  def chart_data_month_all
     [
-      name: 'SP per sprint on every user',
-      data: chart_data_sprint_all_data
+      name: 'SP per month on every user',
+      data: chart_data_month_all_data
     ]
   end
 
@@ -36,29 +34,29 @@ class Report < ApplicationRecord
     ]
   end
 
-  def chart_data_sprint_all_data
+  def chart_data_month_all_data
     data_board = {}
-    Sprint.find_each do |sprint|
-      data_board[sprint.squad_counter] = story_points_sprint_total(sprint.squad_counter).to_f
-    end
+      12.times do |i|
+        data_board[Date.today.months_ago(11-i).strftime('%b')] = sp_month(Date.today.months_ago(11-i))
+      end
     data_board
   end
 
-  def chart_data_sprint_squad_data(squad_id)
-    data_board = {}
-    Sprint.where(squad_id: squad_id).find_each do |sprint|
-      data_board[sprint.squad_counter] = story_points_sprint_total(sprint.squad_counter).to_f
-    end
-    data_board
-  end
-
-  def story_points_sprint_total(sprint_squad_counter)
+  def sp_month(date_month)
     total = 0
-    Sprint.where(squad_counter: sprint_squad_counter).find_each do |sprint|
+    Sprint.where('extract(month from due_date) = ?', date_month.month).where('extract(year from due_date) = ?', date_month.year).find_each do |sprint|
       StoryPoint.where(sprint_id: sprint.id).each do |sp|
         total += sp.value if sp.present?
       end
     end
     total
+  end
+
+  def chart_data_sprint_squad_data(squad_id)
+    data_board = {}
+    Sprint.where(squad_id: squad_id).find_each do |sprint|
+      data_board[sprint.squad_counter] = sprint.story_points_sprint_squad(sprint.id).to_f
+    end
+    data_board
   end
 end

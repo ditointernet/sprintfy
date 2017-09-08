@@ -21,17 +21,16 @@
     <button type="button" name="button">Gerar Gráfico</button>
 </div>
 
-<%= @sprint_all_data  %>
+<br>
 <%=
-  line_chart @sprint_all_data,
-    title: 'SP por Sprint para Todos os Usuários',
+  line_chart @month_all_data,
+    title: 'SP por Mês para Todos os Usuários',
     xtitle: "Sprint",
     ytitle: "SP/dia",
     curve: false,
     legend: false
 %>
-
-<%= @sprint_squad_data  %>
+<br>
 <%=
   line_chart @sprint_squad_data,
     title: 'SP por Sprint para uma equipe',

@@ -4,7 +4,6 @@ class Sprint < ApplicationRecord
 
   belongs_to :squad
   has_and_belongs_to_many :users, -> { distinct }
-  has_and_belongs_to_many :reports
   has_many :goals
   has_many :story_points
   has_many :sprint_reports
@@ -78,5 +77,13 @@ class Sprint < ApplicationRecord
 
   def total_sprint_days
     sprint_days.count
+  end
+
+  def story_points_sprint_squad(sprint_id)
+    total = 0
+    StoryPoint.where(sprint_id: sprint_id).each do |sp|
+      total += sp.value if sp.present?
+    end
+    total
   end
 end
