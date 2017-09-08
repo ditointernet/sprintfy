@@ -45,11 +45,8 @@ Rails.application.routes.draw do
     end
   end
 
-  #Reports admin
   resources :reports, only:[:index], path: 'reports' do
-    member do
       get '/reports', to: 'reports#report', as: :report
-    end
   end
 
   # Story points
