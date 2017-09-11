@@ -86,4 +86,12 @@ class Sprint < ApplicationRecord
     end
     total
   end
+
+  def story_points_sprint_individual(sprint_id)
+    total = 0
+    StoryPoint.where(sprint_id: sprint_id).each do |sp|
+      total += sp.value if sp.present?
+    end
+    total
+  end
 end

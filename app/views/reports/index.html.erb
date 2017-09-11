@@ -10,23 +10,50 @@
 
     <h3>Selecione a base de usuários</h3>
     <select>
-      <option value='single'>Individual</option>
-      <option value='team'>Equipe</option>
       <option value='everyone'>Todos</option>
+      <option value='team'>Equipe</option>
+      <!-- <option value='single'>Individual</option> -->
     </select>
 
-    <h3>Selecione o Usuário</h3>
-    <input/>
+    <!-- <h3>Selecione o Usuário</h3>
+    <input/> -->
 
     <button type="button" name="button">Gerar Gráfico</button>
 </div>
 
 <br>
 <%=
-  line_chart @month_all_data,
+  line_chart @data_month_all,
     title: 'SP por Mês para Todos os Usuários',
+    xtitle: "Mês",
+    ytitle: "SP",
+    curve: false,
+    legend: false
+%>
+<br>
+<%=
+  line_chart @data_sprint_squad,
+    title: 'SP por Sprint para uma equipe',
     xtitle: "Sprint",
-    ytitle: "SP/dia",
+    ytitle: "SP",
+    curve: false,
+    legend: false
+%>
+<br>
+<%=
+  line_chart @data_month_squad,
+    title: 'SP por mês para uma equipe',
+    xtitle: "Mês",
+    ytitle: "SP",
+    curve: false,
+    legend: false
+%>
+<br>
+<%=
+  line_chart @data_week_squad,
+    title: 'SP por semana para uma equipe',
+    xtitle: "Semana",
+    ytitle: "SP",
     curve: false,
     legend: false
 %>
