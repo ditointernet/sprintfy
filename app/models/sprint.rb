@@ -79,9 +79,9 @@ class Sprint < ApplicationRecord
     sprint_days.count
   end
 
-  def story_points_sprint_squad(sprint_id)
+  def story_points_sprint_squad
     total = 0
-    StoryPoint.where(sprint_id: sprint_id).each do |sp|
+    sprint.story_points.find_each do |sp|
       total += sp.value if sp.present?
     end
     total

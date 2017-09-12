@@ -1,36 +1,8 @@
 class Report
-  def chart_data_sprint ##testes
-    sprints_test = {}
-    Sprint.find_each do |sprint|
-      sprints_test[sprint.id] = {
-        squad_name: Squad.where(id: sprint.squad_id).first.name,
-        squad_id: sprint.squad_id,
-        sprint_start_date: sprint.start_date.strftime("%d-%m-%y"),
-        sprint_due_date: sprint.due_date.strftime("%d-%m-%y"),
-        sp_total: story_points_sprint_total(sprint.id)
-      }
-    end
-    sprints_test
-  end
-
-  def admin_chart_data ##testes
-    [
-      name: 'Test data',
-      data: chart_data_sprint
-    ]
-  end
-
   def chart_data_month_all
     [
       name: 'SP per month on every user',
       data: chart_data_month_all_data
-    ]
-  end
-
-  def chart_data_sprint_squad(squad_id)
-    [
-      name: 'SP per sprint on squad',
-      data: chart_data_sprint_squad_data(squad_id)
     ]
   end
 
@@ -50,13 +22,5 @@ class Report
       end
     end
     total
-  end
-
-  def chart_data_sprint_squad_data(squad_id)
-    data_board = {}
-    Sprint.where(squad_id: squad_id).find_each do |sprint|
-      data_board[sprint.squad_counter] = sprint.story_points_sprint_squad(sprint.id).to_f
-    end
-    data_board
   end
 end
