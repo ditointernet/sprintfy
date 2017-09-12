@@ -1,4 +1,22 @@
 class Report
+  def data_route(period,group,squad_id)
+    if (period == 'sprint')
+      if(group == 'everyone')
+        return chart_data_month_all
+      elsif(group == 'squad')
+        return chart_data_sprint_squad(squad_id)
+      end
+    elsif (period == 'week')
+      if (group == 'squad')
+        return chart_data_week_squad(squad_id)
+      end
+    elsif(period == 'month')
+      if (group == 'squad')
+        return chart_data_month_squad(squad_id)
+      end
+    end
+  end
+
   def chart_data_month_all
     {
       name: 'SP per month on every user',
@@ -50,7 +68,7 @@ class Report
   def chart_data_sprint_squad_data(squad_id)
     data_board = {}
     Sprint.where(squad_id: squad_id).find_each do |sprint|
-      data_board[sprint.squad_counter] = sprint.story_points_sprint_squad(sprint.id).to_f
+      data_board[sprint.squad_counter] = sprint.story_points_sprint_squad.to_f
     end
     data_board
   end
@@ -68,15 +86,6 @@ class Report
       12.times do |i|
         data_board[Date.today.weeks_ago(11-i).to_formatted_s(:short) ] = sp_week_squad(Date.today.weeks_ago(11-i),squad_id)
       end
-    data_board
-  end
-
-  def chart_data_sprint_individual_data(id)
-    data_board = {}
-    squad_id = User.find(id).squad_id
-    Sprint.where(squad_id: squad_id).find_each do |sprint|
-      data_board[sprint.squad_counter] = sprint.story_points_sprint_individual(sprint.id).to_f
-    end
     data_board
   end
 
