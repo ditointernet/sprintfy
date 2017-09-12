@@ -1,58 +1,41 @@
 <h1 class="title is-2">RELATÓRIOS</h1>
 
 <div class="filter-graph">
-    <h3>Selecione o Período</h3>
-    <select id="period">
-      <option value='sprint'>Sprint</option>
-      <option value='week'>Semanal</option>
-      <option value='month'>Mensal</option>
-    </select>
+  <%= form_for '', :url => { action: "index", builder: ReportsController} ,method: :get do |f| %>
+    <div class="options">
+      <div class="param">
+        <h3>Selecione o Período</h3>
+        <select name="period">
+          <option value='sprint'>Sprint</option>
+          <option value='week'>Semanal</option>
+          <option value='month'>Mensal</option>
+        </select>
+      </div>
 
-    <h3>Selecione a base de usuários</h3>
-    <select>
-      <option value='everyone'>Todos</option>
-      <option value='team'>Equipe</option>
-      <!-- <option value='single'>Individual</option> -->
-    </select>
-
-    <!-- <h3>Selecione o Usuário</h3>
-    <input/> -->
-
-    <button type="button" name="button">Gerar Gráfico</button>
+      <div class="param">
+        <h3>Selecione a base de usuários</h3>
+        <select name='group'>
+          <option value='everyone'>Todos</option>
+          <option value='squad'>Equipe</option>
+          <!-- <option value='single'>Individual</option> -->
+        </select>
+      </div>
+      <div class="param">
+      <h3>Selecione a Equipe</h3>
+        <%= select("squad","squad_id",Squad.all.collect{|s| [s.name, s.id]}, {include_blank: true}) %>
+      </div>
+      <div class="param">
+        <%= f.submit 'Gerar Relatório'%>
+      </div>
+    </div>
+  <% end %>
 </div>
+<br>
 
-<br>
 <%=
-  line_chart @data_month_all,
-    title: 'SP por Mês para Todos os Usuários',
-    xtitle: "Mês",
-    ytitle: "SP",
-    curve: false,
-    legend: false
-%>
-<br>
-<%=
-  line_chart @data_sprint_squad,
-    title: 'SP por Sprint para uma equipe',
-    xtitle: "Sprint",
-    ytitle: "SP",
-    curve: false,
-    legend: false
-%>
-<br>
-<%=
-  line_chart @data_month_squad,
-    title: 'SP por mês para uma equipe',
-    xtitle: "Mês",
-    ytitle: "SP",
-    curve: false,
-    legend: false
-%>
-<br>
-<%=
-  line_chart @data_week_squad,
-    title: 'SP por semana para uma equipe',
-    xtitle: "Semana",
+  line_chart @data[:data],
+    title: @data[:name],
+    xtitle: @data[:period],
     ytitle: "SP",
     curve: false,
     legend: false

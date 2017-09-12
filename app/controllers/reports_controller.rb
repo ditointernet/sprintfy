@@ -3,14 +3,20 @@ class ReportsController < ApplicationController
 
   def index
     @report = Report.new
-    @data_month_all = @report.chart_data_month_all
-
-    @data_sprint_squad = @report.chart_data_sprint_squad(1)
-    @data_month_squad = @report.chart_data_month_squad(1)
-    @data_week_squad = @report.chart_data_week_squad(1)
-
-    # @data_sprint_individual = @report.chart_data_sprint_individual(1)
-    # @data_month_individual = @report.chart_data_month_individual(1)
-    # @data_week_individual = @report.chart_data_week_individual(1)
+    if (params[:period] == 'sprint')
+      if(params[:group] == 'everyone')
+        @data = @report.chart_data_month_all
+      elsif(params[:group] == 'squad')
+        @data = @report.chart_data_sprint_squad(params[:squad])
+      end
+    elsif (params[:period] == 'week')
+      if (params[:group] == 'squad')
+        @data = @report.chart_data_week_squad(params[:squad])
+      end
+    elsif(params[:period] == 'month')
+      if (params[:group] == 'squad')
+        @data = @report.chart_data_month_squad(params[:squad])
+      end
+    end
   end
 end

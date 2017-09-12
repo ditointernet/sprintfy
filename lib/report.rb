@@ -1,37 +1,42 @@
 class Report
   def chart_data_month_all
-    [
+    {
       name: 'SP per month on every user',
+      period: 'Month',
       data: chart_data_month_all_data
-    ]
+    }
   end
 
   def chart_data_sprint_squad(squad_id)
-    [
+    {
       name: 'SP per sprint on squad',
+      period: 'Sprint',
       data: chart_data_sprint_squad_data(squad_id)
-    ]
+    }
   end
 
   def chart_data_month_squad(squad_id)
-    [
+    {
       name: 'SP per month on squad',
+      period: 'Month',
       data: chart_data_month_squad_data(squad_id)
-    ]
+    }
   end
 
   def chart_data_week_squad(squad_id)
-    [
+    {
       name: 'SP per week on squad',
+      period: 'Week',
       data: chart_data_week_squad_data(squad_id)
-    ]
+    }
   end
 
   def chart_data_sprint_individual(id)
-    [
+    {
       name: 'SP per sprint on employee',
+      period: 'Sprint',
       data: chart_data_sprint_individual_data(id)
-    ]
+    }
   end
 
   def chart_data_month_all_data
