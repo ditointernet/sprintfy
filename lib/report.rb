@@ -55,7 +55,7 @@ class Report
       data[Date.today.months_ago(11-i).strftime('%b-%y')] = 0
     end
     Sprint.where("Date(due_date) >= ?", Date.today.months_ago(11)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
-      data[sprint.due_date.strftime('%b-%y')] = sprint.story_points_total
+      data[sprint.due_date.strftime('%b-%y')] += sprint.story_points_total
     end
     data
   end
@@ -69,40 +69,24 @@ class Report
   end
 
   def chart_data_month_squad_data(squad_id)
-    data_board = {}
-      12.times do |i|
-        data_board[Date.today.months_ago(11-i).strftime('%b-%y')] = sp_month_squad(Date.today.months_ago(11-i),squad_id)
-      end
-    data_board
+    data = {}
+    12.times do |i|
+      data[Date.today.months_ago(11-i).strftime('%b-%y')] = 0
+    end
+    Sprint.where(squad_id: squad_id).where("Date(due_date) >= ?", Date.today.months_ago(11)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
+      data[sprint.due_date.strftime('%b-%y')] += sprint.story_points_total
+    end
+    data
   end
 
   def chart_data_week_squad_data(squad_id)
-    data_board = {}
-      12.times do |i|
-        data_board[Date.today.weeks_ago(11-i).to_formatted_s(:short) ] = sp_week_squad(Date.today.weeks_ago(11-i),squad_id)
-      end
-    data_board
-  end
-
-  def sp_month_squad(date_month,squad_id)
-    total = 0
-    Sprint.where('squad_id = ?',squad_id).where('extract(month from due_date) = ?', date_month.month).where('extract(year from due_date) = ?', date_month.year).find_each do |sprint|
-      StoryPoint.where(sprint_id: sprint.id).each do |sp|
-        total += sp.value if sp.present?
-      end
+    data = {}
+    12.times do |i|
+      data[Date.today.beginning_of_week.weeks_ago(11-i).to_formatted_s(:short)] = 0
     end
-    total
-  end
-
-  def sp_week_squad(date_week,squad_id)
-    total = 0
-    Sprint.where('squad_id = ?',squad_id).where('extract(year from due_date) = ?', date_week.year).find_each do |sprint|
-      if(sprint.due_date.beginning_of_week == date_week.beginning_of_week)
-        StoryPoint.where(sprint_id: sprint.id).each do |sp|
-          total += sp.value if sp.present?
-        end
-      end
+    Sprint.where(squad_id: squad_id).where("Date(due_date) >= ?", Date.today.weeks_ago(11)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
+      data[sprint.due_date.beginning_of_week.to_formatted_s(:short)] += sprint.story_points_total
     end
-    total
+    data
   end
 end
