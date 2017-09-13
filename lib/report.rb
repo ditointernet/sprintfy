@@ -13,7 +13,7 @@ class Report
     end
 
     Sprint.where("Date(due_date) >= ?", Date.today.months_ago(11)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
-      data[sprint.due_date.strftime('%b-%y')] = sprint.story_points_total
+      data[sprint.due_date.strftime('%b-%y')] += sprint.story_points_total
     end
     data
   end
