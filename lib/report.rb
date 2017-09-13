@@ -111,11 +111,12 @@ class Report
 
   def chart_data_week_squad_data(squad_id)
     data = {}
-    12.times do |i|
-      data[Date.today.beginning_of_week.weeks_ago(11-i).to_formatted_s(:short)] = 0
-    end
     Sprint.where(squad_id: squad_id).where("Date(due_date) >= ?", Date.today.weeks_ago(11)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
-      data[sprint.due_date.beginning_of_week.to_formatted_s(:short)] += sprint.story_points_total
+      if (data[sprint.due_date.beginning_of_week.to_formatted_s(:short)])
+        data[sprint.due_date.beginning_of_week.to_formatted_s(:short)] += sprint.story_points_total
+      else
+        data[sprint.due_date.beginning_of_week.to_formatted_s(:short)] = sprint.story_points_total
+      end
     end
     data
   end
@@ -144,11 +145,12 @@ class Report
   def chart_data_week_user_data(user_id)
     data = {}
     squad = Squad.where(id: User.where(id: user_id).first.squad_id).first
-    12.times do |i|
-      data[Date.today.beginning_of_week.weeks_ago(11-i).to_formatted_s(:short)] = 0
-    end
     Sprint.where(squad_id: squad.id).where("Date(due_date) >= ?", Date.today.weeks_ago(11)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
-      data[sprint.due_date.beginning_of_week.to_formatted_s(:short)] += sprint.story_points_total_user(user_id)
+      if (data[sprint.due_date.beginning_of_week.to_formatted_s(:short)])
+        data[sprint.due_date.beginning_of_week.to_formatted_s(:short)] += sprint.story_points_total_user(user_id)
+      else
+        data[sprint.due_date.beginning_of_week.to_formatted_s(:short)] = sprint.story_points_total_user(user_id)
+      end
     end
     data
   end
