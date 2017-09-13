@@ -23,11 +23,7 @@ class Sprint < ApplicationRecord
   end
 
   def story_points_total
-    total = 0
-    self.story_points.find_each do |sp|
-      total += sp.value
-    end
-    total
+    total = self.story_points.sum(:value)
   end
 
   def self.create_for_squad(start_date, due_date, squad)

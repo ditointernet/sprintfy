@@ -2,11 +2,11 @@ class Report
   def chart_data_month_all
     [
       name: 'SP per month on every user',
-      data: sprints_in_year
+      data: sprints_story_points_all_users
     ]
   end
 
-  def sprints_in_year
+  def sprints_story_points_all_users
     data = {}
     12.times do |i|
       data[Date.today.months_ago(11-i).strftime('%b-%y')] = 0
