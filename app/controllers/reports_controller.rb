@@ -3,7 +3,6 @@ class ReportsController < ApplicationController
 
   def index
     @report = Report.new
-    @test_data = @report.admin_chart_data
-    render 'report'
+    @month_all_data = @report.chart_data_month_all
   end
 end

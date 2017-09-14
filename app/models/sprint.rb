@@ -4,7 +4,6 @@ class Sprint < ApplicationRecord
 
   belongs_to :squad
   has_and_belongs_to_many :users, -> { distinct }
-  has_and_belongs_to_many :reports
   has_many :goals
   has_many :story_points
   has_many :sprint_reports
@@ -23,6 +22,9 @@ class Sprint < ApplicationRecord
     end
   end
 
+  def story_points_total
+    total = self.story_points.sum(:value)
+  end
 
   def self.create_for_squad(start_date, due_date, squad)
     ActiveRecord::Base.transaction do

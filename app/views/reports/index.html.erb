@@ -1,0 +1,12 @@
+<h1 class="title is-2">RELATÓRIOS</h1>
+
+<br>
+
+<%=
+  line_chart @month_all_data,
+    title: 'SP por Mês para Todos os Usuários',
+    xtitle: "Mês",
+    ytitle: "SP/dia",
+    curve: false,
+    legend: false
+%>

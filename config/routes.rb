@@ -45,9 +45,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :reports, only:[:index], path: 'reports' do
-      get '/reports', to: 'reports#report', as: :report
-  end
+  resources :reports, only:[:index]
 
   # Story points
   resources :story_points, only: [], path: 'story-points' do
