@@ -1,0 +1,34 @@
+.filter-graph{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.filter-graph h3{
+  font-size: 90%;
+}
+
+.filter-graph input{
+  font-size: 16px;
+  padding: 6px;
+  border-radius: 3px;
+  text-align: center;
+}
+
+.filter-graph .options,
+.filter-graph form{
+  width: 100%
+}
+
+.filter-graph select{
+  font-size: 16px;
+  padding: 5px;
+  width: 160px;
+  margin: 0px 0px;
+  border-radius: 0px;
+}
+
+.filter-graph .param{
+  width: 19%;
+  display: inline-block;
+}

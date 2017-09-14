@@ -22,6 +22,13 @@ class Sprint < ApplicationRecord
     end
   end
 
+  def story_points_total
+    total = self.story_points.sum(:value)
+  end
+
+  def story_points_total_user(user_id)
+    total = self.story_points.where(user_id: user_id).sum(:value)
+  end
 
   def self.create_for_squad(start_date, due_date, squad)
     ActiveRecord::Base.transaction do

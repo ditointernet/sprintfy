@@ -35,6 +35,10 @@ class Users::PagesController < ApplicationController
     @users = User.order(name: :asc)
   end
 
+  def personal_evolution
+    @chart_data = current_user.personal_evolution_chart_data
+  end
+
   private
 
   def user_params

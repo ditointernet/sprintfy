@@ -1,0 +1,12 @@
+<h1 class="title is-2">RELATÓRIOS</h1>
+<h1 class="title is-3">Evolução Pessoal</h1>
+
+<%= @chart_data %>
+<%=
+  line_chart @chart_data,
+    title: 'Média de SPs por dia por Sprint',
+    xtitle: "Sprint",
+    ytitle: "SP/dia",
+    curve: false,
+    legend: false
+%>

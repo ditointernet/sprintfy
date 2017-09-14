@@ -14,7 +14,7 @@
       <% @users.each do |user| %>
         <tr>
           <td><%= user.name_or_email %></td>
-          <td><%= user.squad.name %></td>
+          <td><%= user.squad_name %></td>
           <td><%= user.roles.map(&:name).sort.join(', ') %></td>
         </tr>
       <% end %>

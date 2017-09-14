@@ -9,4 +9,5 @@ class Squad < ApplicationRecord
   def story_points
     StoryPoint.where(sprint: self.sprints)
   end
+
 end

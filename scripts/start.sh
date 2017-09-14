@@ -15,4 +15,4 @@ if [ "$RAILS_ENV" == "production" ]; then
   rails assets:precompile
 fi
 # Liga o server
-bundle exec rails server -b 0.0.0.0 -p 80
+bundle exec rails server -b 0.0.0.0 -p 8080
