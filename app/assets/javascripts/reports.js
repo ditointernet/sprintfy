@@ -43,16 +43,16 @@ $( window ).load(function() {
   });
 
   $('#report-form').submit(function(e) {
-    if(users.val() == 'Equipe' && squads.val() == '')
+    if(users.val() == 'Equipe' && squads.val() == '' || period.val() == '')
     {
       e.preventDefault();
-      alert('Select a squad to continue');
+      alert('Select all the options to continue');
       return false;
     }
-    if(users.val() == 'Individual' && person.val() == '')
+    if(users.val() == 'Individual' && person.val() == '' || period.val() == '')
     {
       e.preventDefault();
-      alert('Select a user to continue');
+      alert('Select all the options to continue');
       return false;
     }
   });

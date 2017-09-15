@@ -134,10 +134,10 @@ class Report
     data = {}
     squad = Squad.where(id: User.where(id: user_id).first.squad_id).first
     12.times do |i|
-      data[Date.today.months_ago(11-i).strftime('%b-%y')] = 0
+      data[Date.today.months_ago(11-i).strftime('%b%y')] = 0
     end
     Sprint.where(squad_id: squad.id).where("Date(due_date) >= ?", Date.today.months_ago(11)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
-      data[sprint.due_date.strftime('%b-%y')] += sprint.story_points_total_user(user_id)
+      data[sprint.due_date.strftime('%b%y')] += sprint.story_points_total_user(user_id)
     end
     data
   end
@@ -146,10 +146,10 @@ class Report
     data = {}
     squad = Squad.where(id: User.where(id: user_id).first.squad_id).first
     Sprint.where(squad_id: squad.id).where("Date(due_date) >= ?", Date.today.weeks_ago(15)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
-      if (data[sprint.due_date.beginning_of_week.to_formatted_s(:short)])
-        data[sprint.due_date.beginning_of_week.to_formatted_s(:short)] += sprint.story_points_total_user(user_id)
+      if (data[sprint.due_date.beginning_of_week.strftime('%d/%b/%Y')])
+        data[sprint.due_date.beginning_of_week.strftime('%d/%b/%Y')] += sprint.story_points_total_user(user_id)
       else
-        data[sprint.due_date.beginning_of_week.to_formatted_s(:short)] = sprint.story_points_total_user(user_id)
+        data[sprint.due_date.beginning_of_week.strftime('%d/%b/%Y')] = sprint.story_points_total_user(user_id)
       end
     end
     data
