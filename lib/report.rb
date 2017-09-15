@@ -71,10 +71,10 @@ class Report
   def chart_data_month_squad_data(squad_id)
     data = {}
     12.times do |i|
-      data[Date.today.months_ago(11-i).strftime('%b-%y')] = 0
+      data[Date.today.months_ago(11-i).strftime('%b%y')] = 0
     end
     Sprint.where(squad_id: squad_id).where("Date(due_date) >= ?", Date.today.months_ago(11)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
-      data[sprint.due_date.strftime('%b-%y')] += sprint.story_points_total
+      data[sprint.due_date.strftime('%b%y')] += sprint.story_points_total
     end
     data
   end
@@ -82,10 +82,10 @@ class Report
   def chart_data_week_squad_data(squad_id)
     data = {}
     Sprint.where(squad_id: squad_id).where("Date(due_date) >= ?", Date.today.weeks_ago(15)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
-      if (data[sprint.due_date.beginning_of_week.to_formatted_s(:short)])
-        data[sprint.due_date.beginning_of_week.to_formatted_s(:short)] += sprint.story_points_total
+      if (data[sprint.due_date.beginning_of_week.strftime('%d/%b/%Y')])
+        data[sprint.due_date.beginning_of_week.strftime('%d/%b/%Y')] += sprint.story_points_total
       else
-        data[sprint.due_date.beginning_of_week.to_formatted_s(:short)] = sprint.story_points_total
+        data[sprint.due_date.beginning_of_week.strftime('%d/%b/%Y')] = sprint.story_points_total
       end
     end
     data
