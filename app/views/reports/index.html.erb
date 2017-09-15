@@ -5,22 +5,15 @@
     <div class="options">
       <div class="param">
         <h3>Selecione a base de usuários</h3>
-        <select name='group' id="report-group">
-          <option value='everyone'>Todos</option>
-          <option value='squad'>Equipe</option>
-        </select>
+        <%= select("filter", "user", ['Todos','Equipe'] , { include_blank: false, selected: @filters[:user] }) %>
       </div>
       <div class="param">
         <h3>Selecione o Período</h3>
-        <select name="period" id='report-period'>
-          <option value='sprint'>Sprint</option>
-          <option value='week'>Semanal</option>
-          <option value='month'>Mensal</option>
-        </select>
+        <%= select("filter","period",['Sprint','Mensal','Semanal'],{ include_blank: false, selected: @filters[:period] }) %>
       </div>
       <div class="param">
-      <h3>Selecione a Equipe</h3>
-        <%= select("squad","squad_id",Squad.all.collect{|s| [s.name, s.id]}, {:include_blank=> 'Selecione'}) %>
+        <h3>Selecione a Equipe</h3>
+        <%= select("filter","squad",options_for_select(Squad.all.collect{|s| [s.name, s.id]}, @filters[:squad]),{ include_blank: false }) %>
       </div>
       <div class="param">
         <%= f.submit 'Gerar Relatório'%>

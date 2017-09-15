@@ -1,27 +1,28 @@
 $( window ).load(function() {
-  users = $('#report-group');
-  periods = $('#report-period');
-  squads = $('#squad_squad_id');
+  users = $('#filter_user');
+  periods = $('#filter_period');
+  squads = $('#filter_squad');
 
-  periods.prop( "disabled", true );
-  squads.prop( "disabled", true );
+  if(users.val() == 'Todos')
+  {
+    periods.prop( "disabled", true );
+    squads.prop( "disabled", true );
+  }
 
   users.change(function() {
-    if(users.val() == 'everyone')
+    if(users.val() == 'Todos')
     {
       periods.prop( "disabled", true );
       squads.prop( "disabled", true );
     }
-    else if(users.val() == 'squad') {
+    else if(users.val() == 'Equipe') {
       periods.prop( "disabled", false  );
       squads.prop( "disabled", false );
     }
   });
 
   $('#report-form').submit(function(e) {
-    periods.prop( "disabled", false );
-    squads.prop( "disabled", false );
-    if(users.val() == 'squad' && squads.val() == '')
+    if(users.val() == 'Equipe' && squads.val() == '')
     {
       e.preventDefault();
       alert('Select a squad to continue');

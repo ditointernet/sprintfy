@@ -1,17 +1,17 @@
 class Report
   def data_route(period,group,squad_id)
-    if (period == 'sprint')
-      if(group == 'everyone')
-        return chart_data_month_all
-      elsif(group == 'squad')
+    if(group == 'Todos')
+      return chart_data_month_all
+    elsif (period == 'Sprint')
+      if(group == 'Equipe')
         return chart_data_sprint_squad(squad_id)
       end
-    elsif (period == 'week')
-      if (group == 'squad')
+    elsif (period == 'Semanal')
+      if (group == 'Equipe')
         return chart_data_week_squad(squad_id)
       end
-    elsif(period == 'month')
-      if (group == 'squad')
+    elsif(period == 'Mensal')
+      if (group == 'Equipe')
         return chart_data_month_squad(squad_id)
       end
     end
@@ -62,8 +62,8 @@ class Report
 
   def chart_data_sprint_squad_data(squad_id)
     data_board = {}
-    Sprint.where(squad_id: squad_id).find_each do |sprint|
-      data_board[sprint.squad_counter] = sprint.story_points_total.to_f
+    Sprint.where(squad_id: squad_id).last(20).each do |sprint|
+      data_board["Sprint " + sprint.squad_counter.to_s] = sprint.story_points_total.to_f
     end
     data_board
   end
@@ -81,11 +81,12 @@ class Report
 
   def chart_data_week_squad_data(squad_id)
     data = {}
-    12.times do |i|
-      data[Date.today.beginning_of_week.weeks_ago(11-i).to_formatted_s(:short)] = 0
-    end
-    Sprint.where(squad_id: squad_id).where("Date(due_date) >= ?", Date.today.weeks_ago(11)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
-      data[sprint.due_date.beginning_of_week.to_formatted_s(:short)] += sprint.story_points_total
+    Sprint.where(squad_id: squad_id).where("Date(due_date) >= ?", Date.today.weeks_ago(15)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
+      if (data[sprint.due_date.beginning_of_week.to_formatted_s(:short)])
+        data[sprint.due_date.beginning_of_week.to_formatted_s(:short)] += sprint.story_points_total
+      else
+        data[sprint.due_date.beginning_of_week.to_formatted_s(:short)] = sprint.story_points_total
+      end
     end
     data
   end
