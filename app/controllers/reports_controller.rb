@@ -2,8 +2,12 @@ class ReportsController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    @filters = params[:filter] || {}
     @report = Report.new
-    @month_all_data = @report.chart_data_month_all
-    @sprint_squad_data = @report.chart_data_sprint_squad(1)
+    @data = @report.data_route(
+      @filters[:period],
+      @filters[:user] || 'Todos',
+      @filters[:squad]
+    )
   end
 end

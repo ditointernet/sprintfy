@@ -22,6 +22,9 @@ class Sprint < ApplicationRecord
     end
   end
 
+  def story_points_total
+    total = self.story_points.sum(:value)
+  end
 
   def self.create_for_squad(start_date, due_date, squad)
     ActiveRecord::Base.transaction do
@@ -77,13 +80,5 @@ class Sprint < ApplicationRecord
 
   def total_sprint_days
     sprint_days.count
-  end
-
-  def story_points_sprint_squad(sprint_id)
-    total = 0
-    StoryPoint.where(sprint_id: sprint_id).each do |sp|
-      total += sp.value if sp.present?
-    end
-    total
   end
 end

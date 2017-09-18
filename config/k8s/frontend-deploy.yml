@@ -26,6 +26,11 @@ spec:
       containers:
       - name: sprintfy-frontend
         image: gcr.io/new-dito/sprintfy:1.0.22
+        resources:
+          requests:
+            cpu: "20m"
+          limits:
+            cpu: "50m"
         command:
           - "/bin/bash"
           - "-c"
