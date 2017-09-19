@@ -7,7 +7,8 @@ class ReportsController < ApplicationController
     @data = @report.data_route(
       @filters[:period],
       @filters[:user] || 'Todos',
-      @filters[:squad]
+      @filters[:squad],
+      @filters[:person]
     )
   end
 end
