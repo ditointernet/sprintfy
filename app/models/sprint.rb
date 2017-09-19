@@ -22,6 +22,10 @@ class Sprint < ApplicationRecord
     end
   end
 
+  def sp_scope(params)
+    params[:person] ? story_points_total_user(params[:person]) : story_points_total
+  end
+
   def story_points_total
     total = self.story_points.sum(:value)
   end

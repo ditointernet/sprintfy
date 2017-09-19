@@ -1,157 +1,37 @@
 class Report
-  def data_route(period,group,squad_id,user_id)
-    if(group == 'Todos')
-      return chart_data_month_all
-    elsif (period == 'Sprint')
-      if(group == 'Equipe')
-        return chart_data_sprint_squad(squad_id)
-      elsif (group == 'Individual')
-        return chart_data_sprint_user(user_id)
-      end
-    elsif (period == 'Semanal')
-      if (group == 'Equipe')
-        return chart_data_week_squad(squad_id)
-      elsif (group == 'Individual')
-        return chart_data_week_user(user_id)
-      end
-    elsif(period == 'Mensal')
-      if (group == 'Equipe')
-        return chart_data_month_squad(squad_id)
-      elsif (group == 'Individual')
-        return chart_data_month_user(user_id)
-      end
+  def data_route(params)
+      {
+        name: "Sp #{user_scope(params)} #{period_scope(params)}",
+        period: params[:period],
+        data: ChartData.new.config(params)
+      }
+  end
+
+  def user_scope(params)
+    if(params[:user] == 'Todos')
+      return 'de todos os usuários'
+    elsif (params[:user] == 'Equipe')
+      return "da equipe #{squad_name(params[:squad])}"
+    else
+      return "do usuário #{person_name(params[:person])}"
     end
   end
 
-  def chart_data_month_all
-    {
-      name: 'SP per month of all users',
-      period: 'Month',
-      data: sprints_story_points_all_users
-    }
-  end
-
-  def chart_data_sprint_squad(squad_id)
-    {
-      name: 'SP per sprint of squad',
-      period: 'Sprint',
-      data: chart_data_sprint_squad_data(squad_id)
-    }
-  end
-
-  def chart_data_month_squad(squad_id)
-    {
-      name: 'SP per month of squad',
-      period: 'Month',
-      data: chart_data_month_squad_data(squad_id)
-    }
-  end
-
-  def chart_data_week_squad(squad_id)
-    {
-      name: 'SP per week of squad',
-      period: 'Week',
-      data: chart_data_week_squad_data(squad_id)
-    }
-  end
-
-  def chart_data_sprint_user(user_id)
-    {
-      name: 'SP per sprint of user',
-      period: 'Sprint',
-      data: chart_data_sprint_user_data(user_id)
-    }
-  end
-
-  def chart_data_month_user(user_id)
-    {
-      name: 'SP per month of user',
-      period: 'Month',
-      data: chart_data_month_user_data(user_id)
-    }
-  end
-
-  def chart_data_week_user(user_id)
-    {
-      name: 'SP per week of user',
-      period: 'Week',
-      data: chart_data_week_user_data(user_id)
-    }
-  end
-
-  def sprints_story_points_all_users
-    data = {}
-    12.times do |i|
-      data[Date.today.months_ago(11-i).strftime('%b%y')] = 0
+  def period_scope(params)
+    if(params[:period] == 'Sprint')
+      return 'por sprint'
+    elsif (params[:period] == 'Mensal')
+      return "no período de 3 meses"
+    else
+      return "nas últimas 16 semanas"
     end
-    Sprint.where("Date(due_date) >= ?", Date.today.months_ago(11)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
-      data[sprint.due_date.strftime('%b%y')] += sprint.story_points_total
-    end
-    data
   end
 
-  def chart_data_sprint_squad_data(squad_id)
-    data_board = {}
-    Sprint.where(squad_id: squad_id).last(20).each do |sprint|
-      data_board["Sprint " + sprint.squad_counter.to_s] = sprint.story_points_total.to_f
-    end
-    data_board
+  def squad_name(id)
+    Squad.where(id: id).first.name
   end
 
-  def chart_data_month_squad_data(squad_id)
-    data = {}
-    12.times do |i|
-      data[Date.today.months_ago(11-i).strftime('%b%y')] = 0
-    end
-    Sprint.where(squad_id: squad_id).where("Date(due_date) >= ?", Date.today.months_ago(11)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
-      data[sprint.due_date.strftime('%b%y')] += sprint.story_points_total
-    end
-    data
-  end
-
-  def chart_data_week_squad_data(squad_id)
-    data = {}
-    Sprint.where(squad_id: squad_id).where("Date(due_date) >= ?", Date.today.weeks_ago(15)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
-      if (data[sprint.due_date.beginning_of_week.strftime('%d/%b/%Y')])
-        data[sprint.due_date.beginning_of_week.strftime('%d/%b/%Y')] += sprint.story_points_total
-      else
-        data[sprint.due_date.beginning_of_week.strftime('%d/%b/%Y')] = sprint.story_points_total
-      end
-    end
-    data
-  end
-
-  def chart_data_sprint_user_data(user_id)
-    data_board = {}
-    squad = Squad.where(id: User.where(id: user_id).first.squad_id).first
-    Sprint.where(squad_id: squad.id).last(20).each do |sprint|
-      data_board["Sprint " + sprint.squad_counter.to_s] = sprint.story_points_total_user(user_id).to_f
-    end
-    data_board
-  end
-
-  def chart_data_month_user_data(user_id)
-    data = {}
-    squad = Squad.where(id: User.where(id: user_id).first.squad_id).first
-    12.times do |i|
-      data[Date.today.months_ago(11-i).strftime('%b%y')] = 0
-    end
-    Sprint.where(squad_id: squad.id).where("Date(due_date) >= ?", Date.today.months_ago(11)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
-      data[sprint.due_date.strftime('%b%y')] += sprint.story_points_total_user(user_id)
-    end
-    data
-  end
-
-  def chart_data_week_user_data(user_id)
-    data = {}
-    squad = Squad.where(id: User.where(id: user_id).first.squad_id).first
-    Sprint.where(squad_id: squad.id).where("Date(due_date) >= ?", Date.today.weeks_ago(15)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
-      if (data[sprint.due_date.beginning_of_week.strftime('%d/%b/%Y')])
-        data[sprint.due_date.beginning_of_week.strftime('%d/%b/%Y')] += sprint.story_points_total_user(user_id)
-      else
-        data[sprint.due_date.beginning_of_week.strftime('%d/%b/%Y')] = sprint.story_points_total_user(user_id)
-      end
-    end
-    data
+  def person_name(id)
+    User.where(id: id).first.name
   end
 end
