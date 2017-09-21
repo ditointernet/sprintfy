@@ -1,37 +1,44 @@
 class Report
-  def data_route(params)
-      {
-        name: "Sp #{user_scope(params)} #{period_scope(params)}",
-        period: params[:period],
-        data: ChartData.new.config(params)
-      }
+  def initialize(filters = nil)
+    @filters = filters || default_filters
   end
 
-  def user_scope(params)
-    if(params[:user] == 'Todos')
-      return 'de todos os usuários'
-    elsif (params[:user] == 'Equipe')
-      return "da equipe #{squad_name(params[:squad])}"
-    else
-      return "do usuário #{person_name(params[:person])}"
-    end
+  def chart
+    {
+      name: "Sp #{user_group} #{period_scope}",
+      period: @filters[:period],
+      data: ChartData.new.config(@filters),
+      filters: @filters
+    }
   end
 
-  def period_scope(params)
-    if(params[:period] == 'Sprint')
-      return 'por sprint'
-    elsif (params[:period] == 'Mensal')
-      return "no período de 3 meses"
-    else
-      return "nas últimas 16 semanas"
-    end
+  private
+
+  def default_filters
+    { user: 'Todos', period: 'Mensal', squad: 0, person: 0 }
   end
 
-  def squad_name(id)
-    Squad.where(id: id).first.name
+  def user_group
+    {
+      'Todos' => 'de todos os usuários',
+      'Equipe' => "da equipe #{squad_name}",
+      'Individual' => "do usuário #{person_name}"
+    }[@filters[:user]]
   end
 
-  def person_name(id)
-    User.where(id: id).first.name
+  def period_scope
+    {
+      'Sprint' => 'por sprint',
+      'Mensal' => 'no período de 12 meses',
+      'Semanal' => 'nas últimas 16 semanas'
+    }[@filters[:period]]
+  end
+
+  def squad_name
+    Squad.where(id: @filters[:squad]).first.try(:name)
+  end
+
+  def person_name
+    User.where(id: @filters[:person]).first.try(:name)
   end
 end

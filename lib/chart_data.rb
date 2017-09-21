@@ -1,3 +1,11 @@
+# Usar scope. Ex: Sprint.by_squad(squad).after_date(DATA).before_date(DATA).find_each do |sprint|
+# Arrumar ternario
+# Remover redundancia
+# scope :by_squad, (squad_id) -> {
+#   if squad_id
+#     where(squad_id: squad_id)
+#   end
+# }
 class ChartData
   def config(params)
     @data = {}
