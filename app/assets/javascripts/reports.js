@@ -6,39 +6,42 @@ $( window ).load(function() {
 
   if(users.val() == 'Todos')
   {
-    periods.prop( "disabled", true );
     squads.prop( "disabled", true );
-    person.prop('disabled',true)
+    person.prop('disabled',true);
+    periods.val('Mensal');
   }
   else if(users.val() == 'Equipe')
   {
-    periods.prop( "disabled", false );
     squads.prop( "disabled", false );
-    person.prop('disabled',true)
+    person.prop('disabled',true);
   }
   else if(users.val() == 'Individual')
   {
-    periods.prop( "disabled", false );
     squads.prop( "disabled", true );
-    person.prop('disabled',false)
+    person.prop('disabled',false);
   }
 
   users.change(function() {
     if(users.val() == 'Todos')
     {
-      periods.prop( "disabled", true );
       squads.prop( "disabled", true );
       person.prop( "disabled", true );
+      periods.val('Mensal');
     }
     else if(users.val() == 'Equipe') {
-      periods.prop( "disabled", false  );
       squads.prop( "disabled", false );
       person.prop( "disabled", true );
     }
     else if(users.val() == 'Individual') {
-      periods.prop( "disabled", false  );
       squads.prop( "disabled", true );
       person.prop( "disabled", false );
+    }
+  });
+
+  periods.change(function(){
+    if(users.val() == 'Todos')
+    {
+      periods.val('Mensal');
     }
   });
 
@@ -49,11 +52,15 @@ $( window ).load(function() {
       alert('Selecione todas as opções para continuar');
       return false;
     }
-    if(users.val() == 'Individual' && (person.val() == '' || period.val() == ''))
+    else if(users.val()=='Individual' && (person.val()=='' || period.val()==''))
     {
       e.preventDefault();
       alert('Selecione todas as opções para continuar');
       return false;
+    }
+    else if (user.val() == 'Todos')
+    {
+      periods.val('Mensal');
     }
   });
 });

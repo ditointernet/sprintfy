@@ -22,6 +22,28 @@ class Sprint < ApplicationRecord
     end
   end
 
+  scope :by_squad, lambda {|squad_id|
+    if squad_id
+      where(squad_id: squad_id)
+    end
+  }
+
+  scope :from_date,lambda {|period|
+    if period == 'Mensal'
+      where("Date(due_date) >= ?", Date.today.months_ago(11))
+    elsif period == 'Semanal'
+      where("Date(due_date) >= ?", Date.today.weeks_ago(15))
+    elsif period == 'Sprint'
+      last(20)
+    else
+      where("Date(due_date) >= ?", Date.today.months_ago(11))
+    end
+  }
+
+  scope :to_date,lambda {|date|
+    where("Date(due_date) <= ?", date)
+  }
+
   def sp_scope(params)
     params[:person] ? story_points_total_user(params[:person]) : story_points_total
   end

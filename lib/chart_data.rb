@@ -7,57 +7,43 @@
 #   end
 # }
 class ChartData
-  def config(params)
-    @data = {}
-    if(params[:user] == 'Todos')
-      return data_all_users
-    elsif (params[:period] == 'Sprint')
-      return data_sprint(params)
-    elsif (params[:period] == 'Semanal')
-      return data_week(params)
-    elsif(params[:period] == 'Mensal')
-      return data_month(params)
-    end
+  def initialize(params)
+    @params = params
+    @entry = {}
+    @squad = params[:squad] || get_squad
   end
 
-  def data_all_users
-    12.times do |i|
-      @data[Date.today.months_ago(11-i).strftime('%b%y')] = 0
-    end
-    Sprint.where("Date(due_date) >= ?", Date.today.months_ago(11)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
-      @data[sprint.due_date.strftime('%b%y')] += sprint.story_points_total
-    end
-    @data
-  end
-
-  def data_sprint(params)
-    params[:squad] ? squad = params[:squad] : squad = Squad.where(id: User.where(id: params[:person]).first.squad_id).first.id
-    Sprint.where(squad_id: squad).last(20).each do |sprint|
-      @data["Sprint " + sprint.squad_counter.to_s] = sprint.sp_scope(params).to_f
-    end
-    @data
-  end
-
-  def data_month(params)
-    params[:squad] ? squad = params[:squad] : squad = Squad.where(id: User.where(id: params[:person]).first.squad_id).first.id
-    12.times do |i|
-      @data[Date.today.months_ago(11-i).strftime('%b%y')] = 0
-    end
-    Sprint.where(squad_id: squad).where("Date(due_date) >= ?", Date.today.months_ago(11)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
-      @data[sprint.due_date.strftime('%b%y')] += sprint.sp_scope(params).to_f
-    end
-    @data
-  end
-
-  def data_week(params)
-    params[:squad] ? squad = params[:squad] : squad = Squad.where(id: User.where(id: params[:person]).first.squad_id).first.id
-    Sprint.where(squad_id: squad).where("Date(due_date) >= ?", Date.today.weeks_ago(15)).where("Date(due_date) <= ?", Date.today).find_each do |sprint|
-      if (@data[sprint.due_date.beginning_of_week.strftime('%d/%b/%Y')])
-        @data[sprint.due_date.beginning_of_week.strftime('%d/%b/%Y')] += sprint.sp_scope(params)
+  def data
+    months_array
+    Sprint.to_date(Date.today).by_squad(@squad).from_date(@params[:period]).each do |sprint|
+      if @entry[grouping(sprint)]
+        @entry[grouping(sprint)] += sprint.sp_scope(@params).to_f
       else
-        @data[sprint.due_date.beginning_of_week.strftime('%d/%b/%Y')] = sprint.sp_scope(params)
+        @entry[grouping(sprint)] = sprint.sp_scope(@params).to_f
       end
     end
-    @data
+    @entry
+  end
+
+  private
+
+  def months_array
+    if @params[:period] == 'Mensal'
+      12.times do |i|
+        @entry[Date.today.months_ago(11-i).strftime('%b%y')] = 0
+      end
+    end
+  end
+
+  def get_squad
+    @params[:person] ? Squad.where(id: User.where(id: @params[:person]).first.squad_id).first.try(:id) : nil
+  end
+
+  def grouping(sprint)
+    {
+      'Mensal' => "#{sprint.due_date.strftime('%b%y')}",
+      'Semanal' => "#{sprint.due_date.beginning_of_week.strftime('%d/%b/%Y')}",
+      'Sprint' => "Sprint #{sprint.squad_counter.to_s}"
+    }[@params[:period]]
   end
 end

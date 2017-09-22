@@ -7,7 +7,7 @@ class Report
     {
       name: "Sp #{user_group} #{period_scope}",
       period: @filters[:period],
-      data: ChartData.new.config(@filters),
+      data: ChartData.new(@filters).data,
       filters: @filters
     }
   end
@@ -15,7 +15,7 @@ class Report
   private
 
   def default_filters
-    { user: 'Todos', period: 'Mensal', squad: 0, person: 0 }
+    { user: 'Todos', period: 'Mensal', squad: nil, person: nil }
   end
 
   def user_group
