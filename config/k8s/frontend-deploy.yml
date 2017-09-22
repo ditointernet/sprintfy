@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: sprintfy-frontend
-        image: gcr.io/new-dito/sprintfy:1.0.22
+        image: gcr.io/new-dito/sprintfy:v1.0.24
         command:
           - "/bin/bash"
           - "-c"
