@@ -8,11 +8,8 @@ class ChartData
   def data
     months_array
     Sprint.to_date(Date.today).by_squad(@squad).from_date(@params[:period]).each do |sprint|
-      if @entry[grouping(sprint)]
-        @entry[grouping(sprint)] += sprint.sp_scope(@params).to_f
-      else
-        @entry[grouping(sprint)] = sprint.sp_scope(@params).to_f
-      end
+      @entry[grouping(sprint)] ||= 0
+      @entry[grouping(sprint)] += sprint.sp_scope(@params).to_f
     end
     @entry
   end
@@ -28,7 +25,8 @@ class ChartData
   end
 
   def get_squad
-    @params[:person] ? Squad.where(id: User.where(id: @params[:person]).first.squad_id).first.try(:id) : nil
+    user = User.where(id: @params[:person]).first
+    @params[:person] ? Squad.where(id: user.try(:squad_id)).first.try(:id) : nil
   end
 
   def grouping(sprint)
