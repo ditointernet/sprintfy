@@ -7,4 +7,5 @@ class StoryPoint < ApplicationRecord
 
   validates :sprint, presence: true
   validates :user, presence: true
+
 end
