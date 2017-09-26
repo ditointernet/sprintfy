@@ -1,8 +1,11 @@
+<div class="notification-login-page">
+  <%= content_tag(:div, flash[:error], :id => "flash_error") if flash[:error] %>
+  <%= content_tag(:div, flash[:alert], :id => "flash_alert") if flash[:alert] %>
+</div>
 <div class="section">
   <div class="columns">
     <div class="column is-one-third">
     </div>
-
     <div class="column is-one-third">
       <h1 class="title is-2">Entrar</h1>
 
