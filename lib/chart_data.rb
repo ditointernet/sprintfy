@@ -10,7 +10,7 @@ class ChartData
   def initialize(params)
     @params = params
     @entry = {}
-    @squad = params[:squad] || get_squad
+    @squad = params[:squad] || nil
   end
 
   def data
@@ -33,10 +33,6 @@ class ChartData
         @entry[Date.today.months_ago(11-i).strftime('%b%y')] = 0
       end
     end
-  end
-
-  def get_squad
-    @params[:person] ? Squad.where(id: User.where(id: @params[:person]).first.squad_id).first.try(:id) : nil
   end
 
   def grouping(sprint)
