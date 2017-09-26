@@ -13,11 +13,11 @@
       </div>
       <div class="param">
         <h3>Selecione a Equipe</h3>
-        <%= select("filter","squad",options_for_select(Squad.all.collect{|s| [s.name, s.id]}, @filters[:squad]),{ include_blank: 'Selecione' }) %>
+        <%= select("filter","squad",options_for_select(Squad.all.collect{|s| [s.name.to_s, s.id]}, @filters[:squad]),{ include_blank: 'Selecione' }) %>
       </div>
       <div class="param">
       <h3>Selecione o Usuário</h3>
-        <%= select("filter","person",User.all.collect{|u| [u.name, u.id]}, {:include_blank=> 'Selecione', selected: @filters[:person]}) %>
+        <%= select("filter","person",User.all.collect{|u| [u.name.to_s, u.id]}.sort, {:include_blank=> 'Selecione', selected: @filters[:person]}) %>
       </div>
       <div class="param">
         <%= f.submit 'Gerar Relatório'%>
