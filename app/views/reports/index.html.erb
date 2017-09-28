@@ -28,10 +28,11 @@
 <br>
 
 <%=
-  line_chart @data[:data],
+  line_chart Hash[@data[:data].sort].delete_if { |key, value| value.to_i == 0 },
     title: @data[:name],
     xtitle: @data[:period],
     ytitle: "SP",
     curve: false,
-    legend: false
+    legend: false,
+    discrete: true
 %>
