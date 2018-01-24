@@ -30,6 +30,9 @@ spec:
           - "/bin/bash"
           - "-c"
           - "scripts/start.sh"
+        resources:
+          requests:
+            cpu: "5m"
         ports:
         - containerPort: 8080
           name: http

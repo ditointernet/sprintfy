@@ -11,24 +11,12 @@ spec:
   selector:
     name: sprintfy-mysql
 ---
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: sprintfy-mysql-claim
-  annotations:
-    volume.beta.kubernetes.io/storage-class: "slow"
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
----
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: apps/v1beta1
+kind: StatefulSet
 metadata:
   name: sprintfy-mysql
 spec:
+  serviceName: sprintfy-mysql
   replicas: 1
   template:
     metadata:
@@ -38,6 +26,9 @@ spec:
       containers:
       - name: sprintfy-mysql
         image: mysql:latest
+        resources:
+          requests:
+            cpu: "5m"
         args:
           - "--ignore-db-dir"
           - "lost+found"
@@ -49,7 +40,14 @@ spec:
         volumeMounts:
           - name: sprintfy-mysql-persistent-storage
             mountPath: /var/lib/mysql
-      volumes:
-        - name: sprintfy-mysql-persistent-storage
-          persistentVolumeClaim:
-            claimName: sprintfy-mysql-claim
+  volumeClaimTemplates:
+  - metadata:
+      name: sprintfy-mysql-persistent-storage
+      annotations:
+        volume.beta.kubernetes.io/storage-class: "slow"
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi
