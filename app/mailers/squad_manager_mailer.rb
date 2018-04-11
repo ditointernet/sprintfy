@@ -40,9 +40,9 @@ class SquadManagerMailer < ApplicationMailer
     @daily_meeting_not_done = @sprint.daily_meetings.where(done: false, skip: false)
     @sprint_skipped_days = @sprint.daily_meetings.where(skip: true).count
 
-    recipients = @squad.squad_managers.map do |manager|
-      manager.user.email
-    end
+    managers = @squad.squad_managers.map { |manager| manager.user.email }
+    team_members = @squad.users.map(&:email)
+    recipients = managers.concat(team_members).uniq
 
     subject = "Relatório Sprint \##{@sprint.squad_counter} - Equipe #{@squad.name}"
 
