@@ -1,20 +1,30 @@
-<div class="container">
-  <h1 class="title is-2">Equipe <%= @squad.name %></h1>
-  <div style="margin-bottom: 40px;">
-    <a id="sprintfy-squad-add-manager-btn" href="#" class="button">Adicionar Gestor</a>
+<%= render(partial: 'layouts/page_header', locals: {
+  icon: 'users',
+  title: 'Equipes',
+  subtitle: "Equipe #{@squad.name}"
+}); %>
+
+<div class="container page-container">
+  <div>
+    <a id="sprintfy-squad-add-manager-btn" href="#" class="button is-rounded">Adicionar Gestor</a>
 
     <div id="sprintfy-squad-add-manager-form" class="is-hidden">
       <%= form_for @squad, url: squad_path(@squad), method: :patch do |f| %>
-        <div class="control">
-          <span class="select">
-            <%= select_tag 'squad_manager[id]', options_from_collection_for_select(@managers, 'id', 'name_or_email'), include_blank: true %>
-          </span>
+        <div class="field has-addons rounded">
+          <div class="control">
+            <span class="select">
+              <%= select_tag 'squad_manager[id]', options_from_collection_for_select(@managers, 'id', 'name_or_email'), include_blank: true %>
+            </span>
+          </div>
+          <div class="control">
+            <button class="button is-rounded is-dark">Adicionar</button>
+          </div>
         </div>
-
-        <button class="button is-dark">Adicionar</button>
       <% end %>
     </div>
   </div>
+
+  <br>
 
   <div style="margin-bottom: 10px;">
     <strong class="title is-3">Integrantes</strong>

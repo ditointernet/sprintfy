@@ -1,38 +1,53 @@
-<h1 class="title is-2">RELATÓRIOS</h1>
+<%= render(partial: 'layouts/page_header', locals: {
+  icon: 'chart-bar',
+  title: 'Relatórios',
+  subtitle: 'Resultados dos sprints'
+}); %>
 
-<div class="filter-graph">
-  <%= form_for '', :url => { action: "index", builder: ReportsController}, html: { id: "report-form" } ,method: :get do |f| %>
-    <div class="options">
-      <div class="param">
-        <h3>Selecione a base de usuários</h3>
-        <%= select("filter", "user", ['Todos','Equipe','Individual'] , { include_blank: false, selected: @filters[:user] }) %>
+<div class="container page-container">
+  <div class="filter-graph">
+    <%= form_for '', :url => { action: "index", builder: ReportsController}, html: { id: "report-form" } ,method: :get do |f| %>
+      <div class="options">
+        <div class="param">
+          <h3 class="field">Selecione a base de usuários</h3>
+          <div class="select is-rounded"> 
+            <%= select("filter", "user", ['Todos','Equipe','Individual'], { include_blank: false, selected: @filters[:user] }) %>
+          </div>
+        </div>
+        <div class="param">
+          <h3 class="field">Selecione o Período</h3>
+          <div class="select is-rounded">
+            <%= select("filter","period",['Sprint','Mensal','Semanal'],{ include_blank: 'Selecione', selected: @filters[:period] }) %>
+          </div>
+        </div>
+        <div class="param">
+          <h3 class="field">Selecione a Equipe</h3>
+          <div class="select is-rounded">
+            <%= select("filter","squad",options_for_select(Squad.all.collect{|s| [s.name.to_s, s.id]}, @filters[:squad]),{ include_blank: 'Selecione' }) %>
+          </div>
+        </div>
+        <div class="param">
+          <h3 class="field">Selecione o Usuário</h3>
+          <div class="select is-rounded">
+            <%= select("filter","person",User.all.collect{|u| [u.name.to_s, u.id]}.sort, {:include_blank=> 'Selecione', selected: @filters[:person]}) %>
+          </div>
+        </div>
+        <div class="param control">
+          <button type="submit" class="button is-primary">Gerar Relatório</button>
+        </div>
       </div>
-      <div class="param">
-        <h3>Selecione o Período</h3>
-        <%= select("filter","period",['Sprint','Mensal','Semanal'],{ include_blank: 'Selecione', selected: @filters[:period] }) %>
-      </div>
-      <div class="param">
-        <h3>Selecione a Equipe</h3>
-        <%= select("filter","squad",options_for_select(Squad.all.collect{|s| [s.name.to_s, s.id]}, @filters[:squad]),{ include_blank: 'Selecione' }) %>
-      </div>
-      <div class="param">
-      <h3>Selecione o Usuário</h3>
-        <%= select("filter","person",User.all.collect{|u| [u.name.to_s, u.id]}.sort, {:include_blank=> 'Selecione', selected: @filters[:person]}) %>
-      </div>
-      <div class="param">
-        <%= f.submit 'Gerar Relatório'%>
-      </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
+  <br>
+
+  <%=
+    line_chart Hash[@data[:data].sort].delete_if { |key, value| value.to_i == 0 },
+      title: @data[:name],
+      xtitle: @data[:period],
+      ytitle: "SP",
+      curve: false,
+      legend: false,
+      discrete: true
+  %>
+
 </div>
-<br>
-
-<%=
-  line_chart Hash[@data[:data].sort].delete_if { |key, value| value.to_i == 0 },
-    title: @data[:name],
-    xtitle: @data[:period],
-    ytitle: "SP",
-    curve: false,
-    legend: false,
-    discrete: true
-%>

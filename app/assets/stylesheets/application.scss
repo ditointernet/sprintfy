@@ -11,22 +11,16 @@
  * It is generally better to create a new file per style scope.
  *
  *= require_tree .
+ *= require 'bulma'
  *= require_self
  */
 
-$primary: #75BA43;
 $dark: #545454;
-
-$link: darken($primary, 10%);
-
 $nav-height: 65px;
 
-$family-primary: 'Roboto', sans-serif;
-
-@import 'https://fonts.googleapis.com/css?family=Roboto:300,400';
-@import "font-awesome";
-@import 'bulma';
-
+body, html {
+  font-family: 'Raleway', sans-serif;
+}
 
 // Texto da logo branco
 .is-brand {

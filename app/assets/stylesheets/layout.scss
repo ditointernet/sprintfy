@@ -1,0 +1,66 @@
+.container {
+  width: 95% !important;
+  max-width: 1280px !important;
+}
+
+#header {
+  .icon {
+    margin-right: 5px;
+  }
+
+  .logo {
+    .icon {
+      color: #3273dc;
+    }
+
+    .logo-text {
+      text-transform: uppercase;
+      color: #222;
+      font-size: 20px;
+    }
+  }
+}
+
+.button {
+  .fa,
+  .svg-inline--fa {
+    margin-right: 5px;
+  }
+}
+
+.page-section,
+.page-section.panel {
+  margin: 35px 0;
+}
+
+.page-header {
+  margin-bottom: 2em;
+
+  .icon {
+    margin-right: 10px;
+    position: relative;
+    top: 3px;
+  }
+}
+
+.page-container {
+  padding-bottom: 2em;
+}
+
+.flash.notification {
+  margin-bottom: 0;
+
+  &:first-child {
+    margin-bottom: 0;
+  }
+}
+
+.app-wrapper {
+  min-height: calc(100vh - 95px);
+}
+
+#footer {
+  width: 100%;
+  padding: 2rem 0;
+  bottom: 0;
+}

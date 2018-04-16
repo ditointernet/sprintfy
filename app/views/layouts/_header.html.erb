@@ -1,0 +1,110 @@
+<header id="header">
+  <nav class="navbar" role="navigation" aria-label="dropdown navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <%= link_to :root, class: 'navbar-item logo' do %>
+          <span class="icon">
+            <i class="fa fa-code-branch"></i>
+          </span>
+          <span class="logo-text">
+            <strong>Sprint</strong>fy
+          </span>
+        <% end %>
+        <div class="navbar-burger burger" data-target="navMenuColorprimary-example">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <% if current_user %>
+        <div class="navbar-start">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              <span class="icon">
+                <i class="fa fa-rocket"></i>
+              </span> 
+              Sprints
+            </a>
+
+            <div class="navbar-dropdown">
+              <%= link_to((current_user.admin? ? 'Sprints' : 'Meus Sprints'), 
+                  :user_sprints, class: 'navbar-item') %>
+              
+              <%= link_to('Criar sprint', new_sprint_path, 
+                class: 'navbar-item') if current_user.can_create?(Sprint.new) %>
+            </div>
+          </div>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              <span class="icon">
+                <i class="fa fa-chart-bar"></i>
+              </span> 
+              Relatórios
+            </a>
+
+            <div class="navbar-dropdown">
+              <%= link_to('Geral', reports_path, class: 'navbar-item') if current_user.admin? %>
+              <%= link_to('Evolução pessoal', :personal_evolution, class: 'navbar-item') %>
+            </div>
+          </div>
+
+          <% if current_user.admin? %>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                <span class="icon">
+                <i class="fa fa-user-plus"></i>
+              </span> 
+                Usuários
+              </a>
+
+              <div class="navbar-dropdown">
+                <%= link_to('Criar usuário', new_user_path, class: 'navbar-item') %>
+                <%= link_to('Cadastrados', :users_list, class: 'navbar-item') %>
+              </div>
+            </div>
+
+            <div class="navbar-item has-dropdown is-hoverable">
+              <a class="navbar-link">
+                <span class="icon">
+                  <i class="fa fa-users"></i>
+                </span> 
+                Equipes
+              </a>
+
+              <div class="navbar-dropdown">
+                <%= link_to('Criar equipe', new_squad_path, class: 'navbar-item') %>
+                <%= link_to('Cadastradas', squads_path, class: 'navbar-item') %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              <span class="icon"><i class="fa fa-user-circle"></i></span>
+              <%= current_user.name %>
+            </a>
+
+            <div class="navbar-dropdown">
+              <%= link_to(edit_account_path, class: 'navbar-item') do %>
+                <span class="icon"><i class="fa fa-user-circle"></i></span>
+                Minha conta
+              <% end %>
+              <%= link_to(:edit_user_registration, class: 'navbar-item') do %>
+                <span class="icon"><i class="fa fa-key"></i></span>
+                Mudar senha
+              <% end %>
+              <hr class="dropdown-divider">
+              <%= link_to(:destroy_user_session, method: :delete, class: 'navbar-item') do %>
+                <span class="icon"><i class="fa fa-power-off"></i></span> 
+                Sair
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </nav>
+</header>

@@ -1,11 +1,16 @@
-<h1 class="title is-2">RELATÓRIOS</h1>
-<h1 class="title is-3">Evolução Pessoal</h1>
+<%= render(partial: 'layouts/page_header', locals: {
+  icon: 'chart-bar',
+  title: 'Relatórios',
+  subtitle: 'Evolução Pessoal'
+}); %>
 
-<%=
-  line_chart @chart_data,
-    title: 'Média de SPs por dia por Sprint',
-    xtitle: "Sprint",
-    ytitle: "SP/dia",
-    curve: false,
-    legend: false
-%>
+<div class="container page-container">
+  <%=
+    line_chart @chart_data,
+      title: 'Média de SPs por dia por Sprint',
+      xtitle: "Sprint",
+      ytitle: "SP/dia",
+      curve: false,
+      legend: false
+  %>
+</div>

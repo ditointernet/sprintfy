@@ -1,0 +1,67 @@
+<div class="sprintfy-sprint-goals panel page-section">
+  <p class="panel-heading">
+    <strong class="title is-4">Goals</strong>
+  </p>
+
+  <div class="panel-block">
+    <% @sprint.goals.each_with_index do |goal, i| %>
+      <div class="box sprintfy-sprint-goal <%= if goal.completed then 'complete' else 'incomplete' end %>">
+        <div class="media">
+          <div class="media-content">
+            <div class="content">
+              <div>
+                <strong>Goal <%= i + 1 %></strong>
+              </div>
+              <div>
+                <%= link_to(goal.description, goal.url, target: '_blank') if goal.url.present? %>
+                <%= goal.description if goal.url.blank? %>
+              </div>
+            </div>
+            <nav class="level">
+              <div class="level-left">
+                <% if !goal.completed && current_user.can_update?(goal) %>
+                  <%= form_tag complete_goal_path(id: goal.id), method: :post do %>
+                    <%= submit_tag 'Completar', class: 'button is-rounded is-primary level-item' %>
+                  <% end %>
+                <% end %>
+              </div>
+            </nav>
+          </div>
+          <% if !goal.completed && !@sprint.closed && current_user.can_update?(goal) %>
+            <div class="media-right">
+              <%= form_tag goal_path(id: goal.id), method: :delete do %>
+                <button type="submit" class="delete"></button>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if !@sprint.closed && current_user.can_create?(Goal) %>
+      <div>
+        <a id="show-add-goal-form-btn" class="button is-rounded" href="#">
+          <i class="fa fa-plus"></i>
+          Adicionar Goal
+        </a>
+      </div>
+
+      <div class="sprintfy-add-goal-form is-hidden">
+        <%= form_for @sprint_goal, url: goals_path do |f| %>
+          <%= f.hidden_field :sprint_id %>
+          <div class="field has-addons">
+            <div class="control is-expanded">
+              <%= f.text_field :description, class: 'input is-rounded', placeholder: 'Título do goal' %>
+            </div>
+            <div class="control is-expanded">
+              <%= f.text_field :url, class: 'input is-rounded', placeholder: 'Link (opcional)' %>
+            </div>
+            <div class="control">
+              <%= f.submit 'Criar Goal', class: 'button is-rounded is-dark' %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
