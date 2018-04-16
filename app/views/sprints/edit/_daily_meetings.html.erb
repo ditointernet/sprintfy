@@ -1,0 +1,14 @@
+<div class="sprintfy-sprint-daily-meetings panel page-section">
+  <p class="panel-heading">
+    <strong class="title is-4">Daily Meetings</strong>
+  </p>
+  <div class="panel-block">
+    <%= link_to(daily_meetings_sprint_path(@sprint), class: 'button is-rounded is-dark') do %>
+      <% if current_user.can_update?(DailyMeeting) %>
+        <i class="fa fa-edit"></i> Gerenciar
+      <% else %>
+        <i class="fa fa-search"></i> Ver 
+      <% end %>
+    <% end %>
+  </div>
+</div>

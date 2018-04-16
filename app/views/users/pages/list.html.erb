@@ -1,6 +1,10 @@
-<div class="container">
-  <h1 class="title is-2">Usuários Cadastrados</h1>
+<%= render(partial: 'layouts/page_header', locals: {
+  icon: 'user',
+  title: 'Usuários',
+  subtitle: 'Cadastrados'
+}); %>
 
+<div class="container page-container">
   <table class="table is-bordered">
     <thead>
       <tr>

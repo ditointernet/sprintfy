@@ -9,15 +9,14 @@ $(function() {
   $('#show-add-sprint-user-form-btn').on('click', function(event) {
     event.preventDefault();
 
-    $('.sprintfy-add-sprint-user-form').removeClass('is-hidden');
-    $('#sprint-users-menu').addClass('is-hidden');
+    $('.sprintfy-add-sprint-user-form').toggleClass('is-hidden');
   });
 
   $('#show-edit-sprint-story-points-form-btn').on('click', function(event) {
     event.preventDefault();
 
-    $('.sprintfy-sprint-users').addClass('is-hidden');
-    $('#sprintfy-edit-sprint-story-points-form').removeClass('is-hidden');
+    $('#sprint-users-table').toggleClass('is-hidden');
+    $('#sprintfy-edit-sprint-story-points-form').toggleClass('is-hidden');
   });
 });
 

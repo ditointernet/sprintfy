@@ -27,7 +27,7 @@ class GoalsController < ApplicationController
   private
 
   def goals_params
-    params.require(:goal).permit([:description, :sprint_id])
+    params.require(:goal).permit([:description, :sprint_id, :url])
   end
 
   def load_goal

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170908142018) do
+ActiveRecord::Schema.define(version: 20180414024841) do
 
   create_table "daily_meetings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "reason"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20170908142018) do
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
     t.integer  "sprint_id"
+    t.string   "url"
     t.index ["sprint_id"], name: "index_goals_on_sprint_id", using: :btree
   end
 

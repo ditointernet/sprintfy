@@ -1,27 +1,29 @@
-<div class="container">
+<%= render(partial: 'layouts/page_header', locals: {
+  icon: 'users',
+  title: 'Equipes',
+  subtitle: 'Lista'
+}); %>
+
+<div class="container page-container">
   <h1 class="title is-2">Equipes</h1>
 
-  <div class="columns">
-    <div class="column is-one-third">
-      <table class="table is-bordered">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Integrantes</th>
-            <td></th>
-          </tr>
-        </thead>
+  <table class="table is-bordered">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Integrantes</th>
+        <td width="80"></th>
+      </tr>
+    </thead>
 
-        <tbody>
-          <% @squads.each do |squad| %>
-            <tr>
-              <td><%= squad.name %></td>
-              <td><%= squad.users.count %></td>
-              <td><%= link_to 'Editar', edit_squad_path(squad) %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
+    <tbody>
+      <% @squads.each do |squad| %>
+        <tr>
+          <td><%= squad.name %></td>
+          <td><%= squad.users.count %></td>
+          <td><%= link_to 'Editar', edit_squad_path(squad), class: 'button' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>

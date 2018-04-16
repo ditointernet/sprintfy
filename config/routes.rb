@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
     get '/usuarios/editar', to: 'users/registrations#edit', as: :edit_user_registration
     patch '/usuarios/editar', to: 'users/registrations#update', as: :user_registration
+    get '/minha-conta', to: 'users/registrations#edit_account', as: :edit_account
 
     get '/esqueci-minha-senha', to: 'users/passwords#new', as: :user_password
     patch '/esqueci-minha-senha', to: 'users/passwords#create', as: :create_user_password

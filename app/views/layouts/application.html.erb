@@ -10,113 +10,68 @@
     <%= javascript_include_tag "https://www.gstatic.com/charts/loader.js" %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,600,700" rel="stylesheet">
   </head>
 
   <body>
-    <section class="hero is-primary">
-      <div class="hero-head">
-        <header class="nav">
-          <div class="container">
-            <div class="nav-left">
-              <%= link_to :root, class: 'nav-item is-brand' do %>
-                <%= image_tag 'logo-sprintfy.png' %>
-              <% end %>
+    <section class="app-wrapper">
+      <%= render('layouts/header'); %>
+      <% if user_signed_in? %>
+        <div class="container-fluid">
+          <% if flash[:notice] %>
+            <div class="notification is-info flash">
+              <p><%= flash[:notice] %></p>
             </div>
+          <% end %>
 
-            <div id="nav-toggle" class="nav-toggle">
-              <span></span>
-              <span></span>
-              <span></span>
+          <% if flash[:success] %>
+            <div class="notification is-success flash">
+              <p><%= flash[:success] %></p>
             </div>
-          </div>
-        </header>
-      </div>
+          <% end %>
+
+          <% if flash[:error] %>
+            <div class="notification is-danger flash">
+              <p><%= flash[:error] %></p>
+            </div>
+          <% end %>
+
+          <%= yield %>
+        </div>
+      <% else %>
+        <div>
+          <% if flash[:notice] %>
+            <div class="notification has-text-centered is-info flash">
+              <p><%= flash[:notice] %></p>
+            </div>
+          <% end %>
+
+          <% if flash[:error] %>
+            <div class="notification has-text-centered is-danger flash">
+              <p><%= flash[:error] %></p>
+            </div>
+          <% end %>
+        </div>
+        <%= yield %>
+      <% end %>
     </section>
 
-    <% if user_signed_in? %>
-      <section class="section">
-        <div class="container">
-          <div class="columns">
-            <div class="column is-3">
-              <aside class="menu">
-                <p class="menu-label">SPRINTS</p>
-                <ul class="menu-list">
-                  <li><%= link_to (current_user.admin? ? 'SPRINTS' : 'MEUS SPRINTS'), :user_sprints %></li>
-
-                  <% if current_user.can_create?(Sprint.new) %>
-                    <li><%= link_to 'CRIAR SPRINT', new_sprint_path %></li>
-                  <% end %>
-                </ul>
-
-                <% if current_user.admin? %>
-                  <p class="menu-label">PAINEL ADMINISTRATIVO</p>
-                  <ul class="menu-list">
-                      <li><%= link_to 'RELATÓRIOS', reports_path %></li>
-                  </ul>
-                <% end %>
-
-                <% if current_user.admin? %>
-                  <p class="menu-label">USUÁRIOS</p>
-                  <ul class="menu-list">
-                    <li><%= link_to 'CRIAR USUÁRIO', new_user_path %></li>
-                    <li><%= link_to 'CADASTRADOS', :users_list %></li>
-                  </ul>
-                <% end %>
-
-                <% if current_user.admin? %>
-                  <p class="menu-label">EQUIPES</p>
-                  <ul class="menu-list">
-                    <li><%= link_to 'CRIAR EQUIPE', new_squad_path %></li>
-                    <li><%= link_to 'CADASTRADAS', squads_path %></li>
-                  </ul>
-                <% end %>
-
-                <p class="menu-label">RELATÓRIOS</p>
-                <ul class="menu-list">
-                  <li><%= link_to 'EVOLUÇÃO PESSOAL', :personal_evolution %></li>
-                </ul>
-
-                <p class="menu-label">CONTA</p>
-                <ul class="menu-list">
-                  <li><%= link_to 'MUDAR SENHA', :edit_user_registration %></li>
-                  <li><%= link_to 'SAIR', :destroy_user_session, method: :delete %></li>
-                </ul>
-              </aside>
-            </div>
-            <div class="column">
-              <% if flash[:notice] %>
-                <div class="notification">
-                  <p><%= flash[:notice] %></p>
-                </div>
-              <% end %>
-
-              <% if flash[:error] %>
-                <div class="notification is-danger">
-                  <p><%= flash[:error] %></p>
-                </div>
-              <% end %>
-
-              <%= yield %>
-            </div>
-          </div>
+    <footer id="footer" class="footer">
+      <div class="container">
+        <div class="content has-text-centered">
+          <p>
+            <%= link_to :root do %>
+              <span class="icon">
+                <i class="fa fa-code-branch"></i>
+              </span>
+              <span class="logo-text is-uppercase">
+                <strong>Sprint</strong>fy
+              </span>
+            <% end %>
+          </p>
         </div>
-      </section>
-    <% else %>
-      <div>
-        <% if flash[:notice] %>
-          <div class="notification has-text-centered">
-            <p><%= flash[:notice] %></p>
-          </div>
-        <% end %>
-
-        <% if flash[:error] %>
-          <div class="notification has-text-centered is-danger">
-            <p><%= flash[:error] %></p>
-          </div>
-        <% end %>
       </div>
-
-      <%= yield %>
-    <% end %>
+    </footer>
   </body>
 </html>

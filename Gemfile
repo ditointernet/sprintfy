@@ -7,6 +7,7 @@ gem 'rails', '~> 5.0.0', '>= 5.0.0.1'
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
+gem "bulma-rails", "~> 0.7.0"
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -33,7 +34,6 @@ gem 'devise', '~> 4.0'
 gem 'rolify'
 gem 'authority'
 
-gem 'bulma-rails', '~> 0.2.3'
 gem 'maskedinput-rails'
 gem 'font-awesome-rails'
 

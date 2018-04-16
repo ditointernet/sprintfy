@@ -1,5 +1,10 @@
-<div class="container">
-  <h1 class="title is-2"><%= current_user.admin? ? 'SPRINTS' : 'MEUS SPRINTS' %></h1>
+<%= render(partial: 'layouts/page_header', locals: {
+  icon: 'rocket',
+  title: current_user.admin? ? 'Sprints' : 'Meus sprints',
+  subtitle: pluralize(@sprints.size, 'sprint realizado', 'sprints realizados')
+}); %>
+
+<div class="container page-container">
   <table class="table is-bordered">
     <thead>
       <tr>
@@ -9,7 +14,7 @@
         <th>Data fim</th>
         <th>SP`s</th>
         <th>Goals</th>
-        <th></th>
+        <th width="220"></th>
       </tr>
     </thead>
 
@@ -38,8 +43,12 @@
           <td><%= story_points_done %> / <%= promised_story_points %> (<%= promised_story_points.to_i > 0 ? (story_points_done / promised_story_points.to_f * 100).round(2) : 0 %>%)</td>
           <td><%= completed %> / <%= goals_count %> (<%= goals_count.to_i > 0 ? (completed / goals_count.to_f * 100).round(2) : 0 %>%)</td>
           <td>
-            <div><%= link_to 'Ver sprint', edit_sprint_path(sprint) %></div>
-            <div><%= link_to 'Gerenciar DMs', daily_meetings_sprint_path(sprint) %></div>
+            <div class="buttons has-addons is-centered">
+              <%= link_to('Ver sprint', edit_sprint_path(sprint), 
+                class: 'button is-small') %>
+              <%= link_to('Gerenciar DMs', daily_meetings_sprint_path(sprint), 
+                class: 'button is-small') %>
+            </div>
           </td>
         </tr>
       <% end %>

@@ -26,8 +26,8 @@ class SprintsController < ApplicationController
   end
 
   def create
-    start_date = DateParser::parse_date_string(sprint_params[:start_date])
-    due_date = DateParser::parse_date_string(sprint_params[:due_date])
+    start_date = sprint_params[:start_date]
+    due_date = sprint_params[:due_date]
 
     squad = Squad.find(sprint_params[:squad_id])
     sprint = Sprint.create_for_squad(start_date, due_date, squad)
@@ -50,8 +50,8 @@ class SprintsController < ApplicationController
   end
 
   def update
-    start_date = DateParser::parse_date_string(sprint_params[:start_date])
-    due_date = DateParser::parse_date_string(sprint_params[:due_date])
+    start_date = sprint_params[:start_date]
+    due_date = sprint_params[:due_date]
 
     @sprint.update_columns(start_date: start_date, due_date: due_date)
 

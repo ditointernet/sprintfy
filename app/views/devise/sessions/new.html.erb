@@ -1,37 +1,54 @@
 <div class="notification-login-page">
-  <%= content_tag(:div, flash[:error], :id => "flash_error") if flash[:error] %>
-  <%= content_tag(:div, flash[:alert], :id => "flash_alert") if flash[:alert] %>
+  <%= content_tag(:div, flash[:error], class: 'notification is-danger',
+    :id => "flash_error") if flash[:error] %>
+  <%= content_tag(:div, flash[:alert], class: 'notification is-warning',
+    :id => "flash_alert") if flash[:alert] %>
 </div>
-<div class="section">
+<header class="hero is-link page-header">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title">
+        Bem-vindo :)
+      </h1>
+    </div>
+  </div>
+</header>
+<div class="container page-container">
   <div class="columns">
     <div class="column is-one-third">
     </div>
     <div class="column is-one-third">
-      <h1 class="title is-2">Entrar</h1>
 
       <%= form_for resource, as: resource_name, url: session_path(resource_name) do |f| %>
-        <%= f.label 'E-mail', class: 'label' %>
-        <p class="control">
-          <%= f.text_field :email, class: 'input' %>
-        </p>
+        <div class="field">
+          <%= f.label 'E-mail', class: 'label' %>
+          <p class="control">
+            <%= f.text_field :email, class: 'input' %>
+          </p>
+        </div>
 
-        <%= f.label 'Senha', class: 'label' %>
-        <p class="control">
-          <%= f.password_field :password, autocomplete: 'off', class: 'input' %>
-        </p>
+        <div class="field">
+          <%= f.label 'Senha', class: 'label' %>
+          <p class="control">
+            <%= f.password_field :password, autocomplete: 'off', class: 'input' %>
+          </p>
+        </div>
 
-        <p class="control">
-          <%= f.label :remember_me, class: 'label' do %>
-            <%= f.check_box :remember_me, class: 'checkbox' %>
-            Mantenha-me conectado
-          <% end %>
-        </p>
+        <div class="field">
+          <div class="columns">
+            <div class="column">
+              <%= f.label :remember_me, class: 'checkbox' do %>
+                <%= f.check_box :remember_me %>
+                <small>Manter-me conectado</small>
+              <% end %>
+            </div>
+            <div class="column has-text-right">
+              <small><%= link_to 'Esqueci minha senha', user_password_path %></small>
+            </div>
+          </div>
+        </div>
 
-        <p class="control">
-          <%= link_to 'Esqueci minha senha', user_password_path %>
-        </p>
-
-        <%= f.submit 'Entrar', class: 'button is-primary' %>
+        <%= f.submit 'Entrar', class: 'button is-rounded is-primary' %>
       <% end %>
     </div>
   </div>

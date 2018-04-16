@@ -1,50 +1,75 @@
-<div class="container">
-  <h1 class="title is-2">Finalizar Sprint</h1>
+<%= render(partial: 'layouts/page_header', locals: {
+  icon: 'rocket',
+  title: "Finalizar Sprint",
+  subtitle: "Sprint Review"
+}); %>
 
+<div class="container page-container">
   <div class="columns">
     <div class="column is-half">
       <%= form_tag close_sprint_path, method: :post do %>
-        <%= label_tag nil, 'Story Points', class: 'label' %>
+        <div class="panel page-section">
+          <p class="panel-heading">
+            <strong class="title is-4">Story Points</strong>
+          </p>
+          <div class="panel-block is-block">
+            <table class="table is-hoverable">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Story Points</th>
+                </tr>
+              </thead>
 
-        <table class="table is-bordered">
-          <thead>
-            <tr>
-              <th>Nome</th>
-              <th>Story Points</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <% @sprint.users.each do |user| %>
-              <tr>
-                <td><%= user.name_or_email %></td>
-                <td>
-                  <%= hidden_field_tag "users[][id]", user.id %>
-                  <%= number_field_tag "users[][story_points]", '', step: '0.01', style: 'width: 30%', class: 'input', value: '0' %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-
-        <div class="control">
-          <%= label_tag 'did_right_sprint_report[text]', 'O que deu certo?', class: 'label' %>
-          <div class="control">
-            <%= text_area 'did_right_sprint_report', 'text', class: 'textarea', value: @did_right_text %>
+              <tbody>
+                <% @sprint.users.each do |user| %>
+                  <tr>
+                    <td><%= user.name_or_email %></td>
+                    <td>
+                      <%= hidden_field_tag "users[][id]", user.id %>
+                      <%= number_field_tag "users[][story_points]", '', step: '0.01', 
+                        style: 'width: 30%', class: 'input', value: '0', required: true %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
           </div>
         </div>
 
-        <div class="control">
-          <%= label_tag 'did_wrong_sprint_report[text]', 'O que deu errado?', class: 'label' %>
-          <div class="control">
-            <%= text_area 'did_wrong_sprint_report', 'text', class: 'textarea', value: @did_wrong_text %>
+        <div class="panel page-section">
+          <p class="panel-heading">
+            <strong class="title is-4">O que deu certo?</strong>
+          </p>
+          <div class="panel-block">
+            <div class="control">
+              <%= text_area 'did_right_sprint_report', 'text', class: 'textarea', 
+                value: @did_right_text, required: true %>
+            </div>
           </div>
         </div>
 
-        <div class="control">
-          <%= label_tag 'what_to_change_sprint_report[text]', 'O que mudar?', class: 'label' %>
-          <div class="control">
-            <%= text_area 'what_to_change_sprint_report', 'text', class: 'textarea', value: @what_to_change_text %>
+        <div class="panel page-section">
+          <p class="panel-heading">
+            <strong class="title is-4">O que deu errado?</strong>
+          </p>
+          <div class="panel-block">
+            <div class="control">
+              <%= text_area 'did_wrong_sprint_report', 'text', class: 'textarea', 
+                value: @did_wrong_text, required: true %>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel page-section">
+          <p class="panel-heading">
+            <strong class="title is-4">O que mudar?</strong>
+          </p>
+          <div class="panel-block">
+            <div class="control">
+              <%= text_area 'what_to_change_sprint_report', 'text', class: 'textarea', 
+                value: @what_to_change_text, required: true %>
+            </div>
           </div>
         </div>
 

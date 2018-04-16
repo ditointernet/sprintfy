@@ -1,14 +1,18 @@
-<div class="container">
-  <h1 class="title is-2">Sprint #<%= @sprint.squad_counter %> Daily Meetings</h1>
+<%= render(partial: 'layouts/page_header', locals: {
+  icon: 'rocket',
+  title: "DM Sprint ##{@sprint.squad_counter} - Equipe #{ @sprint.squad.name }",
+  subtitle: "#{ format_date(@sprint.start_date) } a #{ format_date(@sprint.due_date) }"
+}); %>
 
+<div class="container page-container">
   <table class="table is-bordered">
     <thead>
       <tr>
-        <th>Data</th>
-        <th>Feito?</th>
-        <th>Abonado?</th>
+        <th width="140">Data</th>
+        <th width="100">Feito?</th>
+        <th width="120">Abonado?</th>
         <th>Justificativa</th>
-        <th></th>
+        <th width="280"></th>
       </tr>
     </thead>
 
@@ -19,7 +23,7 @@
           <td><%= sprint_day[:daily_meeting_done] ? 'Sim' : 'Não' %></td>
           <td><%= sprint_day[:daily_meeting_skipped] ? 'Sim' : 'Não' %></td>
           <td><%= sprint_day[:daily_meeting_not_done_reason] %></td>
-          <td>
+          <td class="has-text-centered">
             <%= form_for @sprint, method: :post, url: create_daily_meeting_sprint_path(@sprint), html: { id: "sprintfy-dm-form-#{i}", class: "sprintfy-dm-form" } do |f| %>
               <%= hidden_field_tag 'daily_meeting[date]', format_date(sprint_day[:date]) %>
               <%= hidden_field_tag 'daily_meeting[done]', false %>
@@ -29,9 +33,21 @@
               <% if sprint_day[:date] > @today %>
               <% elsif !sprint_day[:daily_meeting_present] %>
                 <% if current_user.can_update?(DailyMeeting) %>
-                  <div><a href="#" class="dm-done">Feito</a></div>
-                  <div><a href="#" data-form-count="<%= "#{i}" %>" class="dm-not-done">Não Feito</a></div>
-                  <div><a href="#" class="dm-skip">Abonar</a></div>
+                  <div class="buttons has-addons is-centered">
+                    <a href="#" class="dm-done button is-small is-primary">
+                      <i class="fa fa-thumbs-up"></i>
+                      Feito
+                    </a>
+                    <a href="#" data-form-count="<%= "#{i}" %>" 
+                      class="dm-not-done button is-small is-danger">
+                      <i class="fa fa-thumbs-down"></i>
+                      Não Feito
+                    </a>
+                    <a href="#" class="dm-skip button is-small">
+                      <i class="fa fa-align-right"></i>
+                      Abonar
+                    </a>
+                  </div>
                 <% end %>
               <% else %>
                 <div><strong>Registrado</strong></div>
@@ -44,7 +60,8 @@
   </table>
 
   <div>
-    <%= link_to 'Ir para o Sprint', edit_sprint_path(@sprint), class: 'button is-dark' %>
+    <%= link_to 'Ir para o Sprint', edit_sprint_path(@sprint), 
+      class: 'button is-rounded is-dark' %>
   </div>
 
   <div id="sprintfy-dm-not-done-reason-modal" class="modal">
@@ -55,12 +72,16 @@
         <button class="delete"></button>
       </header>
       <section class="modal-card-body">
-        Por que não teve DM:
-        <textarea class="reason-textarea textarea"></textarea>
+        <div class="field">
+          <div class="control">
+            <textarea placeholder="Por que não teve DM" 
+              class="reason-textarea textarea"></textarea>
+          </div>
+        </div>
       </section>
       <footer class="modal-card-foot">
-        <a class="send-button button is-primary">Enviar</a>
-        <a class="cancel-button button">Cancelar</a>
+        <a class="send-button button is-rounded is-primary">Enviar</a>
+        <a class="cancel-button button is-rounded">Cancelar</a>
       </footer>
     </div>
   </div>

@@ -1,25 +1,32 @@
-<div class="section">
-  <div class="columns">
-    <div class="column is-one-third">
-    </div>
+<%= render(partial: 'layouts/page_header', locals: {
+  icon: 'user-circle',
+  title: 'Minha conta',
+  subtitle: "Mudar senha"
+}); %>
 
-    <div class="column is-one-third">
+<div class="container page-container">
+  <div class="columns">
+    <div class="column is-half">
       <h2 class="title is-2">Mudar Senha</h2>
 
       <%= form_for(@user, url: update_user_password_path, html: { method: :put }) do |f| %>
         <%= f.hidden_field :reset_password_token, value: @reset_password_token %>
 
-        <div class="control">
-          <%= f.label :password, "Nova senha", class: 'label' %>
-          <%= f.password_field :password, class: 'input', autofocus: true, autocomplete: "off" %>
+        <div class="field">
+          <div class="control">
+            <%= f.label :password, "Nova senha", class: 'label' %>
+            <%= f.password_field :password, class: 'input', autofocus: true, autocomplete: "off" %>
+          </div>
         </div>
 
-        <div class="control">
-          <%= f.label :password_confirmation, "Confirmar nova senha", class: 'label' %>
-          <%= f.password_field :password_confirmation, class: 'input', autocomplete: "off" %>
+        <div class="field">
+          <div class="control">
+            <%= f.label :password_confirmation, "Confirmar nova senha", class: 'label' %>
+            <%= f.password_field :password_confirmation, class: 'input', autocomplete: "off" %>
+          </div>
         </div>
 
-        <%= f.submit 'Mudar minha senha', class: 'button is-primary' %>
+        <%= f.submit 'Mudar minha senha', class: 'button is-primary is-rounded' %>
       <% end %>
     </div>
   </div>

@@ -1,39 +1,53 @@
-<div class="container">
-  <h1 class="title is-2">Novo Usuário</h1>
+<%= render(partial: 'layouts/page_header', locals: {
+  icon: 'user',
+  title: 'Usuários',
+  subtitle: 'Novo Usuário'
+}); %>
 
+<div class="container page-container">
   <div class="columns">
     <div class="column is-one-third">
       <%= form_for @user, url: create_user_path do |f| %>
         <%= f.label 'Nome', class: 'label' %>
-        <p class="control">
-          <%= f.text_field :name, class: 'input' %>
-        </p>
-
-        <div class="control">
-          <%= f.label 'Equipe', class: 'label' %>
-          <span class="select">
-            <%= f.select :squad_id, options_from_collection_for_select(@squads, 'id', 'name') %>
-          </span>
+        <div class="field">
+          <p class="control">
+            <%= f.text_field :name, class: 'input' %>
+          </p>
         </div>
 
-        <div class="control">
-          <%= f.label 'Permissões', class: 'label' %>
-          <span class="select">
-            <%= select_tag :role, options_from_collection_for_select(@roles, :id, :name, selected: @default_role_id), { style: 'width: 100%;' } %>
-          </span>
+        <div class="field">
+          <div class="control">
+            <%= f.label 'Equipe', class: 'label' %>
+            <span class="select">
+              <%= f.select :squad_id, options_from_collection_for_select(@squads, 'id', 'name') %>
+            </span>
+          </div>
         </div>
 
-        <%= f.label 'E-mail', class: 'label' %>
-        <p class="control">
-          <%= f.text_field :email, class: 'input' %>
-        </p>
+        <div class="field">
+          <div class="control">
+            <%= f.label 'Permissões', class: 'label' %>
+            <span class="select">
+              <%= select_tag :role, options_from_collection_for_select(@roles, :id, :name, selected: @default_role_id), { style: 'width: 100%;' } %>
+            </span>
+          </div>
+        </div>
 
-        <%= f.label 'Senha', class: 'label' %>
-        <p class="control">
-          <%= f.password_field :password, class: 'input' %>
-        </p>
+        <div class="field">
+          <%= f.label 'E-mail', class: 'label' %>
+          <p class="control">
+            <%= f.text_field :email, class: 'input' %>
+          </p>
+        </div>
 
-        <%= f.submit 'Criar Usuário', class: 'button is-primary' %>
+        <div class="field">
+          <%= f.label 'Senha', class: 'label' %>
+          <p class="control">
+            <%= f.password_field :password, class: 'input' %>
+          </p>
+        </div>
+
+        <%= f.submit 'Criar Usuário', class: 'button is-primary is-rounded' %>
       <% end %>
     </div>
   </div>

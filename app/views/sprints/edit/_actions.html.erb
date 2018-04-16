@@ -1,0 +1,10 @@
+<div id="edit-sprint-btns">
+  <a id="show-update-sprint-dates-btn" href="#" class="button is-rounded">
+    <i class="fa fa-calendar-alt"></i>
+    Alterar Período
+  </a>
+  <%= link_to(closing_sprint_path(id: @sprint.id), 
+    class: 'button is-rounded is-warning') do %>
+    <i class="fa fa-check"></i> Finalizar sprint
+  <% end %>
+</div>

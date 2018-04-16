@@ -1,0 +1,22 @@
+<div id="update-sprint-dates-form" class="is-hidden">
+  <div class="columns">
+    <div class="column is-half">
+      <%= form_for @sprint, method: :put do |f| %>
+        <%= f.label 'Período', class: 'label' %>
+        <div class="field has-addons rounded">
+          <div class="control is-expanded">
+            <%= f.text_field :start_date, type: 'date', value: @sprint.start_date, 
+              class: 'input', placeholder: 'Início', required: true %>
+          </div>
+          <div class="control is-expanded">
+            <%= f.text_field :due_date, type: 'date', value: @sprint.due_date,
+              class: 'input', placeholder: 'Término', required: true %>
+          </div>
+          <div class="control">
+            <%= f.submit 'Salvar', class: 'button is-dark' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
